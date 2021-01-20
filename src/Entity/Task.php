@@ -72,6 +72,36 @@ class Task
      */
     private $tag;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $showdays;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $approvedays;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $prepaid;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $quantity;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $applied;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $applydays;
+
     public function __construct()
     {
         $this->tag = new ArrayCollection();
@@ -217,5 +247,77 @@ class Task
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    public function getShowdays(): ?int
+    {
+        return $this->showdays;
+    }
+
+    public function setShowdays(int $showdays): self
+    {
+        $this->showdays = $showdays;
+
+        return $this;
+    }
+
+    public function getApprovedays(): ?int
+    {
+        return $this->approvedays;
+    }
+
+    public function setApprovedays(int $approvedays): self
+    {
+        $this->approvedays = $approvedays;
+
+        return $this;
+    }
+
+    public function getPrepaid(): ?float
+    {
+        return $this->prepaid;
+    }
+
+    public function setPrepaid(float $prepaid): self
+    {
+        $this->prepaid = $prepaid;
+
+        return $this;
+    }
+
+    public function getQuantity(): ?int
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity(int $quantity): self
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    public function getApplied(): ?int
+    {
+        return $this->applied;
+    }
+
+    public function setApplied(int $applied): self
+    {
+        $this->applied = $applied;
+
+        return $this;
+    }
+
+    public function getApplydays(): ?int
+    {
+        return $this->applydays;
+    }
+
+    public function setApplydays(int $applydays): self
+    {
+        $this->applydays = $applydays;
+
+        return $this;
     }
 }

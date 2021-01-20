@@ -22,7 +22,8 @@ easy_admin:
       class: App\Entity\Task
       label: '任务'
       list:
-        fields: ['id','name','title','price','sticky','recommended','owner','platform','category','tag']
+        fields: ['id','name','title','price','prepaid','sticky','recommended','owner','platform','category','tag','quantity','applied']
+        filters: ['sticky','recommended','platform','category','tag','quantity']
     Node:
       class: App\Entity\Node
       label: '话题'

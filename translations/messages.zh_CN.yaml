@@ -14,6 +14,12 @@ Sticky: 置顶
 Recommended: 推荐
 Owner: 发布人
 Category: 类别
-Filters: 过滤
-ends with: 结尾包含
+Tasks: 任务
+Tag: 标签
 Description: 描述
+Applied: 已申请
+Quantity: 份数
+Showdays: 展示天数
+Approvedays: 审核天数
+Applydays: 接单时间
+Prepaid: 预付赏金
