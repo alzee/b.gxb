@@ -6,6 +6,7 @@ easy_admin:
     menu:
       - { entity: 'User', icon: user }
       - { entity: 'Node', icon: file-text }
+      - { entity: 'Tag', icon: tags }
 
   entities:
     Node:
@@ -18,10 +19,12 @@ easy_admin:
       search:
     User:
       class: App\Entity\User
-      icon: user
       label: '用户'
       list: 
         fields:
           - id
           - username
           - roles
+    Tag:
+      class: App\Entity\Tag
+      label: '标签'
