@@ -41,12 +41,16 @@ easy_admin:
     Tag:
       class: App\Entity\Tag
       label: '标签'
+      list:
+        fields: ['id','name']
     Vip:
       class: App\Entity\Vip
       label: '会员'
     Category:
       class: App\Entity\Category
       label: '类别'
+      list:
+        fields: ['id','name']
     Land:
       class: App\Entity\Land
       label: '领地'
