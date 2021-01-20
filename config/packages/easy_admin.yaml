@@ -12,6 +12,7 @@ easy_admin:
       - { entity: 'Node', icon: file-text }
       - { entity: 'Land', icon: square }
       - { entity: 'Bid', icon: dollar }
+      - { entity: 'Report', icon: flag }
 
   entities:
     Node:
@@ -48,3 +49,6 @@ easy_admin:
     Bid:
       class: App\Entity\Bid
       label: '竞价'
+    Report:
+      class: App\Entity\Report
+      label: '举报'
