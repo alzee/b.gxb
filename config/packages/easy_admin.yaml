@@ -20,7 +20,7 @@ easy_admin:
   entities:
     Node:
       class: App\Entity\Node
-      label: '文章'
+      label: '话题'
       help: 
       list: 
         filter: ['Title']
