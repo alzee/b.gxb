@@ -8,8 +8,9 @@ easy_admin:
       - { entity: 'User', icon: user }
       - { entity: 'Vip', icon: user-circle }
       - { entity: 'Tag', icon: tags }
-      - { entity: 'Category', icon: list }
+      - { entity: 'Category', icon: th-large }
       - { entity: 'Node', icon: file-text }
+      - { entity: 'Land', icon: square }
 
   entities:
     Node:
@@ -40,3 +41,6 @@ easy_admin:
     Category:
       class: App\Entity\Category
       label: '类别'
+    Land:
+      class: App\Entity\Land
+      label: '领地'
