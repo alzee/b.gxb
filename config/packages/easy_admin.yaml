@@ -6,9 +6,10 @@ easy_admin:
     menu:
       - { entity: 'Task', icon: tasks }
       - { entity: 'User', icon: user }
-      - { entity: 'Node', icon: file-text }
       - { entity: 'Tag', icon: tags }
       - { entity: 'Vip', icon: user-circle }
+      - { entity: 'Category', icon: list }
+      - { entity: 'Node', icon: file-text }
 
   entities:
     Node:
@@ -36,3 +37,6 @@ easy_admin:
     Vip:
       class: App\Entity\Vip
       label: '会员'
+    Category:
+      class: App\Entity\Category
+      label: '类别'
