@@ -12,8 +12,9 @@ easy_admin:
       - { entity: 'Node', icon: file-text }
       - { entity: 'Land', icon: square }
       - { entity: 'Bid', icon: hand-paper }
-      - { entity: 'Report', icon: flag }
+      - { entity: 'Equity', icon: bank }
       - { entity: 'Finance', icon: dollar }
+      - { entity: 'Report', icon: flag }
 
   entities:
     Node:
@@ -56,3 +57,6 @@ easy_admin:
     Finance:
       class: App\Entity\Finance
       label: '财务'
+    Equity:
+      class: App\Entity\Equity
+      label: '股权'
