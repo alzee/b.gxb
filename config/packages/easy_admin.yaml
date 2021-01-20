@@ -15,3 +15,8 @@ easy_admin:
     User:
       class: App\Entity\User
       label: '用户'
+      list: 
+        fields:
+          - id
+          - username
+          - roles
