@@ -5,15 +5,15 @@ easy_admin:
   design:
     menu:
       - { entity: 'Task', icon: tasks }
-      - { entity: 'User', icon: user }
-      - { entity: 'Vip', icon: user-circle }
       - { entity: 'Tag', icon: tags }
       - { entity: 'Category', icon: th-large }
-      - { entity: 'Node', icon: file-text }
+      - { entity: 'Bid', icon: hand-paper }
       - { entity: 'Dividend', icon: gift }
       - { entity: 'Land', icon: square }
-      - { entity: 'Bid', icon: hand-paper }
       - { entity: 'Equity', icon: bank }
+      - { entity: 'Node', icon: file-text }
+      - { entity: 'User', icon: user }
+      - { entity: 'Vip', icon: user-circle }
       - { entity: 'Finance', icon: dollar }
       - { entity: 'Report', icon: flag }
 
