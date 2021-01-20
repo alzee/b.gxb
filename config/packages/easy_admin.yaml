@@ -10,6 +10,7 @@ easy_admin:
       - { entity: 'Tag', icon: tags }
       - { entity: 'Category', icon: th-large }
       - { entity: 'Node', icon: file-text }
+      - { entity: 'Dividend', icon: gift }
       - { entity: 'Land', icon: square }
       - { entity: 'Bid', icon: hand-paper }
       - { entity: 'Equity', icon: bank }
@@ -60,3 +61,6 @@ easy_admin:
     Equity:
       class: App\Entity\Equity
       label: '股权'
+    Dividend:
+      class: App\Entity\Dividend
+      label: '分红'
