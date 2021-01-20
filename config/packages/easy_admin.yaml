@@ -8,6 +8,7 @@ easy_admin:
       - { entity: 'User', icon: user }
       - { entity: 'Node', icon: file-text }
       - { entity: 'Tag', icon: tags }
+      - { entity: 'Vip', icon: user-circle }
 
   entities:
     Node:
@@ -32,3 +33,6 @@ easy_admin:
     Task:
       class: App\Entity\Task
       label: '任务'
+    Vip:
+      class: App\Entity\Vip
+      label: '会员'
