@@ -8,4 +8,6 @@ Label: 标签
 Title: 标题
 Date: 日期
 Body: 正文
-ROLE_ADMIN: 管理员
+Platform: 平台
+Price: 价格
+Description: 描述

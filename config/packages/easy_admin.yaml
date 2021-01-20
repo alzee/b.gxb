@@ -4,6 +4,7 @@ easy_admin:
     max_results: 50
   design:
     menu:
+      - { entity: 'Task', icon: tasks }
       - { entity: 'User', icon: user }
       - { entity: 'Node', icon: file-text }
       - { entity: 'Tag', icon: tags }
@@ -28,3 +29,6 @@ easy_admin:
     Tag:
       class: App\Entity\Tag
       label: '标签'
+    Task:
+      class: App\Entity\Task
+      label: '任务'
