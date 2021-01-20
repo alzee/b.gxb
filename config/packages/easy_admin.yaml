@@ -11,8 +11,9 @@ easy_admin:
       - { entity: 'Category', icon: th-large }
       - { entity: 'Node', icon: file-text }
       - { entity: 'Land', icon: square }
-      - { entity: 'Bid', icon: dollar }
+      - { entity: 'Bid', icon: hand-paper }
       - { entity: 'Report', icon: flag }
+      - { entity: 'Finance', icon: dollar }
 
   entities:
     Node:
@@ -52,3 +53,6 @@ easy_admin:
     Report:
       class: App\Entity\Report
       label: '举报'
+    Finance:
+      class: App\Entity\Finance
+      label: '财务'
