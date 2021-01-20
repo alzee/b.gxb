@@ -48,6 +48,16 @@ class Task
      */
     private $owner;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $sticky;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $recommended;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -121,6 +131,30 @@ class Task
     public function setOwner(User $owner): self
     {
         $this->owner = $owner;
+
+        return $this;
+    }
+
+    public function getSticky(): ?bool
+    {
+        return $this->sticky;
+    }
+
+    public function setSticky(bool $sticky): self
+    {
+        $this->sticky = $sticky;
+
+        return $this;
+    }
+
+    public function getRecommended(): ?bool
+    {
+        return $this->recommended;
+    }
+
+    public function setRecommended(bool $recommended): self
+    {
+        $this->recommended = $recommended;
 
         return $this;
     }
