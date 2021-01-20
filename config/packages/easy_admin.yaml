@@ -18,6 +18,9 @@ easy_admin:
       - { entity: 'Report', icon: flag }
 
   entities:
+    Task:
+      class: App\Entity\Task
+      label: '任务'
     Node:
       class: App\Entity\Node
       label: '话题'
@@ -38,9 +41,6 @@ easy_admin:
     Tag:
       class: App\Entity\Tag
       label: '标签'
-    Task:
-      class: App\Entity\Task
-      label: '任务'
     Vip:
       class: App\Entity\Vip
       label: '会员'
