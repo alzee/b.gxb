@@ -21,6 +21,8 @@ easy_admin:
     Task:
       class: App\Entity\Task
       label: '任务'
+      list:
+        fields: ['id','name','title','price','sticky','recommended','owner','platform','category','tag']
     Node:
       class: App\Entity\Node
       label: '话题'
