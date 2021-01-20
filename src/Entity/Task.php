@@ -25,11 +25,6 @@ class Task
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $platform;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     private $title;
 
     /**
@@ -58,6 +53,12 @@ class Task
      */
     private $recommended;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Platform::class, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $platform;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -71,18 +72,6 @@ class Task
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getPlatform(): ?string
-    {
-        return $this->platform;
-    }
-
-    public function setPlatform(string $platform): self
-    {
-        $this->platform = $platform;
 
         return $this;
     }
@@ -155,6 +144,18 @@ class Task
     public function setRecommended(bool $recommended): self
     {
         $this->recommended = $recommended;
+
+        return $this;
+    }
+
+    public function getPlatform(): ?Platform
+    {
+        return $this->platform;
+    }
+
+    public function setPlatform(Platform $platform): self
+    {
+        $this->platform = $platform;
 
         return $this;
     }
