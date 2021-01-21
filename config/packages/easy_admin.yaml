@@ -18,14 +18,45 @@ easy_admin:
       - { entity: 'Finance', icon: dollar }
       - { entity: 'Report', icon: flag }
       - { entity: 'Config', icon: cog }
+    assets:
+      favicon: '/img/favicon.ico'
+      css:
 
   entities:
     Task:
       class: App\Entity\Task
       label: '任务'
       list:
-        fields: ['id','name','title','price','prepaid','sticky','recommended','owner','platform','category','tag','quantity','applied']
+        fields: 
+          - id
+          - name
+          - title
+          - price
+          - prepaid
+          - sticky
+          - recommended
+          - owner
+          - platform
+          - category
+          - tag
+          - quantity
+          - applied
         filters: ['sticky','recommended','platform','category','tag','quantity']
+      form:
+        fields: 
+          - name
+          - title
+          - price
+          - { property: 'description', type: 'textarea'}
+          - prepaid
+          - sticky
+          - recommended
+          - owner
+          - platform
+          - category
+          - tag
+          - quantity
+          - applied
     Node:
       class: App\Entity\Node
       label: '话题'
@@ -61,28 +92,36 @@ easy_admin:
     Land:
       class: App\Entity\Land
       label: '领地'
+      disabled_actions: ['new']
     Bid:
       class: App\Entity\Bid
       label: '竞价'
+      disabled_actions: ['new']
     Report:
       class: App\Entity\Report
       label: '举报'
+      disabled_actions: ['new']
     Finance:
       class: App\Entity\Finance
       label: '财务'
+      disabled_actions: ['new']
     Equity:
       class: App\Entity\Equity
       label: '股权'
+      disabled_actions: ['new']
     Dividend:
       class: App\Entity\Dividend
       label: '分红'
+      disabled_actions: ['new']
     Level:
       class: App\Entity\Level
       label: '等级'
       list:
         fields: ['name','price','taskLeast','postFee','withdrawFee','stickyFee']
+        title: '会员等级'
     Config:
       class: App\Entity\Config
       label: '设置'
+      disabled_actions: ['new']
       list:
         fields: ['name','value']
