@@ -78,17 +78,23 @@ easy_admin:
       class: App\Entity\Tag
       label: '标签'
       list:
-        fields: ['id','name']
+        title: '任务标签'
+        fields: ['name']
+      form:
+        fields: ['name']
+    Category:
+      class: App\Entity\Category
+      label: '类别'
+      list:
+        title: '任务类别'
+        fields: ['name']
+      form:
+        fields: ['name']
     Vip:
       class: App\Entity\Vip
       label: '会员'
       list:
         fields: ['uid','level']
-    Category:
-      class: App\Entity\Category
-      label: '类别'
-      list:
-        fields: ['id','name']
     Land:
       class: App\Entity\Land
       label: '领地'
@@ -101,10 +107,14 @@ easy_admin:
       class: App\Entity\Report
       label: '举报'
       disabled_actions: ['new']
+      list:
+        title: '举报记录'
     Finance:
       class: App\Entity\Finance
       label: '财务'
       disabled_actions: ['new']
+      list:
+        title: '财务明细'
     Equity:
       class: App\Entity\Equity
       label: '股权'
