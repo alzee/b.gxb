@@ -35,6 +35,36 @@ class User implements UserInterface
      */
     private $password;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $nick;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $avatar;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $phone;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $balanceTopup;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $balanceTask;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $gxb;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -111,5 +141,77 @@ class User implements UserInterface
     public function __toString(): string
     {
         return $this->username;
+    }
+
+    public function getNick(): ?string
+    {
+        return $this->nick;
+    }
+
+    public function setNick(string $nick): self
+    {
+        $this->nick = $nick;
+
+        return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?string $avatar): self
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(string $phone): self
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getBalanceTopup(): ?float
+    {
+        return $this->balanceTopup;
+    }
+
+    public function setBalanceTopup(float $balanceTopup): self
+    {
+        $this->balanceTopup = $balanceTopup;
+
+        return $this;
+    }
+
+    public function getBalanceTask(): ?float
+    {
+        return $this->balanceTask;
+    }
+
+    public function setBalanceTask(float $balanceTask): self
+    {
+        $this->balanceTask = $balanceTask;
+
+        return $this;
+    }
+
+    public function getGxb(): ?int
+    {
+        return $this->gxb;
+    }
+
+    public function setGxb(int $gxb): self
+    {
+        $this->gxb = $gxb;
+
+        return $this;
     }
 }

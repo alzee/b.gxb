@@ -72,8 +72,19 @@ easy_admin:
         fields:
           - id
           - username
-          - roles
+          - nick
+          - { property: 'avatar', label: 'avatar', type: avatar, is_image_url: 'true'}
+          - phone
+          - balanceTopup
+          - balanceTask
+          - gxb
         filters: ['roles']
+      form: 
+        fields:
+          - username
+          - password
+          - nick
+          - phone
     Tag:
       class: App\Entity\Tag
       label: '标签'
