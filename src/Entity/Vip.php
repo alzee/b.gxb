@@ -27,6 +27,16 @@ class Vip
      */
     private $level;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $date;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $days;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +62,30 @@ class Vip
     public function setLevel(string $level): self
     {
         $this->level = $level;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function getDays(): ?int
+    {
+        return $this->days;
+    }
+
+    public function setDays(int $days): self
+    {
+        $this->days = $days;
 
         return $this;
     }

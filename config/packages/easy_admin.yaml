@@ -94,7 +94,11 @@ easy_admin:
       class: App\Entity\Vip
       label: '会员'
       list:
-        fields: ['uid','level']
+        fields: 
+          - { property: 'uid', label: 'vip.uid'}
+          - level
+          - { property: 'date', label: 'vip.date'}
+          - { property: 'days', label: 'vip.days'}
     Land:
       class: App\Entity\Land
       label: '领地'
@@ -127,7 +131,7 @@ easy_admin:
       class: App\Entity\Level
       label: '等级'
       list:
-        fields: ['name','price','taskLeast','postFee','withdrawFee','stickyFee']
+        fields: ['name','price','taskLeast','postFee','withdrawFee','stickyFee', 'Level.days']
         title: '会员等级'
     Config:
       class: App\Entity\Config

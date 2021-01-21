@@ -25,7 +25,6 @@ Applydays: 接单时间
 Prepaid: 预付赏金
 Value: 数值
 Level: 等级
-Uid: 用户
 Task least: 任务最低数量
 Post fee: 任务手续费
 Withdraw fee: 提现手续费
@@ -41,3 +40,7 @@ Total: 总金额
 Share: 分红人数
 Bid: 出价
 Position: 位置
+vip.date: 充值日期
+vip.days: 剩余天数
+vip.uid: 用户
+Level.days: 有效天数

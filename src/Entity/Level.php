@@ -47,6 +47,11 @@ class Level
      */
     private $stickyFee;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $days;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,6 +125,18 @@ class Level
     public function setStickyFee(int $stickyFee): self
     {
         $this->stickyFee = $stickyFee;
+
+        return $this;
+    }
+
+    public function getDays(): ?int
+    {
+        return $this->days;
+    }
+
+    public function setDays(int $days): self
+    {
+        $this->days = $days;
 
         return $this;
     }
