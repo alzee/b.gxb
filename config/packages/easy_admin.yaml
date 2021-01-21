@@ -51,6 +51,8 @@ easy_admin:
     Vip:
       class: App\Entity\Vip
       label: '会员'
+      list:
+        fields: ['uid','level']
     Category:
       class: App\Entity\Category
       label: '类别'
@@ -77,6 +79,8 @@ easy_admin:
     Level:
       class: App\Entity\Level
       label: '等级'
+      list:
+        fields: ['name','price','taskLeast','postFee','withdrawFee','stickyFee']
     Config:
       class: App\Entity\Config
       label: '设置'

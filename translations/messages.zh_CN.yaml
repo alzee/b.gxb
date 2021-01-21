@@ -24,3 +24,20 @@ Approvedays: 审核天数
 Applydays: 接单时间
 Prepaid: 预付赏金
 Value: 数值
+Level: 等级
+Uid: 用户
+Task least: 任务最低数量
+Post fee: 任务手续费
+Withdraw fee: 提现手续费
+Sticky fee: 置顶手续费
+Type: 类型
+Amount: 金额
+User: 用户
+Task: 任务
+Ratio: 兑换比率
+Topic: 话题
+City: 城市
+Total: 总金额
+Share: 分红人数
+Bid: 出价
+Position: 位置
