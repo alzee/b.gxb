@@ -103,10 +103,14 @@ easy_admin:
       class: App\Entity\Land
       label: '领地'
       disabled_actions: ['new']
+      list:
+        title: '领地交易记录'
     Bid:
       class: App\Entity\Bid
       label: '竞价'
       disabled_actions: ['new']
+      list:
+        title: '竞价记录'
     Report:
       class: App\Entity\Report
       label: '举报'
@@ -123,10 +127,14 @@ easy_admin:
       class: App\Entity\Equity
       label: '股权'
       disabled_actions: ['new']
+      list:
+        title: '股权交易记录'
     Dividend:
       class: App\Entity\Dividend
       label: '分红'
       disabled_actions: ['new']
+      list:
+        title: '分红记录'
     Level:
       class: App\Entity\Level
       label: '等级'
