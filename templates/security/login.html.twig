@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block body %}
-<form method="post" class="w-25 mt-4 mx-auto">
+<form method="post" class="p-3 mx-auto" style="max-width: 420px">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
