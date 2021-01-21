@@ -14,6 +14,7 @@ easy_admin:
       - { entity: 'Node', icon: file-text }
       - { entity: 'User', icon: user }
       - { entity: 'Vip', icon: user-circle }
+      - { entity: 'Level', icon: diamond }
       - { entity: 'Finance', icon: dollar }
       - { entity: 'Report', icon: flag }
 
@@ -72,3 +73,6 @@ easy_admin:
     Dividend:
       class: App\Entity\Dividend
       label: '分红'
+    Level:
+      class: App\Entity\Level
+      label: '等级'
