@@ -14,7 +14,7 @@
 
     {% if app.user %}
         <div class="mb-3 text-center">
-            你已登录 {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+            你已登录 {{ app.user.username }}, <a href="{{ path('app_logout') }}">退出</a>
         </div>
     {% endif %}
 
