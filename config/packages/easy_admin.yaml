@@ -57,6 +57,9 @@ easy_admin:
           - tag
           - quantity
           - applied
+          - showdays
+          - approvedays
+          - applydays
     Node:
       class: App\Entity\Node
       label: '话题'

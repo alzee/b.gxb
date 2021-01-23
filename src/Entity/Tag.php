@@ -29,16 +29,6 @@ class Tag
      */
     private $label;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Task::class, mappedBy="tag")
-     */
-    private $tasks;
-
-    public function __construct()
-    {
-        $this->tasks = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -64,33 +54,6 @@ class Tag
     public function setLabel(string $label): self
     {
         $this->label = $label;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Task[]
-     */
-    public function getTasks(): Collection
-    {
-        return $this->tasks;
-    }
-
-    public function addTask(Task $task): self
-    {
-        if (!$this->tasks->contains($task)) {
-            $this->tasks[] = $task;
-            $task->addTag($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTask(Task $task): self
-    {
-        if ($this->tasks->removeElement($task)) {
-            $task->removeTag($this);
-        }
 
         return $this;
     }

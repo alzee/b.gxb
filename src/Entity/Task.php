@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\TaskRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=TaskRepository::class)
  */
 class Task
@@ -40,7 +42,7 @@ class Task
     private $description;
 
     /**
-     * @ORM\OneToOne(targetEntity=User::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=User::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $owner;
@@ -56,19 +58,19 @@ class Task
     private $recommended;
 
     /**
-     * @ORM\OneToOne(targetEntity=Platform::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Platform::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $platform;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="tasks")
+     * @ORM\ManyToOne(targetEntity=Category::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $category;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="tasks")
+     * @ORM\ManyToMany(targetEntity=Tag::class, cascade={"persist", "remove"})
      */
     private $tag;
 
