@@ -217,18 +217,16 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getNewpass(): ?string
-    {
+    private ?string $plainPassword = null;
 
-        return '';
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
     }
 
-    public function setNewpass(?string $newpass): self
+    public function setPlainPassword(string $password): void
     {
-        if(!is_null($newpass)){
-            $this->password = $newpass;
-        }
-
-        return $this;
+        $this->plainPassword = $password;
     }
+
 }

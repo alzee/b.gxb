@@ -86,10 +86,19 @@ easy_admin:
           - gxb
         filters: ['roles']
       new: 
+        fields:
+          - username
+          - { property: 'plainPassword', label: 'new.plainpass', type: 'text', type_options: { required: false } }
+          - nick
+          - { property: 'avatar', label: 'avatar' }
+          - phone
+          - balanceTopup
+          - balanceTask
+          - gxb
       edit: 
         fields:
           - { property: 'username', type_options: { disabled: true, required: false } }
-          - { property: 'newpass', type: 'text', type_options: { required: false } }
+          - { property: 'plainPassword', label: 'edit.plainpass', type: 'text', type_options: { required: false } }
           - { property: 'nick', type_options: { required: false } }
           - { property: 'phone',  type_options: { required: false } }
     Tag:
