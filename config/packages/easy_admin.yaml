@@ -4,6 +4,8 @@ easy_admin:
     datetime: 'Y/m/d H:i'
   list:
     max_results: 50
+  user:
+    avatar_property_path: 'avatar'
   design:
     menu:
       - { entity: 'Task', icon: tasks }
@@ -79,7 +81,7 @@ easy_admin:
           - id
           - username
           - nick
-          - { property: 'avatar', label: 'avatar', type: 'avatar', is_image_url: 'true'}
+          #- { property: 'avatar', label: 'avatar', type: 'avatar', is_image_url: 'true'}
           - phone
           - balanceTopup
           - balanceTask
@@ -88,9 +90,9 @@ easy_admin:
       new: 
         fields:
           - username
-          - { property: 'plainPassword', label: 'new.plainpass', type: 'text', type_options: { required: false } }
+          - { property: 'plainPassword', label: 'new.plainpass', type: 'text', type_options: { required: true } }
           - nick
-          - { property: 'avatar', label: 'avatar' }
+          - { property: 'avatar', label: 'avatar', type: 'file_upload', type_options: { required: false } }
           - phone
           - balanceTopup
           - balanceTask
@@ -99,6 +101,7 @@ easy_admin:
         fields:
           - { property: 'username', type_options: { disabled: true, required: false } }
           - { property: 'plainPassword', label: 'edit.plainpass', type: 'text', type_options: { required: false } }
+          - { property: 'avatar', label: 'avatar', type: 'file_upload', type_options: { required: false } }
           - { property: 'nick', type_options: { required: false } }
           - { property: 'phone',  type_options: { required: false } }
     Tag:

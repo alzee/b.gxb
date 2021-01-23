@@ -59,17 +59,17 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="float", nullable=true)
      */
-    private $balanceTopup;
+    private $balanceTopup = 0;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      */
-    private $balanceTask;
+    private $balanceTask = 0;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $gxb;
+    private $gxb = 0;
 
     public function getId(): ?int
     {
