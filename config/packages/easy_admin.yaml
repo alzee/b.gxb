@@ -41,6 +41,7 @@ easy_admin:
           - tag
           - quantity
           - applied
+          - date
         filters: ['sticky','recommended','platform','category','tag','quantity']
       form:
         fields: 

@@ -104,9 +104,15 @@ class Task
      */
     private $applydays;
 
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    private $date;
+
     public function __construct()
     {
         $this->tag = new ArrayCollection();
+        $this->date = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -321,5 +327,10 @@ class Task
         $this->applydays = $applydays;
 
         return $this;
+    }
+
+    public function getDate(): ?\DateTimeImmutable
+    {
+        return $this->date;
     }
 }
