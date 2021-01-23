@@ -45,6 +45,7 @@ easy_admin:
           - tag
           - quantity
           - applied
+          - { property: 'approved', type: 'boolean'}
           - date
         filters: ['sticky','recommended','platform','category','tag','quantity']
       form:

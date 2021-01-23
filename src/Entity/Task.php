@@ -130,6 +130,11 @@ class Task
      */
     private $date;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $approved = false;
+
     public function __construct()
     {
         $this->tag = new ArrayCollection();
@@ -354,5 +359,17 @@ class Task
     public function getDate(): ?\DateTimeImmutable
     {
         return $this->date;
+    }
+
+    public function getApproved(): ?bool
+    {
+        return $this->approved;
+    }
+
+    public function setApproved(bool $approved): self
+    {
+        $this->approved = $approved;
+
+        return $this;
     }
 }
