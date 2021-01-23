@@ -1,5 +1,7 @@
 easy_admin:
   site_name: 达人共享宝
+  formats:
+    datetime: 'Y/m/d H:i'
   list:
     max_results: 50
   design:

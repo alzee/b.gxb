@@ -113,6 +113,7 @@ class Task
     {
         $this->tag = new ArrayCollection();
         $this->date = new \DateTimeImmutable();
+        $this->date = $this->date->setTimezone(new \DateTimeZone('Asia/Shanghai'));
     }
 
     public function getId(): ?int
