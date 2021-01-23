@@ -2,14 +2,21 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\TaskRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ * normalizationContext={"groups"={"task:read"}},
+ * denormalizationContext={"groups"={"task:write"}}
+ * )
  * @ORM\Entity(repositoryClass=TaskRepository::class)
  */
 class Task
@@ -23,89 +30,106 @@ class Task
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"task:read", "task:write"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"task:read", "task:write"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="float")
+     * @Groups({"task:read", "task:write"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"task:read", "task:write"})
      */
     private $description;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"task:read", "task:write"})
      */
     private $owner;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"task:read", "task:write"})
      */
     private $sticky;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"task:read", "task:write"})
      */
     private $recommended;
 
     /**
      * @ORM\ManyToOne(targetEntity=Platform::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"task:read", "task:write"})
      */
     private $platform;
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"task:read", "task:write"})
      */
     private $category;
 
     /**
      * @ORM\ManyToMany(targetEntity=Tag::class, cascade={"persist", "remove"})
+     * @Groups({"task:read", "task:write"})
      */
     private $tag;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"task:read", "task:write"})
      */
     private $showdays;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"task:read", "task:write"})
      */
     private $approvedays;
 
     /**
      * @ORM\Column(type="float")
+     * @Groups({"task:read", "task:write"})
      */
     private $prepaid;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"task:read", "task:write"})
      */
     private $quantity;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"task:read", "task:write"})
      */
     private $applied;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"task:read", "task:write"})
      */
     private $applydays;
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     * @Groups({"task:read"})
      */
     private $date;
 
