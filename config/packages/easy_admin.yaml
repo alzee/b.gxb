@@ -79,18 +79,19 @@ easy_admin:
           - id
           - username
           - nick
-          - { property: 'avatar', label: 'avatar', type: avatar, is_image_url: 'true'}
+          - { property: 'avatar', label: 'avatar', type: 'avatar', is_image_url: 'true'}
           - phone
           - balanceTopup
           - balanceTask
           - gxb
         filters: ['roles']
-      form: 
+      new: 
+      edit: 
         fields:
-          - username
-          - password
-          - nick
-          - phone
+          - { property: 'username', type_options: { disabled: true, required: false } }
+          - { property: 'newpass', type: 'text', type_options: { required: false } }
+          - { property: 'nick', type_options: { required: false } }
+          - { property: 'phone',  type_options: { required: false } }
     Tag:
       class: App\Entity\Tag
       label: '标签'

@@ -216,4 +216,19 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function getNewpass(): ?string
+    {
+
+        return '';
+    }
+
+    public function setNewpass(?string $newpass): self
+    {
+        if(!is_null($newpass)){
+            $this->password = $newpass;
+        }
+
+        return $this;
+    }
 }
