@@ -46,9 +46,7 @@ class SecurityController extends AbstractController
         }
         else {
             return $this->json([
-                'userData' => [
-                    'user' => $this->getUser() ? $this->getUser()->getId() : null,
-                ],
+                'id' => $this->getUser() ? $this->getUser()->getId() : null,
             ]);
         }
     }
