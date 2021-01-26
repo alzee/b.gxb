@@ -6,8 +6,11 @@ use App\Repository\TaskRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ApiResource(
@@ -15,6 +18,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * denormalizationContext={"groups"={"task:write"}}
  * )
  * @ORM\Entity(repositoryClass=TaskRepository::class)
+ * @ApiFilter(BooleanFilter::class, properties={"sticky", "recommended", "approved"})
+ * @ApiFilter(SearchFilter::class, properties={"title": "partial", "name": "partial", "bidPosition": "exact"})
  */
 class Task
 {
@@ -134,6 +139,11 @@ class Task
      * @ORM\Column(type="boolean")
      */
     private $approved = false;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $bidPosition;
 
     public function __construct()
     {
@@ -369,6 +379,18 @@ class Task
     public function setApproved(bool $approved): self
     {
         $this->approved = $approved;
+
+        return $this;
+    }
+
+    public function getBidPosition(): ?int
+    {
+        return $this->bidPosition;
+    }
+
+    public function setBidPosition(?int $bidPosition): self
+    {
+        $this->bidPosition = $bidPosition;
 
         return $this;
     }
