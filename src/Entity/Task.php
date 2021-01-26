@@ -127,12 +127,6 @@ class Task
      * @ORM\Column(type="integer")
      * @Groups({"task:read", "task:write"})
      */
-    private $applied;
-
-    /**
-     * @ORM\Column(type="integer")
-     * @Groups({"task:read", "task:write"})
-     */
     private $applydays;
 
     /**
@@ -151,11 +145,18 @@ class Task
      */
     private $bidPosition;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="tasksApplied")
+     * @Groups({"task:read"})
+     */
+    private $applied;
+
     public function __construct()
     {
         $this->tag = new ArrayCollection();
         $this->date = new \DateTimeImmutable();
         $this->date = $this->date->setTimezone(new \DateTimeZone('Asia/Shanghai'));
+        $this->applied = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -348,18 +349,6 @@ class Task
         return $this;
     }
 
-    public function getApplied(): ?int
-    {
-        return $this->applied;
-    }
-
-    public function setApplied(int $applied): self
-    {
-        $this->applied = $applied;
-
-        return $this;
-    }
-
     public function getApplydays(): ?int
     {
         return $this->applydays;
@@ -397,6 +386,30 @@ class Task
     public function setBidPosition(?int $bidPosition): self
     {
         $this->bidPosition = $bidPosition;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getApplied(): Collection
+    {
+        return $this->applied;
+    }
+
+    public function addApplied(User $applied): self
+    {
+        if (!$this->applied->contains($applied)) {
+            $this->applied[] = $applied;
+        }
+
+        return $this;
+    }
+
+    public function removeApplied(User $applied): self
+    {
+        $this->applied->removeElement($applied);
 
         return $this;
     }

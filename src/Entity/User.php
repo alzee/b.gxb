@@ -3,13 +3,18 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource
+ * normalizationContext={"groups"={"user:read"}},
+ * denormalizationContext={"groups"={"user:write"}}
+ * ()
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
  */
@@ -223,6 +228,16 @@ class User implements UserInterface
 
     private ?string $plainPassword = null;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Task::class, mappedBy="applied")
+     */
+    private $tasksApplied;
+
+    public function __construct()
+    {
+        $this->tasksApplied = new ArrayCollection();
+    }
+
     public function getPlainPassword(): ?string
     {
         return $this->plainPassword;
@@ -231,6 +246,33 @@ class User implements UserInterface
     public function setPlainPassword(string $password): void
     {
         $this->plainPassword = $password;
+    }
+
+    /**
+     * @return Collection|Task[]
+     */
+    public function getTasksApplied(): Collection
+    {
+        return $this->tasksApplied;
+    }
+
+    public function addTasksApplied(Task $tasksApplied): self
+    {
+        if (!$this->tasksApplied->contains($tasksApplied)) {
+            $this->tasksApplied[] = $tasksApplied;
+            $tasksApplied->addApplied($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTasksApplied(Task $tasksApplied): self
+    {
+        if ($this->tasksApplied->removeElement($tasksApplied)) {
+            $tasksApplied->removeApplied($this);
+        }
+
+        return $this;
     }
 
 }
