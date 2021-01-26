@@ -66,6 +66,7 @@ easy_admin:
           - showdays
           - approvedays
           - applydays
+          - bidPosition
     Node:
       class: App\Entity\Node
       label: '话题'
