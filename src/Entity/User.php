@@ -11,10 +11,10 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource
+ * @ApiResource(
  * normalizationContext={"groups"={"user:read"}},
  * denormalizationContext={"groups"={"user:write"}}
- * ()
+ * )
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
  */
@@ -230,6 +230,7 @@ class User implements UserInterface
 
     /**
      * @ORM\ManyToMany(targetEntity=Task::class, mappedBy="applied")
+     * @Groups({"user:read"})
      */
     private $tasksApplied;
 
