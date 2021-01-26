@@ -11,6 +11,9 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
 
 /**
  * @ApiResource(
@@ -19,7 +22,10 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  * )
  * @ORM\Entity(repositoryClass=TaskRepository::class)
  * @ApiFilter(BooleanFilter::class, properties={"sticky", "recommended", "approved"})
- * @ApiFilter(SearchFilter::class, properties={"title": "partial", "name": "partial", "bidPosition": "exact"})
+ * @ApiFilter(SearchFilter::class, properties={"title": "partial", "name": "partial"})
+ * @ApiFilter(OrderFilter::class, properties={"bidPosition"})
+ * @ApiFilter(RangeFilter::class, properties={"bidPosition"})
+ * @ApiFilter(PropertyFilter::class)
  */
 class Task
 {
