@@ -44,7 +44,7 @@ easy_admin:
           - category
           - tag
           - quantity
-          - applied
+          - applies
           - { property: 'approved', type: 'boolean'}
           - date
         filters: ['sticky','recommended','platform','category','tag','quantity']
@@ -62,7 +62,7 @@ easy_admin:
           - category
           - tag
           - quantity
-          - applied
+          - applies
           - showdays
           - approvedays
           - applydays
