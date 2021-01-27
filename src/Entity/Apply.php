@@ -20,19 +20,19 @@ class Apply
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=task::class, inversedBy="applies")
+     * @ORM\ManyToOne(targetEntity=Task::class, inversedBy="applies")
      * @ORM\JoinColumn(nullable=false)
      */
     private $task;
 
     /**
-     * @ORM\ManyToOne(targetEntity=user::class, inversedBy="applies")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="applies")
      * @ORM\JoinColumn(nullable=false)
      */
     private $applicant;
 
     /**
-     * @ORM\ManyToOne(targetEntity=status::class)
+     * @ORM\ManyToOne(targetEntity=Status::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $status;
