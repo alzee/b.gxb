@@ -29,7 +29,7 @@ easy_admin:
   entities:
     Task:
       class: App\Entity\Task
-      label: '任务'
+      label: task
       list:
         fields: 
           - id
@@ -69,7 +69,7 @@ easy_admin:
           - bidPosition
     Node:
       class: App\Entity\Node
-      label: '话题'
+      label: topic
       help: 
       list: 
         filter: ['Title']
@@ -77,7 +77,7 @@ easy_admin:
       search:
     User:
       class: App\Entity\User
-      label: '用户'
+      label: user
       disabled_actions: ['show']
       list: 
         fields:
@@ -109,7 +109,7 @@ easy_admin:
           - { property: 'phone',  type_options: { required: false } }
     Tag:
       class: App\Entity\Tag
-      label: '标签'
+      label: tag
       list:
         title: '任务标签'
         fields: ['name']
@@ -117,7 +117,7 @@ easy_admin:
         fields: ['name']
     Category:
       class: App\Entity\Category
-      label: '类别'
+      label: category
       disabled_actions: ['show']
       list:
         title: '任务类别'
@@ -126,7 +126,7 @@ easy_admin:
         fields: ['name']
     Vip:
       class: App\Entity\Vip
-      label: '会员'
+      label: vip
       list:
         fields: 
           - { property: 'uid', label: 'vip.uid'}
@@ -135,49 +135,49 @@ easy_admin:
           - { property: 'days', label: 'vip.days'}
     Land:
       class: App\Entity\Land
-      label: '领地'
+      label: land
       disabled_actions: ['new']
       list:
         title: '领地交易记录'
     Bid:
       class: App\Entity\Bid
-      label: '竞价'
+      label: bid
       disabled_actions: ['new']
       list:
         title: '竞价记录'
     Report:
       class: App\Entity\Report
-      label: '举报'
+      label: report
       disabled_actions: ['new']
       list:
         title: '举报记录'
     Finance:
       class: App\Entity\Finance
-      label: '财务'
+      label: finance
       disabled_actions: ['new']
       list:
         title: '财务明细'
     Equity:
       class: App\Entity\Equity
-      label: '股权'
+      label: equity
       disabled_actions: ['new']
       list:
         title: '股权交易记录'
     Dividend:
       class: App\Entity\Dividend
-      label: '分红'
+      label: dividend
       disabled_actions: ['new']
       list:
         title: '分红记录'
     Level:
       class: App\Entity\Level
-      label: '等级'
+      label: level
       list:
         fields: ['name','price','taskLeast','postFee','withdrawFee','stickyFee', 'Level.days']
         title: '会员等级'
     Config:
       class: App\Entity\Config
-      label: '设置'
+      label: config
       disabled_actions: ['new']
       list:
         fields: ['name','value']
