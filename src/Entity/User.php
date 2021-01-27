@@ -30,6 +30,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Groups({"task:read"})
+     * @Groups({"user:read", "user:write"})
      */
     private $username;
 
@@ -40,6 +41,7 @@ class User implements UserInterface
 
     /**
      * @var string The hashed password
+     * @Groups({"user:read", "user:write"})
      * @ORM\Column(type="string")
      */
     private $password;
@@ -47,32 +49,38 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"task:read"})
+     * @Groups({"user:read", "user:write"})
      */
     private $nick;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"task:read"})
+     * @Groups({"user:read", "user:write"})
      */
     private $avatar;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"user:read", "user:write"})
      */
     private $phone;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Groups({"user:read", "user:write"})
      */
     private $balanceTopup = 0;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Groups({"user:read", "user:write"})
      */
     private $balanceTask = 0;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"user:read", "user:write"})
      */
     private $gxb = 0;
 
