@@ -35,7 +35,7 @@ class Guide
     private $screenshotUrl;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Task::class)
+     * @ORM\ManyToOne(targetEntity=Task::class, inversedBy="guides")
      * @ORM\JoinColumn(nullable=false)
      */
     private $task;
@@ -81,12 +81,12 @@ class Guide
         return $this;
     }
 
-    public function getTask(): ?task
+    public function getTask(): ?Task
     {
         return $this->task;
     }
 
-    public function setTask(?task $task): self
+    public function setTask(?Task $task): self
     {
         $this->task = $task;
 

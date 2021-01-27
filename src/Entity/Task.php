@@ -150,12 +150,18 @@ class Task
      */
     private $applies;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Guide::class, mappedBy="task")
+     */
+    private $guides;
+
     public function __construct()
     {
         $this->tag = new ArrayCollection();
         $this->date = new \DateTimeImmutable();
         $this->date = $this->date->setTimezone(new \DateTimeZone('Asia/Shanghai'));
         $this->applies = new ArrayCollection();
+        $this->guides = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -413,6 +419,36 @@ class Task
             // set the owning side to null (unless already changed)
             if ($apply->getTask() === $this) {
                 $apply->setTask(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Guide[]
+     */
+    public function getGuides(): Collection
+    {
+        return $this->guides;
+    }
+
+    public function addGuide(Guide $guide): self
+    {
+        if (!$this->guides->contains($guide)) {
+            $this->guides[] = $guide;
+            $guide->setTask($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGuide(Guide $guide): self
+    {
+        if ($this->guides->removeElement($guide)) {
+            // set the owning side to null (unless already changed)
+            if ($guide->getTask() === $this) {
+                $guide->setTask(null);
             }
         }
 
