@@ -146,17 +146,16 @@ class Task
     private $bidPosition;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="tasksApplied")
-     * @Groups({"task:read"})
+     * @ORM\OneToMany(targetEntity=Apply::class, mappedBy="task")
      */
-    private $applied;
+    private $applies;
 
     public function __construct()
     {
         $this->tag = new ArrayCollection();
         $this->date = new \DateTimeImmutable();
         $this->date = $this->date->setTimezone(new \DateTimeZone('Asia/Shanghai'));
-        $this->applied = new ArrayCollection();
+        $this->applies = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -391,25 +390,31 @@ class Task
     }
 
     /**
-     * @return Collection|User[]
+     * @return Collection|Apply[]
      */
-    public function getApplied(): Collection
+    public function getApplies(): Collection
     {
-        return $this->applied;
+        return $this->applies;
     }
 
-    public function addApplied(User $applied): self
+    public function addApply(Apply $apply): self
     {
-        if (!$this->applied->contains($applied)) {
-            $this->applied[] = $applied;
+        if (!$this->applies->contains($apply)) {
+            $this->applies[] = $apply;
+            $apply->setTask($this);
         }
 
         return $this;
     }
 
-    public function removeApplied(User $applied): self
+    public function removeApply(Apply $apply): self
     {
-        $this->applied->removeElement($applied);
+        if ($this->applies->removeElement($apply)) {
+            // set the owning side to null (unless already changed)
+            if ($apply->getTask() === $this) {
+                $apply->setTask(null);
+            }
+        }
 
         return $this;
     }

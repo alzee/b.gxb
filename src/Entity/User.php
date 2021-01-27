@@ -229,14 +229,13 @@ class User implements UserInterface
     private ?string $plainPassword = null;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Task::class, mappedBy="applied")
-     * @Groups({"user:read"})
+     * @ORM\OneToMany(targetEntity=Apply::class, mappedBy="applicant")
      */
-    private $tasksApplied;
+    private $applies;
 
     public function __construct()
     {
-        $this->tasksApplied = new ArrayCollection();
+        $this->applies = new ArrayCollection();
     }
 
     public function getPlainPassword(): ?string
@@ -250,27 +249,30 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|Task[]
+     * @return Collection|Apply[]
      */
-    public function getTasksApplied(): Collection
+    public function getApplies(): Collection
     {
-        return $this->tasksApplied;
+        return $this->applies;
     }
 
-    public function addTasksApplied(Task $tasksApplied): self
+    public function addApply(Apply $apply): self
     {
-        if (!$this->tasksApplied->contains($tasksApplied)) {
-            $this->tasksApplied[] = $tasksApplied;
-            $tasksApplied->addApplied($this);
+        if (!$this->applies->contains($apply)) {
+            $this->applies[] = $apply;
+            $apply->setApplicant($this);
         }
 
         return $this;
     }
 
-    public function removeTasksApplied(Task $tasksApplied): self
+    public function removeApply(Apply $apply): self
     {
-        if ($this->tasksApplied->removeElement($tasksApplied)) {
-            $tasksApplied->removeApplied($this);
+        if ($this->applies->removeElement($apply)) {
+            // set the owning side to null (unless already changed)
+            if ($apply->getApplicant() === $this) {
+                $apply->setApplicant(null);
+            }
         }
 
         return $this;
