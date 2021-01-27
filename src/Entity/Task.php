@@ -33,6 +33,7 @@ class Task
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"task:read"})
      */
     private $id;
 
