@@ -152,6 +152,7 @@ class Task
 
     /**
      * @ORM\OneToMany(targetEntity=Guide::class, mappedBy="task")
+     * @Groups({"task:read", "task:write"})
      */
     private $guides;
 

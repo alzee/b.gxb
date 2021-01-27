@@ -3,11 +3,15 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 use App\Repository\GuideRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ * normalizationContext={"groups"={"guide:read"}},
+ * denormalizationContext={"groups"={"guide:write"}}
+ * )
  * @ORM\Entity(repositoryClass=GuideRepository::class)
  */
 class Guide
@@ -21,22 +25,27 @@ class Guide
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"guide:read", "guide:write"})
+     * @Groups({"guide:read", "guide:write", "task:read"})
      */
     private $figureUrl;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"guide:read", "guide:write", "task:read"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"guide:read", "guide:write", "task:read"})
      */
     private $screenshotUrl;
 
     /**
      * @ORM\ManyToOne(targetEntity=Task::class, inversedBy="guides")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"guide:read", "guide:write"})
      */
     private $task;
 
