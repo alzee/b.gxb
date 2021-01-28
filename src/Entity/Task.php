@@ -143,6 +143,7 @@ class Task
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"task:read"})
      */
     private $bidPosition;
 
