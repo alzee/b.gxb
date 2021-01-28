@@ -20,25 +20,29 @@ class Guide
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"guide:read"})
+     * @Groups({"task:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"guide:read", "guide:write"})
-     * @Groups({"guide:read", "guide:write", "task:read"})
+     * @Groups({"task:read", "task:write"})
      */
     private $figureUrl;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"guide:read", "guide:write", "task:read"})
+     * @Groups({"guide:read", "guide:write"})
+     * @Groups({"task:read", "task:write"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"guide:read", "guide:write", "task:read"})
+     * @Groups({"guide:read", "guide:write"})
+     * @Groups({"task:read", "task:write"})
      */
     private $screenshotUrl;
 

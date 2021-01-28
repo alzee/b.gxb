@@ -5,9 +5,13 @@ namespace App\Entity;
 use App\Repository\ApplyRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ * normalizationContext={"groups"={"apply:read"}},
+ * denormalizationContext={"groups"={"apply:write"}}
+ * )
  * @ORM\Entity(repositoryClass=ApplyRepository::class)
  */
 class Apply
@@ -16,24 +20,31 @@ class Apply
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"apply:read"})
+     * @Groups({"task:read"})
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=Task::class, inversedBy="applies")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"apply:read", "apply:write"})
      */
     private $task;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="applies")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"apply:read", "apply:write"})
+     * @Groups({"task:read", "task:write"})
      */
     private $applicant;
 
     /**
      * @ORM\ManyToOne(targetEntity=Status::class)
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"apply:read", "apply:write"})
+     * @Groups({"task:read", "task:write"})
      */
     private $status;
 

@@ -149,6 +149,7 @@ class Task
 
     /**
      * @ORM\OneToMany(targetEntity=Apply::class, mappedBy="task")
+     * @Groups({"task:read"})
      */
     private $applies;
 
