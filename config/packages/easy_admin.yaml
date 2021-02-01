@@ -182,3 +182,4 @@ easy_admin:
       disabled_actions: ['new']
       list:
         fields: ['name','value']
+        actions: ['-delete']
