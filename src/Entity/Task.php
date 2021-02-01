@@ -163,6 +163,11 @@ class Task
     private $countApplies;
 
     /**
+     * @Groups({"task:read"})
+     */
+    private $remain;
+
+    /**
      * @ORM\OneToMany(targetEntity=Guide::class, mappedBy="task")
      * @Groups({"task:read", "task:write"})
      */
@@ -189,7 +194,12 @@ class Task
 
     public function getCountApplies(): ?int
     {
-        return sizeof($this->applies);
+        return $this->countApplies = sizeof($this->applies);
+    }
+
+    public function getRemain(): ?int
+    {
+        return $this->quantity - $this->countApplies;
     }
 
     public function getId(): ?int
