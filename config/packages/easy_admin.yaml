@@ -33,7 +33,6 @@ easy_admin:
       list:
         fields: 
           - id
-          - name
           - title
           - price
           - prepaid
@@ -67,6 +66,8 @@ easy_admin:
           - approvedays
           - applydays
           - bidPosition
+          - approved
+        actions: ['-delete']
     Node:
       class: App\Entity\Node
       label: topic
