@@ -72,13 +72,13 @@ class Task
      * @ORM\Column(type="boolean", nullable=true)
      * @Groups({"task:read", "task:write"})
      */
-    private $sticky;
+    private $sticky = false;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      * @Groups({"task:read", "task:write"})
      */
-    private $recommended;
+    private $recommended = false;
 
     /**
      * @ORM\ManyToOne(targetEntity=Platform::class, cascade={"persist", "remove"})
