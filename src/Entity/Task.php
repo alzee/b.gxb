@@ -69,13 +69,13 @@ class Task
     private $owner;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      * @Groups({"task:read", "task:write"})
      */
     private $sticky;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      * @Groups({"task:read", "task:write"})
      */
     private $recommended;
