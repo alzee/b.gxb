@@ -159,6 +159,11 @@ class Task
      */
     private $guides;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $link;
+
     public function __construct()
     {
         $this->tag = new ArrayCollection();
@@ -455,6 +460,18 @@ class Task
                 $guide->setTask(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLink(): ?string
+    {
+        return $this->link;
+    }
+
+    public function setLink(?string $link): self
+    {
+        $this->link = $link;
 
         return $this;
     }
