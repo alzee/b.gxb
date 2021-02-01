@@ -164,6 +164,11 @@ class Task
      */
     private $link;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $contact;
+
     public function __construct()
     {
         $this->tag = new ArrayCollection();
@@ -472,6 +477,18 @@ class Task
     public function setLink(?string $link): self
     {
         $this->link = $link;
+
+        return $this;
+    }
+
+    public function getContact(): ?string
+    {
+        return $this->contact;
+    }
+
+    public function setContact(?string $contact): self
+    {
+        $this->contact = $contact;
 
         return $this;
     }
