@@ -158,6 +158,11 @@ class Task
     private $applies;
 
     /**
+     * @Groups({"task:read"})
+     */
+    private $countApplies;
+
+    /**
      * @ORM\OneToMany(targetEntity=Guide::class, mappedBy="task")
      * @Groups({"task:read", "task:write"})
      */
@@ -180,6 +185,11 @@ class Task
         $this->date = $this->date->setTimezone(new \DateTimeZone('Asia/Shanghai'));
         $this->applies = new ArrayCollection();
         $this->guides = new ArrayCollection();
+    }
+
+    public function getCountApplies(): ?int
+    {
+        return sizeof($this->applies);
     }
 
     public function getId(): ?int
