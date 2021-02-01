@@ -4,7 +4,9 @@ namespace App\Entity;
 
 use App\Repository\ApplyRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -13,6 +15,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * denormalizationContext={"groups"={"apply:write"}}
  * )
  * @ORM\Entity(repositoryClass=ApplyRepository::class)
+ * @ApiFilter(SearchFilter::class, properties={"applicant.id": "exact"})
  */
 class Apply
 {
@@ -50,8 +53,15 @@ class Apply
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"apply:read"})
      */
     private $date;
+
+    public function __construct()
+    {
+        $this->date = new \DateTime();
+        $this->date = $this->date->setTimezone(new \DateTimeZone('Asia/Shanghai'));
+    }
 
     public function getId(): ?int
     {
