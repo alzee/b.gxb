@@ -46,12 +46,14 @@ class Task
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"task:read", "task:write"})
+     * @Groups({"apply:read"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="float")
      * @Groups({"task:read", "task:write"})
+     * @Groups({"apply:read"})
      */
     private $price;
 
@@ -91,12 +93,14 @@ class Task
      * @ORM\ManyToOne(targetEntity=Category::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"task:read", "task:write"})
+     * @Groups({"apply:read"})
      */
     private $category;
 
     /**
      * @ORM\ManyToMany(targetEntity=Tag::class, cascade={"persist", "remove"})
      * @Groups({"task:read", "task:write"})
+     * @Groups({"apply:read"})
      */
     private $tag;
 

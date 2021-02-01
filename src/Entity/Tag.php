@@ -26,6 +26,7 @@ class Tag
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"task:read"})
+     * @Groups({"apply:read"})
      */
     private $name;
 
