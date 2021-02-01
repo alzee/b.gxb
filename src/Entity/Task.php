@@ -64,7 +64,7 @@ class Task
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=User::class)
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"task:read", "task:write"})
      */
@@ -83,14 +83,14 @@ class Task
     private $recommended = false;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Platform::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Platform::class)
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"task:read", "task:write"})
      */
     private $platform;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Category::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Category::class)
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"task:read", "task:write"})
      * @Groups({"apply:read"})
@@ -98,7 +98,7 @@ class Task
     private $category;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Tag::class, cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity=Tag::class)
      * @Groups({"task:read", "task:write"})
      * @Groups({"apply:read"})
      */
