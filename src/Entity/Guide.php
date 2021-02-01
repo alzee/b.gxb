@@ -26,7 +26,7 @@ class Guide
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"guide:read", "guide:write"})
      * @Groups({"task:read", "task:write"})
      */
