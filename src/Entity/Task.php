@@ -67,6 +67,7 @@ class Task
      * @ORM\ManyToOne(targetEntity=User::class)
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"task:read", "task:write"})
+     * @Groups({"apply:read"})
      */
     private $owner;
 

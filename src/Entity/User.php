@@ -60,6 +60,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"task:read"})
+     * @Groups({"apply:read"})
      * @Groups({"user:read", "user:write"})
      */
     private $avatar = '../../../img/avatar.png';
