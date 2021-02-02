@@ -40,13 +40,6 @@ class Guide
     private $description;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"guide:read", "guide:write"})
-     * @Groups({"task:read", "task:write"})
-     */
-    private $screenshotUrl;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Task::class, inversedBy="guides")
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"guide:read", "guide:write"})
@@ -78,18 +71,6 @@ class Guide
     public function setDescription(?string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getScreenshotUrl(): ?string
-    {
-        return $this->screenshotUrl;
-    }
-
-    public function setScreenshotUrl(?string $screenshotUrl): self
-    {
-        $this->screenshotUrl = $screenshotUrl;
 
         return $this;
     }

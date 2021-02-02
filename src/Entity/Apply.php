@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ApplyRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
@@ -57,10 +59,16 @@ class Apply
      */
     private $date;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Work::class, mappedBy="apply")
+     */
+    private $works;
+
     public function __construct()
     {
         $this->date = new \DateTime();
         $this->date = $this->date->setTimezone(new \DateTimeZone('Asia/Shanghai'));
+        $this->works = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -117,6 +125,36 @@ class Apply
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Work[]
+     */
+    public function getWorks(): Collection
+    {
+        return $this->works;
+    }
+
+    public function addWork(Work $work): self
+    {
+        if (!$this->works->contains($work)) {
+            $this->works[] = $work;
+            $work->setApply($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWork(Work $work): self
+    {
+        if ($this->works->removeElement($work)) {
+            // set the owning side to null (unless already changed)
+            if ($work->getApply() === $this) {
+                $work->setApply(null);
+            }
+        }
 
         return $this;
     }
