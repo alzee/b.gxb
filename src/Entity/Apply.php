@@ -17,7 +17,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * denormalizationContext={"groups"={"apply:write"}}
  * )
  * @ORM\Entity(repositoryClass=ApplyRepository::class)
- * @ApiFilter(SearchFilter::class, properties={"applicant.id": "exact", "status.id": "exact"})
+ * @ApiFilter(SearchFilter::class, properties={"applicant.id": "exact", "status.id": "exact", "task.id": "exact"})
  */
 class Apply
 {

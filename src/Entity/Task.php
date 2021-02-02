@@ -22,7 +22,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
  * )
  * @ORM\Entity(repositoryClass=TaskRepository::class)
  * @ApiFilter(BooleanFilter::class, properties={"sticky", "recommended", "approved"})
- * @ApiFilter(SearchFilter::class, properties={"title": "partial", "name": "partial", "category.id": "exact"})
+ * @ApiFilter(SearchFilter::class, properties={"title": "partial", "name": "partial", "category.id": "exact", "owner.id": "exact"})
  * @ApiFilter(OrderFilter::class, properties={"bidPosition", "date", "price", "sticky"})
  * @ApiFilter(RangeFilter::class, properties={"bidPosition"})
  * @ApiFilter(PropertyFilter::class)
@@ -34,6 +34,7 @@ class Task
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups({"task:read"})
+     * @Groups({"apply:read"})
      */
     private $id;
 
