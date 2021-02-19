@@ -13,7 +13,8 @@ easy_admin:
       - { entity: 'Category', icon: th-large }
       - { entity: 'Bid', icon: hand-paper }
       - { entity: 'Dividend', icon: gift }
-      - { entity: 'Land', icon: square }
+      - { entity: 'LandTrade', icon: square }
+      - { entity: 'LandPost', icon: square }
       - { entity: 'Equity', icon: bank }
       - { entity: 'Node', icon: file-text }
       - { entity: 'User', icon: user }
@@ -134,12 +135,18 @@ easy_admin:
           - level
           - { property: 'date', label: 'vip.date'}
           - { property: 'days', label: 'vip.days'}
-    Land:
-      class: App\Entity\Land
-      label: land
+    LandTrade:
+      class: App\Entity\LandTrade
+      label: landtrade
       disabled_actions: ['new']
       list:
         title: '领地交易记录'
+    LandPost:
+      class: App\Entity\LandPost
+      label: landpost
+      disabled_actions: ['new']
+      list:
+        title: '领地广告'
     Bid:
       class: App\Entity\Bid
       label: bid
