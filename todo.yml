@@ -1,46 +1,7 @@
-api:
-  tasks:
-    - search
-    - list
-    - list bids
-    - show detail
-    - post
-    - apply
-    - approve
-    - sticky
-    - recommend
-    - favorite
-    - report
-  bid:
-    - 
-  user:
-    - show info
-    - follow
-  dividend:
-    - total amount
-    - coin
-    - history
-  land:
-    - select city
-    - list cells
-    - buy cell
-    - city price
-    - city trade history
-  equity:
-    - collect gxb
-    - gxb history
-    - gxb ratio
-    - gxb total
-    - gxb exchange
-    - list node
-    - show node
-  me:
-    - change avatar
-    - change nick
-    - change pass
-    - change phone
-    - balance
-    - withdraw
-    - topup
-    - become vip
-    - refer
+upload ui
+
+skeleton-text
+refresh
+infinite-scroll
+
+add picture
