@@ -170,12 +170,6 @@ class Task
     private $remain;
 
     /**
-     * @ORM\OneToMany(targetEntity=Guide::class, mappedBy="task")
-     * @Groups({"task:read", "task:write"})
-     */
-    private $guides;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $link;
@@ -185,13 +179,17 @@ class Task
      */
     private $contact;
 
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $guides = [];
+
     public function __construct()
     {
         $this->tag = new ArrayCollection();
         $this->date = new \DateTimeImmutable();
         $this->date = $this->date->setTimezone(new \DateTimeZone('Asia/Shanghai'));
         $this->applies = new ArrayCollection();
-        $this->guides = new ArrayCollection();
     }
 
     public function getCountApplies(): ?int
@@ -465,36 +463,6 @@ class Task
         return $this;
     }
 
-    /**
-     * @return Collection|Guide[]
-     */
-    public function getGuides(): Collection
-    {
-        return $this->guides;
-    }
-
-    public function addGuide(Guide $guide): self
-    {
-        if (!$this->guides->contains($guide)) {
-            $this->guides[] = $guide;
-            $guide->setTask($this);
-        }
-
-        return $this;
-    }
-
-    public function removeGuide(Guide $guide): self
-    {
-        if ($this->guides->removeElement($guide)) {
-            // set the owning side to null (unless already changed)
-            if ($guide->getTask() === $this) {
-                $guide->setTask(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getLink(): ?string
     {
         return $this->link;
@@ -515,6 +483,18 @@ class Task
     public function setContact(?string $contact): self
     {
         $this->contact = $contact;
+
+        return $this;
+    }
+
+    public function getGuides(): ?array
+    {
+        return $this->guides;
+    }
+
+    public function setGuides(?array $guides): self
+    {
+        $this->guides = $guides;
 
         return $this;
     }
