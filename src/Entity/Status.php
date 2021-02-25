@@ -22,6 +22,7 @@ class Status
      * @ORM\Column(type="integer")
      * @Groups({"status:read"})
      * @Groups({"apply:read"})
+     * @Groups({"task:read"})
      */
     private $id;
 
