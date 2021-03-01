@@ -7,6 +7,7 @@
 /public/bundles/
 /public/uploads/
 /public/media/
+/public/download/*.apk
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
