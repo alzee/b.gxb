@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\NodeTypeRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=NodeTypeRepository::class)
@@ -13,6 +14,7 @@ class NodeType
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
+     * @Groups({"node:read"})
      * @ORM\Column(type="integer")
      */
     private $id;

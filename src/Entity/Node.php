@@ -10,7 +10,10 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ * normalizationContext={"groups"={"node:read"}},
+ * denormalizationContext={"groups"={"node:write"}}
+ * )
  * @ApiFilter(SearchFilter::class, properties={"type.id": "exact"})
  * @ORM\Entity(repositoryClass=NodeRepository::class)
  */
@@ -19,41 +22,49 @@ class Node
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
+     * @Groups({"node:read"})
      * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
+     * @Groups({"node:read", "node:write"})
      * @ORM\Column(type="string", length=255)
      */
     private $title;
 
     /**
+     * @Groups({"node:read", "node:write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $body;
 
     /**
+     * @Groups({"node:read", "node:write"})
      * @ORM\Column(type="datetime_immutable")
      */
     private $date;
 
     /**
+     * @Groups({"node:read", "node:write"})
      * @ORM\Column(type="integer", nullable=true)
      */
     private $up = 0;
 
     /**
+     * @Groups({"node:read", "node:write"})
      * @ORM\Column(type="integer", nullable=true)
      */
     private $down = 0;
 
     /**
+     * @Groups({"node:read", "node:write"})
      * @ORM\ManyToOne(targetEntity=User::class)
      */
     private $author;
 
     /**
+     * @Groups({"node:read", "node:write"})
      * @ORM\ManyToOne(targetEntity=NodeType::class)
      */
     private $type;
