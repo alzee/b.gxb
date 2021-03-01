@@ -50,6 +50,11 @@ class Node
      */
     private $author;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=NodeType::class)
+     */
+    private $type;
+
     public function __construct()
     {
         $this->date = new \DateTimeImmutable();
@@ -129,6 +134,18 @@ class Node
     public function setAuthor(?User $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function getType(): ?NodeType
+    {
+        return $this->type;
+    }
+
+    public function setType(?NodeType $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

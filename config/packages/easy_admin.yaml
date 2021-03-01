@@ -17,6 +17,7 @@ easy_admin:
       - { entity: 'LandPost', icon: square }
       - { entity: 'Equity', icon: bank }
       - { entity: 'Node', icon: file-text }
+      - { entity: 'NodeType', icon: file-text }
       - { entity: 'User', icon: user }
       - { entity: 'Vip', icon: user-circle }
       - { entity: 'Level', icon: diamond }
@@ -28,6 +29,9 @@ easy_admin:
       css:
 
   entities:
+    NodeType:
+      class: App\Entity\NodeType
+      label: nodetype
     Task:
       class: App\Entity\Task
       label: task
@@ -71,13 +75,14 @@ easy_admin:
         actions: ['-delete']
     Node:
       class: App\Entity\Node
-      label: topic
+      label: node
       help: 
       list: 
         filter: ['Title']
         fields:
           - id
           - title
+          - type
           - body
           - up
           - down
@@ -86,11 +91,13 @@ easy_admin:
       new: 
         fields:
           - title
+          - type
           - { property: 'body', type: 'textarea'}
           - author
       edit:
         fields:
           - title
+          - type
           - { property: 'body', type: 'textarea'}
           - up
           - down

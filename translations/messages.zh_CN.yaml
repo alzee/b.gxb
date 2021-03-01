@@ -6,7 +6,8 @@ Buyer: 买家
 Days: 天数
 Cover: 封面
 task: 任务
-topic: 话题
+node: 文章
+nodetype: 文章类别
 user: 用户
 tag: 标签
 category: 类别
