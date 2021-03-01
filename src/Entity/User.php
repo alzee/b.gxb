@@ -70,7 +70,7 @@ class User implements UserInterface
      * @Groups({"landpost:read"})
      * @Groups({"node:read"})
      */
-    private $avatar = '../../../img/avatar.png';
+    private $avatar = '/media/avatar.png';
 
     /**
      * @Vich\UploadableField(mapping="img", fileNameProperty="avatar")
