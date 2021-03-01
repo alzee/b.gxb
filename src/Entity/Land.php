@@ -10,7 +10,10 @@ use App\Repository\LandRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ * normalizationContext={"groups"={"land:read"}},
+ * denormalizationContext={"groups"={"land:write"}}
+ * )
  * @ApiFilter(SearchFilter::class, properties={"name": "exact"})
  * @ORM\Entity(repositoryClass=LandRepository::class)
  */
@@ -19,6 +22,7 @@ class Land
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
+     * @Groups({"land:read"})
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -29,14 +33,22 @@ class Land
     private $code;
 
     /**
+     * @Groups({"land:read", "land:write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $name;
 
     /**
+     * @Groups({"land:read", "land:write"})
      * @ORM\ManyToOne(targetEntity=User::class)
      */
     private $owner;
+
+    /**
+     * @Groups({"land:read", "land:write"})
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $price;
 
     public function getId(): ?int
     {
@@ -75,6 +87,18 @@ class Land
     public function setOwner(?User $owner): self
     {
         $this->owner = $owner;
+
+        return $this;
+    }
+
+    public function getPrice(): ?int
+    {
+        return $this->price;
+    }
+
+    public function setPrice(?int $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }

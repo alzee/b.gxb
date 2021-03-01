@@ -36,6 +36,7 @@ class User implements UserInterface
      * @Groups({"task:read"})
      * @Groups({"user:read", "user:write"})
      * @Groups({"apply:read"})
+     * @Groups({"land:read"})
      */
     private $username;
 
@@ -63,6 +64,7 @@ class User implements UserInterface
      * @Groups({"task:read"})
      * @Groups({"apply:read"})
      * @Groups({"user:read", "user:write"})
+     * @Groups({"land:read"})
      */
     private $avatar = '../../../img/avatar.png';
 

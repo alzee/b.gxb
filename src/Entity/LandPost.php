@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ApiResource()
- * @ApiFilter(SearchFilter::class, properties={"name": "exact"})
+ * @ApiFilter(SearchFilter::class, properties={"land": "exact"})
  * @ORM\Entity(repositoryClass=LandPostRepository::class)
  */
 class LandPost
