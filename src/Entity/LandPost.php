@@ -10,7 +10,10 @@ use App\Repository\LandPostRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ * normalizationContext={"groups"={"landpost:read"}},
+ * denormalizationContext={"groups"={"landpost:write"}}
+ * )
  * @ApiFilter(SearchFilter::class, properties={"land": "exact"})
  * @ORM\Entity(repositoryClass=LandPostRepository::class)
  */
@@ -19,41 +22,49 @@ class LandPost
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
+     * @Groups({"landpost:read"})
      * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
+     * @Groups({"landpost:read", "landpost:write"})
      * @ORM\ManyToOne(targetEntity=Land::class)
      */
     private $land;
 
     /**
+     * @Groups({"landpost:read", "landpost:write"})
      * @ORM\ManyToOne(targetEntity=User::class)
      */
     private $owner;
 
     /**
+     * @Groups({"landpost:read", "landpost:write"})
      * @ORM\Column(type="string", length=255)
      */
     private $price;
 
     /**
+     * @Groups({"landpost:read", "landpost:write"})
      * @ORM\Column(type="integer")
      */
     private $days;
 
     /**
+     * @Groups({"landpost:read", "landpost:write"})
      * @ORM\Column(type="string", length=255)
      */
     private $title;
 
     /**
+     * @Groups({"landpost:read", "landpost:write"})
      * @ORM\Column(type="string", length=255)
      */
     private $body;
 
     /**
+     * @Groups({"landpost:read", "landpost:write"})
      * @ORM\Column(type="string", length=255)
      */
     private $cover;
