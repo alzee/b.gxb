@@ -26,14 +26,35 @@ class Node
     private $title;
 
     /**
-     * @ORM\Column(type="time")
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $body;
+
+    /**
+     * @ORM\Column(type="datetime_immutable")
      */
     private $date;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private $body;
+    private $up = 0;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $down = 0;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class)
+     */
+    private $author;
+
+    public function __construct()
+    {
+        $this->date = new \DateTimeImmutable();
+        $this->date = $this->date->setTimezone(new \DateTimeZone('Asia/Shanghai'));
+    }
 
     public function getId(): ?int
     {
@@ -52,18 +73,6 @@ class Node
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
-    {
-        return $this->date;
-    }
-
-    public function setDate(\DateTimeInterface $date): self
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
     public function getBody(): ?string
     {
         return $this->body;
@@ -72,6 +81,54 @@ class Node
     public function setBody(?string $body): self
     {
         $this->body = $body;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeImmutable
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeImmutable $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function getUp(): ?int
+    {
+        return $this->up;
+    }
+
+    public function setUp(?int $up): self
+    {
+        $this->up = $up;
+
+        return $this;
+    }
+
+    public function getDown(): ?int
+    {
+        return $this->down;
+    }
+
+    public function setDown(?int $down): self
+    {
+        $this->down = $down;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }

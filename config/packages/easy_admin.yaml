@@ -75,6 +75,27 @@ easy_admin:
       help: 
       list: 
         filter: ['Title']
+        fields:
+          - id
+          - title
+          - body
+          - up
+          - down
+          - date
+          - author
+      new: 
+        fields:
+          - title
+          - { property: 'body', type: 'textarea'}
+          - author
+      edit:
+        fields:
+          - title
+          - { property: 'body', type: 'textarea'}
+          - up
+          - down
+          - date
+          - author
       show:
       search:
     User:
