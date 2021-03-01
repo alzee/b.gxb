@@ -27,6 +27,7 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"user:read"})
      * @Groups({"task:read"})
      */
     private $id;
@@ -49,7 +50,6 @@ class User implements UserInterface
 
     /**
      * @var string The hashed password
-     * @Groups({"user:read", "user:write"})
      * @ORM\Column(type="string")
      */
     private $password;
