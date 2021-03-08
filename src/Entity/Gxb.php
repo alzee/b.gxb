@@ -36,6 +36,12 @@ class Gxb
      */
     private $user;
 
+    public function __construct()
+    {
+        $this->date = new \DateTimeImmutable();
+        $this->date = $this->date->setTimezone(new \DateTimeZone('Asia/Shanghai'));
+    }
+
     public function getId(): ?int
     {
         return $this->id;
