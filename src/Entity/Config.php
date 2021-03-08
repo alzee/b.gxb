@@ -5,10 +5,13 @@ namespace App\Entity;
 use App\Repository\ConfigRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ApiResource()
+ * @ApiFilter(SearchFilter::class, properties={"label": "exact"})
  * @ORM\Entity(repositoryClass=ConfigRepository::class)
  */
 class Config
