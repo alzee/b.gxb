@@ -4,8 +4,12 @@ namespace App\Entity;
 
 use App\Repository\EquityTradeRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=EquityTradeRepository::class)
  */
 class EquityTrade
