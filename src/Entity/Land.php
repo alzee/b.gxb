@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * normalizationContext={"groups"={"land:read"}},
  * denormalizationContext={"groups"={"land:write"}}
  * )
- * @ApiFilter(SearchFilter::class, properties={"name": "exact"})
+ * @ApiFilter(SearchFilter::class, properties={"name": "exact", "owner.id": "exact"})
  * @ORM\Entity(repositoryClass=LandRepository::class)
  */
 class Land

@@ -29,6 +29,7 @@ class User implements UserInterface
      * @ORM\Column(type="integer")
      * @Groups({"user:read"})
      * @Groups({"task:read"})
+     * @Groups({"land:read"})
      */
     private $id;
 
