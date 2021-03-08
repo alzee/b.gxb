@@ -66,6 +66,11 @@ class Apply
      */
     private $works;
 
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $pic = [];
+
     public function __construct()
     {
         $this->date = new \DateTime();
@@ -157,6 +162,18 @@ class Apply
                 $work->setApply(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPic(): ?array
+    {
+        return $this->pic;
+    }
+
+    public function setPic(array $pic): self
+    {
+        $this->pic = $pic;
 
         return $this;
     }
