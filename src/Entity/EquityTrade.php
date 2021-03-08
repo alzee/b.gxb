@@ -21,12 +21,6 @@ class EquityTrade
      * @ORM\ManyToOne(targetEntity=User::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $seller;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class)
-     * @ORM\JoinColumn(nullable=false)
-     */
     private $buyer;
 
     /**
@@ -44,21 +38,15 @@ class EquityTrade
      */
     private $rate;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=EquityShop::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $shop;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getSeller(): ?User
-    {
-        return $this->seller;
-    }
-
-    public function setSeller(?User $seller): self
-    {
-        $this->seller = $seller;
-
-        return $this;
     }
 
     public function getBuyer(): ?User
@@ -105,6 +93,18 @@ class EquityTrade
     public function setRate(float $rate): self
     {
         $this->rate = $rate;
+
+        return $this;
+    }
+
+    public function getShop(): ?EquityShop
+    {
+        return $this->shop;
+    }
+
+    public function setShop(?EquityShop $shop): self
+    {
+        $this->shop = $shop;
 
         return $this;
     }
