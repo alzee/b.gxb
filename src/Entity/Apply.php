@@ -67,7 +67,7 @@ class Apply
     private $works;
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="simple_array")
      */
     private $pic = [];
 
