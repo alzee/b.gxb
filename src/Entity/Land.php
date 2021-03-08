@@ -34,6 +34,7 @@ class Land
 
     /**
      * @Groups({"land:read", "land:write"})
+     * @Groups({"landtrade:read"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $name;

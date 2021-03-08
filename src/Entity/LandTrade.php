@@ -10,7 +10,10 @@ use App\Repository\LandTradeRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ * normalizationContext={"groups"={"landtrade:read"}},
+ * denormalizationContext={"groups"={"landtrade:write"}}
+ * )
  * @ApiFilter(SearchFilter::class, properties={"name": "exact"})
  * @ORM\Entity(repositoryClass=LandTradeRepository::class)
  */
@@ -19,31 +22,37 @@ class LandTrade
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
+     * @Groups({"landtrade:read"})
      * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
+     * @Groups({"landtrade:read", "landtrade:write"})
      * @ORM\ManyToOne(targetEntity=Land::class)
      */
     private $land;
 
     /**
+     * @Groups({"landtrade:read", "landtrade:write"})
      * @ORM\ManyToOne(targetEntity=User::class)
      */
     private $seller;
 
     /**
+     * @Groups({"landtrade:read", "landtrade:write"})
      * @ORM\ManyToOne(targetEntity=User::class)
      */
     private $buyer;
 
     /**
+     * @Groups({"landtrade:read", "landtrade:write"})
      * @ORM\Column(type="string", length=255)
      */
     private $price;
 
     /**
+     * @Groups({"landtrade:read"})
      * @ORM\Column(type="datetime_immutable")
      */
     private $date;
