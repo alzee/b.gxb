@@ -182,6 +182,7 @@ class Task
     /**
      * @ORM\Column(type="array", nullable=true)
      * @Groups({"task:read", "task:write"})
+     * @Groups({"apply:read"})
      */
     private $guides = [];
 
