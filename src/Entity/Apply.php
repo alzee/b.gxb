@@ -67,6 +67,8 @@ class Apply
     private $works;
 
     /**
+     * @Groups({"apply:read", "apply:write"})
+     * @Groups({"task:read"})
      * @ORM\Column(type="simple_array")
      */
     private $pic = [];
