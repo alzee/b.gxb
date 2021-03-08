@@ -5,10 +5,16 @@ namespace App\Entity;
 use App\Repository\GxbRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ * normalizationContext={"groups"={"gxb:read"}},
+ * denormalizationContext={"groups"={"gxb:write"}}
+ * )
+ * @ApiFilter(SearchFilter::class, properties={"user.id": "exact"})
  * @ORM\Entity(repositoryClass=GxbRepository::class)
  */
 class Gxb
@@ -16,21 +22,25 @@ class Gxb
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
+     * @Groups({"gxb:read"})
      * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
+     * @Groups({"gxb:read"})
      * @ORM\Column(type="datetime_immutable")
      */
     private $date;
 
     /**
+     * @Groups({"gxb:read", "gxb:write"})
      * @ORM\Column(type="integer")
      */
     private $amount;
 
     /**
+     * @Groups({"gxb:read", "gxb:write"})
      * @ORM\ManyToOne(targetEntity=User::class)
      * @ORM\JoinColumn(nullable=false)
      */
