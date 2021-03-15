@@ -58,6 +58,7 @@ class Land
     private $forSale = true;
 
     /**
+     * @Groups({"land:read", "land:write"})
      * @ORM\Column(type="integer", nullable=true)
      */
     private $prePrice;
