@@ -69,7 +69,7 @@ class Apply
     /**
      * @Groups({"apply:read", "apply:write"})
      * @Groups({"task:read"})
-     * @ORM\Column(type="simple_array")
+     * @ORM\Column(type="simple_array", nullable=true)
      */
     private $pic = [];
 
