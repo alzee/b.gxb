@@ -52,9 +52,15 @@ class Land
     private $price = 99;
 
     /**
+     * @Groups({"land:read", "land:write"})
      * @ORM\Column(type="boolean")
      */
     private $forSale = true;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $prePrice;
 
     public function getId(): ?int
     {
@@ -117,6 +123,18 @@ class Land
     public function setForSale(bool $forSale): self
     {
         $this->forSale = $forSale;
+
+        return $this;
+    }
+
+    public function getPrePrice(): ?int
+    {
+        return $this->prePrice;
+    }
+
+    public function setPrePrice(?int $prePrice): self
+    {
+        $this->prePrice = $prePrice;
 
         return $this;
     }
