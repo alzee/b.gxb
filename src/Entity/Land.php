@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 use App\Repository\LandRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -15,6 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  * denormalizationContext={"groups"={"land:write"}}
  * )
  * @ApiFilter(SearchFilter::class, properties={"name": "exact", "owner.id": "exact"})
+ * @ApiFilter(BooleanFilter::class, properties={"forSale"})
  * @ORM\Entity(repositoryClass=LandRepository::class)
  */
 class Land
@@ -55,7 +57,7 @@ class Land
      * @Groups({"land:read", "land:write"})
      * @ORM\Column(type="boolean")
      */
-    private $forSale = true;
+    private $forSale = false;
 
     /**
      * @Groups({"land:read", "land:write"})
