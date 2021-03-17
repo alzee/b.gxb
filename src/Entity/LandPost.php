@@ -69,6 +69,11 @@ class LandPost
      */
     private $cover;
 
+    /**
+     * @ORM\Column(type="simple_array", nullable=true)
+     */
+    private $pics = [];
+
     public function getId(): ?int
     {
         return $this->id;
@@ -154,6 +159,18 @@ class LandPost
     public function setCover(string $cover): self
     {
         $this->cover = $cover;
+
+        return $this;
+    }
+
+    public function getPics(): ?array
+    {
+        return $this->pics;
+    }
+
+    public function setPics(?array $pics): self
+    {
+        $this->pics = $pics;
 
         return $this;
     }
