@@ -192,7 +192,7 @@ class Task
      * @Groups({"task:read", "task:write"})
      * @Groups({"apply:read"})
      */
-    private $review = [];
+    private $reviews = [];
 
     public function __construct()
     {
@@ -509,14 +509,14 @@ class Task
         return $this;
     }
 
-    public function getReview(): ?array
+    public function getReviews(): ?array
     {
-        return $this->review;
+        return $this->reviews;
     }
 
-    public function setReview(?array $review): self
+    public function setReviews(?array $reviews): self
     {
-        $this->review = $review;
+        $this->reviews = $reviews;
 
         return $this;
     }
