@@ -187,6 +187,13 @@ class Task
      */
     private $guides = [];
 
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     * @Groups({"task:read", "task:write"})
+     * @Groups({"apply:read"})
+     */
+    private $review = [];
+
     public function __construct()
     {
         $this->tag = new ArrayCollection();
@@ -498,6 +505,18 @@ class Task
     public function setGuides(?array $guides): self
     {
         $this->guides = $guides;
+
+        return $this;
+    }
+
+    public function getReview(): ?array
+    {
+        return $this->review;
+    }
+
+    public function setReview(?array $review): self
+    {
+        $this->review = $review;
 
         return $this;
     }
