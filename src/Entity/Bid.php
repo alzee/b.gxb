@@ -29,7 +29,7 @@ class Bid
 
     /**
      * @Groups({"bid:read", "bid:write"})
-     * @ORM\OneToOne(targetEntity=Task::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Task::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $task;
@@ -47,6 +47,7 @@ class Bid
     private $position;
 
     /**
+     * @Groups({"bid:read"})
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private $date;
@@ -103,4 +104,11 @@ class Bid
 
         return $this;
     }
+
+    public function __construct()
+    {
+        $this->date = new \DateTimeImmutable();
+        $this->date = $this->date->setTimezone(new \DateTimeZone('Asia/Shanghai'));
+    }
+
 }
