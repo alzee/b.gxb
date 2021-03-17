@@ -70,6 +70,7 @@ class LandPost
     private $cover;
 
     /**
+     * @Groups({"landpost:read", "landpost:write"})
      * @ORM\Column(type="simple_array", nullable=true)
      */
     private $pics = [];
