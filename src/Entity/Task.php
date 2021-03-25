@@ -214,7 +214,7 @@ class Task
      * @Groups({"task:read", "task:write"})
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $sitckyUntil;
+    private $stickyUntil;
 
     /**
      * @Groups({"task:read", "task:write"})
@@ -573,14 +573,14 @@ class Task
         return $this;
     }
 
-    public function getSitckyUntil(): ?\DateTimeInterface
+    public function getStickyUntil(): ?\DateTimeInterface
     {
-        return $this->sitckyUntil;
+        return $this->stickyUntil;
     }
 
-    public function setSitckyUntil(?\DateTimeInterface $sitckyUntil): self
+    public function setStickyUntil(?\DateTimeInterface $stickyUntil): self
     {
-        $this->sitckyUntil = $sitckyUntil;
+        $this->stickyUntil = $stickyUntil;
 
         return $this;
     }
