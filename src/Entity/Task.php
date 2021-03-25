@@ -198,6 +198,18 @@ class Task
      */
     private $reviews = [];
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     * @Groups({"task:read", "task:write"})
+     */
+    private $paused;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     * @Groups({"task:read", "task:write"})
+     */
+    private $stopped;
+
     public function __construct()
     {
         $this->tag = new ArrayCollection();
@@ -521,6 +533,30 @@ class Task
     public function setReviews(?array $reviews): self
     {
         $this->reviews = $reviews;
+
+        return $this;
+    }
+
+    public function getPaused(): ?bool
+    {
+        return $this->paused;
+    }
+
+    public function setPaused(?bool $paused): self
+    {
+        $this->paused = $paused;
+
+        return $this;
+    }
+
+    public function getStopped(): ?bool
+    {
+        return $this->stopped;
+    }
+
+    public function setStopped(?bool $stopped): self
+    {
+        $this->stopped = $stopped;
 
         return $this;
     }
