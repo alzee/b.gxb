@@ -268,6 +268,11 @@ class User implements UserInterface
      */
     private $updatedAt;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $equity;
+
     public function __construct()
     {
         $this->applies = new ArrayCollection();
@@ -339,6 +344,18 @@ class User implements UserInterface
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getEquity(): ?int
+    {
+        return $this->equity;
+    }
+
+    public function setEquity(?int $equity): self
+    {
+        $this->equity = $equity;
 
         return $this;
     }
