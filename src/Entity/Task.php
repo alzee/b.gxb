@@ -150,6 +150,7 @@ class Task
     private $date;
 
     /**
+     * @Groups({"task:read", "task:write"})
      * @ORM\Column(type="boolean")
      */
     private $approved = false;
