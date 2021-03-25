@@ -229,8 +229,6 @@ class Task
         $this->tag = new ArrayCollection();
         $this->date = new \DateTimeImmutable();
         $this->date = $this->date->setTimezone(new \DateTimeZone('Asia/Shanghai'));
-        $this->stickyUntil = $this->stickyUntil->setTimezone(new \DateTimeZone('Asia/Shanghai'));
-        // $this->date = $this->date->setTimezone(new \DateTimeZone('Asia/Shanghai'));
         $this->applies = new ArrayCollection();
     }
 
@@ -579,12 +577,13 @@ class Task
 
     public function getStickyUntil(): ?\DateTimeInterface
     {
-        //$this->stickyUntil->setTimezone(new \DateTimeZone('Asia/Shanghai'));
+        // $this->stickyUntil->setTimezone(new \DateTimeZone('Asia/Shanghai'));
         return $this->stickyUntil;
     }
 
     public function setStickyUntil(?\DateTimeInterface $stickyUntil): self
     {
+        // $this->stickyUntil->setTimezone(new \DateTimeZone('Asia/Shanghai'));
         $this->stickyUntil = $stickyUntil;
 
         return $this;
