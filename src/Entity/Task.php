@@ -210,6 +210,18 @@ class Task
      */
     private $stopped = false;
 
+    /**
+     * @Groups({"task:read", "task:write"})
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $sitckyUntil;
+
+    /**
+     * @Groups({"task:read", "task:write"})
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $recommendUntil;
+
     public function __construct()
     {
         $this->tag = new ArrayCollection();
@@ -557,6 +569,30 @@ class Task
     public function setStopped(?bool $stopped): self
     {
         $this->stopped = $stopped;
+
+        return $this;
+    }
+
+    public function getSitckyUntil(): ?\DateTimeInterface
+    {
+        return $this->sitckyUntil;
+    }
+
+    public function setSitckyUntil(?\DateTimeInterface $sitckyUntil): self
+    {
+        $this->sitckyUntil = $sitckyUntil;
+
+        return $this;
+    }
+
+    public function getRecommendUntil(): ?\DateTimeInterface
+    {
+        return $this->recommendUntil;
+    }
+
+    public function setRecommendUntil(?\DateTimeInterface $recommendUntil): self
+    {
+        $this->recommendUntil = $recommendUntil;
 
         return $this;
     }
