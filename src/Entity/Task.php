@@ -202,13 +202,13 @@ class Task
      * @ORM\Column(type="boolean", nullable=true)
      * @Groups({"task:read", "task:write"})
      */
-    private $paused;
+    private $paused = false;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      * @Groups({"task:read", "task:write"})
      */
-    private $stopped;
+    private $stopped = false;
 
     public function __construct()
     {
