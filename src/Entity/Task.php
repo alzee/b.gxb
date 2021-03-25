@@ -14,6 +14,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 
 /**
  * @ApiResource(
@@ -26,6 +27,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
  * @ApiFilter(OrderFilter::class, properties={"bidPosition", "date", "price", "sticky"})
  * @ApiFilter(RangeFilter::class, properties={"bidPosition"})
  * @ApiFilter(PropertyFilter::class)
+ * @ApiFilter(DateFilter::class, properties={"stickyUntil", "recommendUntil"})
  */
 class Task
 {
@@ -214,19 +216,21 @@ class Task
      * @Groups({"task:read", "task:write"})
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $stickyUntil;
+    private $stickyUntil = '1900-01-01 00:00:00';
 
     /**
      * @Groups({"task:read", "task:write"})
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $recommendUntil;
+    private $recommendUntil = '1900-01-01 00:00:00';
 
     public function __construct()
     {
         $this->tag = new ArrayCollection();
         $this->date = new \DateTimeImmutable();
         $this->date = $this->date->setTimezone(new \DateTimeZone('Asia/Shanghai'));
+        $this->stickyUntil = $this->stickyUntil->setTimezone(new \DateTimeZone('Asia/Shanghai'));
+        // $this->date = $this->date->setTimezone(new \DateTimeZone('Asia/Shanghai'));
         $this->applies = new ArrayCollection();
     }
 
@@ -575,6 +579,7 @@ class Task
 
     public function getStickyUntil(): ?\DateTimeInterface
     {
+        //$this->stickyUntil->setTimezone(new \DateTimeZone('Asia/Shanghai'));
         return $this->stickyUntil;
     }
 
@@ -587,6 +592,7 @@ class Task
 
     public function getRecommendUntil(): ?\DateTimeInterface
     {
+        //$this->stickyUntil->setTimezone(new \DateTimeZone('Asia/Shanghai'));
         return $this->recommendUntil;
     }
 
