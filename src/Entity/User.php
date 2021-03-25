@@ -269,6 +269,7 @@ class User implements UserInterface
     private $updatedAt;
 
     /**
+     * @Groups({"user:read", "user:write"})
      * @ORM\Column(type="integer", nullable=true)
      */
     private $equity;
