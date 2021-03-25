@@ -41,6 +41,7 @@ class User implements UserInterface
      * @Groups({"apply:read"})
      * @Groups({"land:read"})
      * @Groups({"landpost:read"})
+     * @Groups({"bid:read"})
      * @Groups({"node:read"})
      */
     private $username;
@@ -71,6 +72,7 @@ class User implements UserInterface
      * @Groups({"land:read"})
      * @Groups({"landpost:read"})
      * @Groups({"node:read"})
+     * @Groups({"bid:read"})
      */
     private $avatar = '/media/avatar.png';
 

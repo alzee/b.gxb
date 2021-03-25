@@ -34,6 +34,7 @@ class Task
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups({"task:read"})
+     * @Groups({"bid:read"})
      * @Groups({"apply:read"})
      */
     private $id;
@@ -56,6 +57,7 @@ class Task
      * @ORM\Column(type="float")
      * @Groups({"task:read", "task:write"})
      * @Groups({"apply:read"})
+     * @Groups({"bid:read"})
      */
     private $price;
 
@@ -70,6 +72,7 @@ class Task
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"task:read", "task:write"})
      * @Groups({"apply:read"})
+     * @Groups({"bid:read"})
      */
     private $owner;
 
@@ -97,6 +100,7 @@ class Task
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"task:read", "task:write"})
      * @Groups({"apply:read"})
+     * @Groups({"bid:read"})
      */
     private $category;
 
