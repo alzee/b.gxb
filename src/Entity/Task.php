@@ -126,12 +126,6 @@ class Task
     private $approvedays;
 
     /**
-     * @ORM\Column(type="float")
-     * @Groups({"task:read", "task:write"})
-     */
-    private $prepaid;
-
-    /**
      * @ORM\Column(type="integer")
      * @Groups({"task:read", "task:write"})
      */
@@ -405,18 +399,6 @@ class Task
     public function setApprovedays(int $approvedays): self
     {
         $this->approvedays = $approvedays;
-
-        return $this;
-    }
-
-    public function getPrepaid(): ?float
-    {
-        return $this->prepaid;
-    }
-
-    public function setPrepaid(float $prepaid): self
-    {
-        $this->prepaid = $prepaid;
 
         return $this;
     }
