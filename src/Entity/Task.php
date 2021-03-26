@@ -217,13 +217,13 @@ class Task
      * @Groups({"task:read", "task:write"})
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $stickyUntil = '1900-01-01 00:00:00';
+    private $stickyUntil;
 
     /**
      * @Groups({"task:read", "task:write"})
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $recommendUntil = '1900-01-01 00:00:00';
+    private $recommendUntil;
 
     public function __construct()
     {
