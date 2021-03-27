@@ -27,7 +27,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
  * @ApiFilter(OrderFilter::class, properties={"bidPosition", "date", "price", "sticky"})
  * @ApiFilter(RangeFilter::class, properties={"bidPosition"})
  * @ApiFilter(PropertyFilter::class)
- * @ApiFilter(DateFilter::class, properties={"stickyUntil", "recommendUntil"})
+ * @ApiFilter(DateFilter::class, properties={"stickyUntil", "recommendUntil", "applyUntil", "approveUntil"})
  */
 class Task
 {
@@ -210,12 +210,12 @@ class Task
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $applyHours;
+    private $applyUntil;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $approveHours;
+    private $approveUntil;
 
     public function __construct()
     {
@@ -559,26 +559,26 @@ class Task
         return $this;
     }
 
-    public function getApplyHours(): ?\DateTimeInterface
+    public function getApplyUntil(): ?\DateTimeInterface
     {
-        return $this->applyHours;
+        return $this->applyUntil;
     }
 
-    public function setApplyHours(?\DateTimeInterface $applyHours): self
+    public function setApplyUntil(?\DateTimeInterface $applyUntil): self
     {
-        $this->applyHours = $applyHours;
+        $this->applyUntil = $applyUntil;
 
         return $this;
     }
 
-    public function getApproveHours(): ?\DateTimeInterface
+    public function getApproveUntil(): ?\DateTimeInterface
     {
-        return $this->approveHours;
+        return $this->approveUntil;
     }
 
-    public function setApproveHours(?\DateTimeInterface $approveHours): self
+    public function setApproveUntil(?\DateTimeInterface $approveUntil): self
     {
-        $this->approveHours = $approveHours;
+        $this->approveUntil = $approveUntil;
 
         return $this;
     }
