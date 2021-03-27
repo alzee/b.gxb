@@ -8,6 +8,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
 /**
  * @ApiResource(
@@ -15,6 +16,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * denormalizationContext={"groups"={"gxb:write"}}
  * )
  * @ApiFilter(SearchFilter::class, properties={"user.id": "exact"})
+ * @ApiFilter(OrderFilter::class, properties={"date"})
  * @ORM\Entity(repositoryClass=GxbRepository::class)
  */
 class Gxb
@@ -49,7 +51,7 @@ class Gxb
     public function __construct()
     {
         $this->date = new \DateTimeImmutable();
-        $this->date = $this->date->setTimezone(new \DateTimeZone('Asia/Shanghai'));
+        //$this->date = $this->date->setTimezone(new \DateTimeZone('Asia/Shanghai'));
     }
 
     public function getId(): ?int

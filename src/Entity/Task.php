@@ -208,11 +208,13 @@ class Task
     private $recommendUntil;
 
     /**
+     * @Groups({"task:read", "task:write"})
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $applyUntil;
 
     /**
+     * @Groups({"task:read", "task:write"})
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $approveUntil;
@@ -221,7 +223,7 @@ class Task
     {
         $this->tag = new ArrayCollection();
         $this->date = new \DateTimeImmutable();
-        $this->date = $this->date->setTimezone(new \DateTimeZone('Asia/Shanghai'));
+        //$this->date = $this->date->setTimezone(new \DateTimeZone('Asia/Shanghai'));
         $this->applies = new ArrayCollection();
     }
 
@@ -534,13 +536,11 @@ class Task
 
     public function getStickyUntil(): ?\DateTimeInterface
     {
-        // $this->stickyUntil->setTimezone(new \DateTimeZone('Asia/Shanghai'));
         return $this->stickyUntil;
     }
 
     public function setStickyUntil(?\DateTimeInterface $stickyUntil): self
     {
-        // $this->stickyUntil->setTimezone(new \DateTimeZone('Asia/Shanghai'));
         $this->stickyUntil = $stickyUntil;
 
         return $this;
@@ -548,7 +548,6 @@ class Task
 
     public function getRecommendUntil(): ?\DateTimeInterface
     {
-        //$this->stickyUntil->setTimezone(new \DateTimeZone('Asia/Shanghai'));
         return $this->recommendUntil;
     }
 
