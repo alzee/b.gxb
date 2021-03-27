@@ -92,7 +92,7 @@ class Task
 
     /**
      * @ORM\ManyToOne(targetEntity=Platform::class)
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      * @Groups({"task:read", "task:write"})
      */
     private $platform;
