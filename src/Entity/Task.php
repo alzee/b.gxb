@@ -22,9 +22,9 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
  * denormalizationContext={"groups"={"task:write"}}
  * )
  * @ORM\Entity(repositoryClass=TaskRepository::class)
- * @ApiFilter(BooleanFilter::class, properties={"sticky", "recommended", "approved"})
+ * @ApiFilter(BooleanFilter::class, properties={"approved"})
  * @ApiFilter(SearchFilter::class, properties={"title": "partial", "name": "partial", "category.id": "exact", "owner.id": "exact"})
- * @ApiFilter(OrderFilter::class, properties={"bidPosition", "date", "price", "sticky"})
+ * @ApiFilter(OrderFilter::class, properties={"bidPosition", "date", "price", "stickyUntil", "recommendUntil"})
  * @ApiFilter(RangeFilter::class, properties={"bidPosition"})
  * @ApiFilter(PropertyFilter::class)
  * @ApiFilter(DateFilter::class, properties={"stickyUntil", "recommendUntil", "applyUntil", "approveUntil"})
@@ -77,18 +77,6 @@ class Task
      * @Groups({"bid:read"})
      */
     private $owner;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     * @Groups({"task:read", "task:write"})
-     */
-    private $sticky = false;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     * @Groups({"task:read", "task:write"})
-     */
-    private $recommended = false;
 
     /**
      * @ORM\ManyToOne(targetEntity=Platform::class)
@@ -298,30 +286,6 @@ class Task
     public function setOwner(User $owner): self
     {
         $this->owner = $owner;
-
-        return $this;
-    }
-
-    public function getSticky(): ?bool
-    {
-        return $this->sticky;
-    }
-
-    public function setSticky(bool $sticky): self
-    {
-        $this->sticky = $sticky;
-
-        return $this;
-    }
-
-    public function getRecommended(): ?bool
-    {
-        return $this->recommended;
-    }
-
-    public function setRecommended(bool $recommended): self
-    {
-        $this->recommended = $recommended;
 
         return $this;
     }
