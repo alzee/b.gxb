@@ -123,19 +123,7 @@ class Task
      * @ORM\Column(type="integer")
      * @Groups({"task:read", "task:write"})
      */
-    private $approvedays;
-
-    /**
-     * @ORM\Column(type="integer")
-     * @Groups({"task:read", "task:write"})
-     */
     private $quantity;
-
-    /**
-     * @ORM\Column(type="integer")
-     * @Groups({"task:read", "task:write"})
-     */
-    private $applydays;
 
     /**
      * @ORM\Column(type="datetime_immutable")
@@ -218,6 +206,16 @@ class Task
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $recommendUntil;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $applyHours;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $approveHours;
 
     public function __construct()
     {
@@ -391,18 +389,6 @@ class Task
         return $this;
     }
 
-    public function getApprovedays(): ?int
-    {
-        return $this->approvedays;
-    }
-
-    public function setApprovedays(int $approvedays): self
-    {
-        $this->approvedays = $approvedays;
-
-        return $this;
-    }
-
     public function getQuantity(): ?int
     {
         return $this->quantity;
@@ -411,18 +397,6 @@ class Task
     public function setQuantity(int $quantity): self
     {
         $this->quantity = $quantity;
-
-        return $this;
-    }
-
-    public function getApplydays(): ?int
-    {
-        return $this->applydays;
-    }
-
-    public function setApplydays(int $applydays): self
-    {
-        $this->applydays = $applydays;
 
         return $this;
     }
@@ -581,6 +555,30 @@ class Task
     public function setRecommendUntil(?\DateTimeInterface $recommendUntil): self
     {
         $this->recommendUntil = $recommendUntil;
+
+        return $this;
+    }
+
+    public function getApplyHours(): ?\DateTimeInterface
+    {
+        return $this->applyHours;
+    }
+
+    public function setApplyHours(?\DateTimeInterface $applyHours): self
+    {
+        $this->applyHours = $applyHours;
+
+        return $this;
+    }
+
+    public function getApproveHours(): ?\DateTimeInterface
+    {
+        return $this->approveHours;
+    }
+
+    public function setApproveHours(?\DateTimeInterface $approveHours): self
+    {
+        $this->approveHours = $approveHours;
 
         return $this;
     }
