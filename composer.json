@@ -7,6 +7,8 @@
         "php": ">=7.2.5",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "alibabacloud/darabonba-openapi": "^0.1.8",
+        "alibabacloud/dysmsapi-20170525": "^1.0",
         "api-platform/core": "^2.5",
         "composer/package-versions-deprecated": "1.11.99.1",
         "doctrine/annotations": "^1.0",
