@@ -40,14 +40,27 @@ class SecurityController extends AbstractController
     public function apiLogin()
     {
         if (!$this->isGranted('IS_AUTHENTICATED_FULLY')){
-            //return $this->json([
-            //    'error' => 'Invalid login request: check if is json'
-            //], 400);
+            $resp = [
+                "code" => 1
+            ];
         }
         else {
-            return $this->json([
-                'id' => $this->getUser() ? $this->getUser()->getId() : null,
-            ]);
+            $user = $this->getUser();
+            $uid = $user->getId();
+            $avatar = $user->getAvatar();
+            $username = $user->getUsername();
+            $gxb = $user->getGxb();
+            $data = [
+                "id" => $uid,
+                "avatar" => $avatar,
+                "username" => $username,
+                "gxb" => $gxb
+            ];
+            $resp = [
+                "code" => 0,
+                "data" => $data
+            ];
         }
+        return $this->json($resp);
     }
 }
