@@ -65,7 +65,7 @@ class ApiController extends AbstractController
             "templateParam" => "{\"code\":\"$code\"}"
         ]);
         if($pass == $_ENV['pass']){
-            $client->sendSms($sendSmsRequest);
+           // $client->sendSms($sendSmsRequest);
             $msg = 'Sent';
         }
         else{

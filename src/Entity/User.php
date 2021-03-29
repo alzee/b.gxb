@@ -54,6 +54,7 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Groups({"user:read", "user:write"})
      */
     private $password;
 
