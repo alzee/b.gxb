@@ -27,7 +27,7 @@ class ApiController extends AbstractController
         $accessKeyId = $_ENV['accessKeyId'];
         $accessKeySecret = $_ENV['accessKeySecret'];
         $signName = '达人共享宝';
-        $code = substr(md5(uniqid(mt_rand(), true)) , 0, 4);
+        $code = mt_rand(100000, 999999);
         switch($type){
             case 'verify':
                 $templateCode = 'SMS_211140349';
