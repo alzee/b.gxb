@@ -10,7 +10,10 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ * normalizationContext={"groups"={"cate:read"}},
+ * denormalizationContext={"groups"={"cate:write"}}
+ * )
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
  */
 class Category
@@ -20,11 +23,13 @@ class Category
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups({"task:read"})
+     * @Groups({"cate:read", "cate:write"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"cate:read", "cate:write"})
      * @Groups({"task:read"})
      * @Groups({"bid:read"})
      * @Groups({"apply:read"})
@@ -32,9 +37,16 @@ class Category
     private $name;
 
     /**
+     * @Groups({"cate:read", "cate:write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $label;
+
+    /**
+     * @Groups({"cate:read", "cate:write"})
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $rate;
 
     public function getId(): ?int
     {
@@ -68,5 +80,17 @@ class Category
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    public function getRate(): ?float
+    {
+        return $this->rate;
+    }
+
+    public function setRate(?float $rate): self
+    {
+        $this->rate = $rate;
+
+        return $this;
     }
 }
