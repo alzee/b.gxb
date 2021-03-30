@@ -147,9 +147,13 @@ easy_admin:
       disabled_actions: ['show']
       list:
         title: '任务类别'
-        fields: ['name']
+        fields:
+          - { property: 'name'}
+          - { property: 'rate', label: 'cate.rate'}
       form:
-        fields: ['name']
+        fields:
+          - { property: 'name'}
+          - { property: 'rate', label: 'cate.rate'}
     Vip:
       class: App\Entity\Vip
       label: vip
