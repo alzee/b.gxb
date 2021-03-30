@@ -86,7 +86,7 @@ class Task
     private $platform;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Category::class, cascade={"remove"})
+     * @ORM\ManyToOne(targetEntity=Category::class)
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"task:read", "task:write"})
      * @Groups({"apply:read"})
