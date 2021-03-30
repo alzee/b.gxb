@@ -68,6 +68,9 @@ class ApiController extends AbstractController
             $client->sendSms($sendSmsRequest);
             $msg = 'Sent';
         }
+        else if($pass == 'test'){
+            $msg = 'test Sent';
+        }
         else{
             $msg = 'Wrong password';
         }
