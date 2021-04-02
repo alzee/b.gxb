@@ -93,13 +93,13 @@ class User implements UserInterface
      * @ORM\Column(type="float", nullable=true)
      * @Groups({"user:read", "user:write"})
      */
-    private $balanceTopup = 0;
+    private $topup = 0;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      * @Groups({"user:read", "user:write"})
      */
-    private $balanceTask = 0;
+    private $earnings = 0;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -221,26 +221,26 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getBalanceTopup(): ?float
+    public function getTopup(): ?float
     {
-        return $this->balanceTopup;
+        return $this->topup;
     }
 
-    public function setBalanceTopup(float $balanceTopup): self
+    public function setTopup(float $balanceTopup): self
     {
-        $this->balanceTopup = $balanceTopup;
+        $this->topup = $balanceTopup;
 
         return $this;
     }
 
-    public function getBalanceTask(): ?float
+    public function getEarnings(): ?float
     {
-        return $this->balanceTask;
+        return $this->earnings;
     }
 
-    public function setBalanceTask(float $balanceTask): self
+    public function setEarnings(float $earnings): self
     {
-        $this->balanceTask = $balanceTask;
+        $this->earnings = $earnings;
 
         return $this;
     }
