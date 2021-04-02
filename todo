@@ -1,3 +1,3 @@
-patch avatar cause password change?
+patch avatar cause password change? maybe it's src/DataPersister/UserDataPersister::persist()
 login api
 task cate cascade:remove
