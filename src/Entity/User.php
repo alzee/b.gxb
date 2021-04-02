@@ -275,6 +275,11 @@ class User implements UserInterface
      */
     private $equity;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $frozen;
+
     public function __construct()
     {
         $this->applies = new ArrayCollection();
@@ -358,6 +363,18 @@ class User implements UserInterface
     public function setEquity(?int $equity): self
     {
         $this->equity = $equity;
+
+        return $this;
+    }
+
+    public function getFrozen(): ?int
+    {
+        return $this->frozen;
+    }
+
+    public function setFrozen(?int $frozen): self
+    {
+        $this->frozen = $frozen;
 
         return $this;
     }
