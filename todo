@@ -1,3 +1,2 @@
-patch avatar cause password change? maybe it's src/DataPersister/UserDataPersister::persist()
-login api
+login api / handle duplicate username error
 task cate cascade:remove
