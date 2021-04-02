@@ -54,7 +54,7 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"user:write"})
      */
     private $password;
 
@@ -276,9 +276,10 @@ class User implements UserInterface
     private $equity;
 
     /**
+     * @Groups({"user:read", "user:write"})
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $frozen;
+    private $frozen = 0;
 
     public function __construct()
     {
