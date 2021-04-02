@@ -1,2 +1,8 @@
-login api / handle duplicate username error
-task cate cascade:remove
+major:
+  - login api / handle duplicate username error
+  - task cate cascade:remove
+  - admin entity
+  - gxb/equity/balance add/minus
+
+
+# vim:ft=yaml
