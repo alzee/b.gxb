@@ -275,12 +275,6 @@ class User implements UserInterface
      */
     private $equity;
 
-    /**
-     * @Groups({"user:read", "user:write"})
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $collectAt;
-
     public function __construct()
     {
         $this->applies = new ArrayCollection();
@@ -364,18 +358,6 @@ class User implements UserInterface
     public function setEquity(?int $equity): self
     {
         $this->equity = $equity;
-
-        return $this;
-    }
-
-    public function getCollectAt(): ?\DateTimeInterface
-    {
-        return $this->collectAt;
-    }
-
-    public function setCollectAt(?\DateTimeInterface $collectAt): self
-    {
-        $this->collectAt = $collectAt;
 
         return $this;
     }
