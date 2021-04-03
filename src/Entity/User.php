@@ -93,19 +93,19 @@ class User implements UserInterface
      * @ORM\Column(type="float", nullable=true)
      * @Groups({"user:read", "user:write"})
      */
-    private $topup = 0;
+    private $topup = 400;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      * @Groups({"user:read", "user:write"})
      */
-    private $earnings = 0;
+    private $earnings = 100;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @Groups({"user:read", "user:write"})
      */
-    private $gxb = 0;
+    private $gxb = 1000;
 
     public function getId(): ?int
     {
@@ -279,7 +279,7 @@ class User implements UserInterface
      * @Groups({"user:read", "user:write"})
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $frozen = 0;
+    private $frozen = 100;
 
     public function __construct()
     {
