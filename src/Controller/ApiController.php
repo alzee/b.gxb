@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use AlibabaCloud\SDK\Dysmsapi\V20170525\Dysmsapi;
 use Darabonba\OpenApi\Models\Config;
 use AlibabaCloud\SDK\Dysmsapi\V20170525\Models\SendSmsRequest;
@@ -19,6 +20,124 @@ use GuzzleHttp\HandlerStack;
  */
 class ApiController extends AbstractController
 {
+    private $httpclient;
+    private $mchid;
+    private $appid;
+    private $appsecret;
+    private $api_cert_sn;
+    private $apikey;
+    private $apikey_v3;
+    private $mch_private_key;
+
+    function __construct(HttpClientInterface $client)
+    {
+        $this->httpclient = $client;
+        $this->mchid = $_ENV['mchid'];
+        $this->appid = $_ENV['appid'];
+        $this->appsecret = $_ENV['appsecret'];
+        $this->api_cert_sn = $_ENV['api_cert_sn'];
+        $this->apikey = $_ENV['apikey'];
+        $this->apikey_v3 = $_ENV['apikey_v3'];
+        $this->mch_private_key_file = $_ENV['mch_private_key_file'];
+    }
+
+    /**
+     * @Route("/auth", name="_auth")
+     */
+    function auth($url = "https://api.mch.weixin.qq.com/v3/certificates", $http_method = "GET", $body = "")
+    {
+        $url_parts = parse_url($url);
+        $canonical_url = ($url_parts['path'] . (!empty($url_parts['query']) ? "?${url_parts['query']}" : ""));
+        dump($canonical_url);
+        $timestamp = time();
+        $nonce = md5(uniqid());
+        $merchant_id = $this->mchid;
+        $serial_no = $this->api_cert_sn;
+        $mch_private_key = $this->getMchPrivatekey();
+        $message = $http_method."\n".
+            $canonical_url."\n".
+            $timestamp."\n".
+            $nonce."\n".
+            $body."\n";
+
+        openssl_sign($message, $raw_sign, $mch_private_key, 'sha256WithRSAEncryption');
+        $sign = base64_encode($raw_sign);
+
+        $schema = 'Authorization: WECHATPAY2-SHA256-RSA2048';
+        $token = $schema . ' ' . sprintf('mchid="%s",nonce_str="%s",timestamp="%d",serial_no="%s",signature="%s"',
+            $merchant_id, $nonce, $timestamp, $serial_no, $sign);
+
+        return $token;
+        // return $this->json($token);
+    }
+
+
+    public function getMchPrivatekey()
+    {
+        $mch_private_key  = openssl_get_privatekey($this->mch_private_key_file);
+        //$mch_private_key  = openssl_get_privatekey(file_get_contents($this->mch_private_key_file));
+        return $mch_private_key;
+    }
+
+    /**
+     * @Route("/cert", name="_cert")
+     */
+    public function getCertificates()
+    {
+        $url = "https://api.mch.weixin.qq.com/v3/certificates";
+        $merchant_id =$this->mchid;
+        $serial_no = $this->api_cert_sn;
+        $auth = $this->auth($url, "GET", "");
+        $header[] = 'User-Agent:https://zh.wikipedia.org/wiki/User_agent';
+        $header[] = 'Accept:application/json';
+        $header[] = $auth;
+        $resp = $this->httpclient->request('GET', $url ,['headers' => $header]);
+        $content = $resp->getContent();
+        return $this->json($resp);
+    }
+
+    /**
+     * @Route("/prepayid", name="_prepayid")
+     */
+    function generatePrepayId($app_id, $mch_id)
+    {
+        $params = array(
+            'appid'            => $app_id,
+            'mch_id'           => $mch_id,
+            'nonce_str'        => generateNonce(),
+            'body'             => 'Test product name',
+            'out_trade_no'     => time(),
+            'total_fee'        => 1,
+            'spbill_create_ip' => '8.8.8.8',
+            'notify_url'       => 'http://localhost',
+            'trade_type'       => 'APP',
+        );
+
+        // add sign
+        $params['sign'] = calculateSign($params, APP_KEY);
+
+        // create xml
+        $xml = getXMLFromArray($params);
+
+        // send request
+        $ch = curl_init();
+
+        curl_setopt_array($ch, array(
+            CURLOPT_URL            => "https://api.mch.weixin.qq.com/pay/unifiedorder",
+            CURLOPT_POST           => true,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HTTPHEADER     => array('Content-Type: text/xml'),
+            CURLOPT_POSTFIELDS     => $xml,
+        ));
+
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        // get the prepay id from response
+        $xml = simplexml_load_string($result);
+        return (string)$xml->prepay_id;
+    }
+
     /**
      * @Route("/wxpay", name="_wxpay")
      */
