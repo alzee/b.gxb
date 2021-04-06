@@ -105,9 +105,9 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Route("/prepayid", name="_prepayid")
+     * @Route("/prepayid/{amount}", name="_prepayid")
      */
-    function generatePrepayId()
+    function generatePrepayId($amount = 1)
     {
         $url = "https://api.mch.weixin.qq.com/v3/pay/transactions/app";
         $method = 'POST';
@@ -118,7 +118,7 @@ class ApiController extends AbstractController
             'out_trade_no' => uniqid() . time(),
             'notify_url' => 'http://backend.drgxb.com',
             'amount' => [
-                'total' => 1
+                'total' => $amount
             ]
         ];
 
