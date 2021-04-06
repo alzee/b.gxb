@@ -10,11 +10,6 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 use AlibabaCloud\SDK\Dysmsapi\V20170525\Dysmsapi;
 use Darabonba\OpenApi\Models\Config;
 use AlibabaCloud\SDK\Dysmsapi\V20170525\Models\SendSmsRequest;
-use GuzzleHttp\Exception\RequestException;
-use WechatPay\GuzzleMiddleware\WechatPayMiddleware;
-use WechatPay\GuzzleMiddleware\Util\PemUtil;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Client;
 
 /**
  * @Route("/api", name="api")
@@ -155,69 +150,6 @@ class ApiController extends AbstractController
         ];
 
         return $this->json($d);
-    }
-
-    /**
-     * @Route("/wxpay", name="_wxpay")
-     */
-    public function wxpay(): Response
-    {
-        // 商户相关配置，
-        $merchantId = $this->mchid; // 商户号
-        $merchantSerialNumber = $this->api_cert_sn; // 商户API证书序列号
-        $merchantPrivateKey = PemUtil::loadPrivateKey('/home/al/cert/wxpay/apiclient_key.pem'); // 商户私钥文件路径
-
-        // 微信支付平台配置
-        $wechatpayCertificate = PemUtil::loadCertificate('/home/al/cert/wxpay/wechatpay_5772C642163189E65783E430BDBDD78AB52A840D.pem'); // 微信支付平台证书文件路径
-
-        // 构造一个WechatPayMiddleware
-        $wechatpayMiddleware = WechatPayMiddleware::builder()
-            ->withMerchant($merchantId, $merchantSerialNumber, $merchantPrivateKey) // 传入商户相关配置
-            ->withWechatPay([ $wechatpayCertificate ]) // 可传入多个微信支付平台证书，参数类型为array
-            ->build();
-
-        // 将WechatPayMiddleware添加到Guzzle的HandlerStack中
-        $stack = HandlerStack::create();
-        $stack->push($wechatpayMiddleware, 'wechatpay');
-
-        // 创建Guzzle HTTP Client时，将HandlerStack传入，接下来，正常使用Guzzle发起API请求，WechatPayMiddleware会自动地处理签名和验签
-        $client = new Client(['handler' => $stack]);
-
-        // 接下来，正常使用Guzzle发起API请求，WechatPayMiddleware会自动地处理签名和验签
-        try {
-            // $resp = $client->request('GET', 'https://api.mch.weixin.qq.com/v3/certificates', [ // 注意替换为实际URL
-            //     'headers' => [ 'Accept' => 'application/json' ]
-            // ]);
-
-            // echo $resp->getStatusCode().' '.$resp->getReasonPhrase()."\n";
-            // echo $resp->getBody()."\n";
-
-            $resp = $client->request('POST', 'https://api.mch.weixin.qq.com/v3/pay/transactions/app', [
-                'json' => [ // JSON请求体
-                    'appid' => $this->appid,
-                    'mchid' => $this->mchid,
-                    'description' => 'desc',
-                    'out_trade_no' => 'd12345678',
-                    'notify_url' => 'http://backend.drgxb.com',
-                    'amount' => [
-                        'total' => 1
-                    ]
-                ],
-                'headers' => [ 'Accept' => 'application/json' ]
-            ]);
-
-            echo $resp->getStatusCode().' '.$resp->getReasonPhrase()."\n";
-            echo $resp->getBody()."\n";
-        } catch (RequestException $e) {
-            // 进行错误处理
-            echo $e->getMessage()."\n";
-            if ($e->hasResponse()) {
-                echo $e->getResponse()->getStatusCode().' '.$e->getResponse()->getReasonPhrase()."\n";
-                echo $e->getResponse()->getBody();
-            }
-            dump($e->getResponse()->getBody());
-            return 1;
-        }
     }
 
     /**

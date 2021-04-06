@@ -622,9 +622,6 @@
     "webmozart/assert": {
         "version": "1.9.1"
     },
-    "wechatpay/wechatpay-guzzle-middleware": {
-        "version": "0.2.2"
-    },
     "willdurand/negotiation": {
         "version": "3.0.0"
     }
