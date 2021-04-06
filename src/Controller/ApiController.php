@@ -139,7 +139,7 @@ class ApiController extends AbstractController
             "$nonce" . "\n" .
             $prepayid . "\n";
 
-        dump($msg);
+        // dump($msg);
         openssl_sign($msg, $raw_sign, $this->getMchPrivatekey(), 'sha256WithRSAEncryption');
         $sig1 = base64_encode($raw_sign);
 
