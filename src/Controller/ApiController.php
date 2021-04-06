@@ -115,7 +115,7 @@ class ApiController extends AbstractController
             'appid' => $this->appid,
             'mchid' => $this->mchid,
             'description' => 'desc',
-            'out_trade_no' => 'd12345678',
+            'out_trade_no' => uniqid() . time(),
             'notify_url' => 'http://backend.drgxb.com',
             'amount' => [
                 'total' => 1
@@ -135,8 +135,8 @@ class ApiController extends AbstractController
         $nonce = md5(uniqid());
         $prepayid = $content['prepay_id'];
         $msg = $appid . "\n".
-            "$timestamp" . "\n" .
-            "$nonce" . "\n" .
+            $timestamp . "\n" .
+            $nonce . "\n" .
             $prepayid . "\n";
 
         // dump($msg);
@@ -149,7 +149,7 @@ class ApiController extends AbstractController
             'prepayid' => $prepayid,
             //'package' => 'Sign=WXPay',
             'noncestr' => $nonce,
-            'timestamp' => "$timestamp",
+            'timestamp' => $timestamp,
             'sign' => $sig1
         ];
 
