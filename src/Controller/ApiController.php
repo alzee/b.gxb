@@ -28,7 +28,7 @@ class ApiController extends AbstractController
     private $api_cert_sn;
     private $apikey;
     private $apikey_v3;
-    private $mch_private_key;
+    private $mch_private_key_file;
 
     function __construct(HttpClientInterface $client)
     {
@@ -49,9 +49,9 @@ class ApiController extends AbstractController
     {
         $url_parts = parse_url($url);
         $canonical_url = ($url_parts['path'] . (!empty($url_parts['query']) ? "?${url_parts['query']}" : ""));
-        dump($canonical_url);
         $timestamp = time();
         $nonce = md5(uniqid());
+        // $nonce = '593BEC0C930BF1AFEB40B4A08C8FB242';
         $merchant_id = $this->mchid;
         $serial_no = $this->api_cert_sn;
         $mch_private_key = $this->getMchPrivatekey();
@@ -60,11 +60,9 @@ class ApiController extends AbstractController
             $timestamp."\n".
             $nonce."\n".
             $body."\n";
-        dump($message);
 
         openssl_sign($message, $raw_sign, $mch_private_key, 'sha256WithRSAEncryption');
         $sign = base64_encode($raw_sign);
-        dump($sign);
 
         $schema = 'Authorization: WECHATPAY2-SHA256-RSA2048';
         $token = $schema . ' ' . sprintf('mchid="%s",nonce_str="%s",timestamp="%d",serial_no="%s",signature="%s"',
@@ -78,7 +76,7 @@ class ApiController extends AbstractController
     public function getMchPrivatekey()
     {
         $mch_private_key  = openssl_get_privatekey($this->mch_private_key_file);
-        //$mch_private_key  = openssl_get_privatekey(file_get_contents($this->mch_private_key_file));
+        // $mch_private_key  = openssl_get_privatekey(file_get_contents($this->mch_private_key_file));
         return $mch_private_key;
     }
 
@@ -95,7 +93,8 @@ class ApiController extends AbstractController
         $merchant_id =$this->mchid;
         $serial_no = $this->api_cert_sn;
         $auth = $this->auth($url, "GET", "");
-        $header[] = 'User-Agent:https://zh.wikipedia.org/wiki/User_agent';
+        // $header[] = 'User-Agent:https://zh.wikipedia.org/wiki/User_agent';
+        $header[] = 'Content-Type: application/json';
         $header[] = 'Accept:application/json';
         $header[] = $auth;
         $resp = $this->httpclient->request('GET', $url ,['headers' => $header]);
@@ -175,23 +174,29 @@ class ApiController extends AbstractController
 
         // 接下来，正常使用Guzzle发起API请求，WechatPayMiddleware会自动地处理签名和验签
         try {
-            $resp = $client->request('GET', 'https://api.mch.weixin.qq.com/v3/certificates', [ // 注意替换为实际URL
-                'headers' => [ 'Accept' => 'application/json' ]
-            ]);
-
-            echo $resp->getStatusCode().' '.$resp->getReasonPhrase()."\n";
-            echo $resp->getBody()."\n";
-
-            // $resp = $client->request('POST', 'https://api.mch.weixin.qq.com/v3/...', [
-            //     'json' => [ // JSON请求体
-            //         'field1' => 'value1',
-            //         'field2' => 'value2'
-            //     ],
+            // $resp = $client->request('GET', 'https://api.mch.weixin.qq.com/v3/certificates', [ // 注意替换为实际URL
             //     'headers' => [ 'Accept' => 'application/json' ]
             // ]);
 
             // echo $resp->getStatusCode().' '.$resp->getReasonPhrase()."\n";
             // echo $resp->getBody()."\n";
+
+            $resp = $client->request('POST', 'https://api.mch.weixin.qq.com/v3/pay/transactions/app', [
+                'json' => [ // JSON请求体
+                    'appid' => $this->appid,
+                    'mchid' => $this->mchid,
+                    'description' => 'desc',
+                    'out_trade_no' => 'd12345678',
+                    'notify_url' => 'http://backend.drgxb.com',
+                    'amount' => [
+                        'total' => 1
+                    ]
+                ],
+                'headers' => [ 'Accept' => 'application/json' ]
+            ]);
+
+            echo $resp->getStatusCode().' '.$resp->getReasonPhrase()."\n";
+            echo $resp->getBody()."\n";
         } catch (RequestException $e) {
             // 进行错误处理
             echo $e->getMessage()."\n";
