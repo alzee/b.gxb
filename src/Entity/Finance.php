@@ -23,7 +23,7 @@ class Finance
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $type;
+    private $note;
 
     /**
      * @ORM\Column(type="datetime")
@@ -40,19 +40,34 @@ class Finance
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $prepayid;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $orderid;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $wx_orderid;
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getType(): ?string
+    public function getNote(): ?string
     {
-        return $this->type;
+        return $this->note;
     }
 
-    public function setType(string $type): self
+    public function setType(string $note): self
     {
-        $this->type = $type;
+        $this->note= $note;
 
         return $this;
     }
@@ -89,6 +104,42 @@ class Finance
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getPrepayid(): ?string
+    {
+        return $this->prepayid;
+    }
+
+    public function setPrepayid(?string $prepayid): self
+    {
+        $this->prepayid = $prepayid;
+
+        return $this;
+    }
+
+    public function getOrderid(): ?string
+    {
+        return $this->orderid;
+    }
+
+    public function setOrderid(?string $orderid): self
+    {
+        $this->orderid = $orderid;
+
+        return $this;
+    }
+
+    public function getWxOrderid(): ?string
+    {
+        return $this->wx_orderid;
+    }
+
+    public function setWxOrderid(string $wx_orderid): self
+    {
+        $this->wx_orderid = $wx_orderid;
 
         return $this;
     }
