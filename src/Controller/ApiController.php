@@ -153,7 +153,7 @@ class ApiController extends AbstractController
             'sign' => $sig1
         ];
 
-        // return $this->json($d);
+        return $this->json($d);
     }
 
     /**
