@@ -105,9 +105,9 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Route("/prepayid/{amount}", name="_prepayid")
+     * @Route("/prepayid/{amount<\d+>}", name="_prepayid")
      */
-    function generatePrepayId($amount = 1)
+    function generatePrepayId(int $amount = 1)
     {
         $url = "https://api.mch.weixin.qq.com/v3/pay/transactions/app";
         $method = 'POST';
