@@ -148,7 +148,7 @@ class ApiController extends AbstractController
             'prepayid' => $prepayid,
             //'package' => 'Sign=WXPay',
             'noncestr' => $nonce,
-            'timestamp' => $timestamp,
+            'timestamp' => "$timestamp",
             'sign' => $sig1
         ];
 
