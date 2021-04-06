@@ -109,12 +109,13 @@ class ApiController extends AbstractController
      */
     function generatePrepayId(int $amount = 1)
     {
+        $amount = 1;
         $url = "https://api.mch.weixin.qq.com/v3/pay/transactions/app";
         $method = 'POST';
         $data = [
             'appid' => $this->appid,
             'mchid' => $this->mchid,
-            'description' => 'desc',
+            'description' => '达人共享宝-在线支付',
             'out_trade_no' => uniqid() . time(),
             'notify_url' => 'http://backend.drgxb.com',
             'amount' => [
