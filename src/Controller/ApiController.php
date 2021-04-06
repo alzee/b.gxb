@@ -43,9 +43,9 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Route("/auth", name="_auth")
+     * @Route("/genSig", name="_gensig")
      */
-    function auth($url = "https://api.mch.weixin.qq.com/v3/certificates", $http_method = "GET", $body = "")
+    function genSig($url = "https://api.mch.weixin.qq.com/v3/certificates", $http_method = "GET", $body = "")
     {
         $url_parts = parse_url($url);
         $canonical_url = ($url_parts['path'] . (!empty($url_parts['query']) ? "?${url_parts['query']}" : ""));
@@ -93,11 +93,11 @@ class ApiController extends AbstractController
         $method = 'GET';
         $merchant_id =$this->mchid;
         $serial_no = $this->api_cert_sn;
-        $auth = $this->auth($url, $method, "");
+        $sig = $this->genSig($url, $method, "");
         // $header[] = 'User-Agent:https://zh.wikipedia.org/wiki/User_agent';
         $header[] = 'Content-Type: application/json';
         $header[] = 'Accept:application/json';
-        $header[] = $auth;
+        $header[] = $sig;
         $resp = $this->httpclient->request($method, $url ,['headers' => $header]);
         $content = $resp->getContent(false);
         dump($content);
@@ -122,13 +122,37 @@ class ApiController extends AbstractController
             ]
         ];
 
-        $auth = $this->auth($url, $method, json_encode($data));
+        $sig = $this->genSig($url, $method, json_encode($data));
         $header[] = 'Content-Type: application/json';
         $header[] = 'Accept:application/json';
-        $header[] = $auth;
+        $header[] = $sig;
         $resp = $this->httpclient->request($method, $url ,['headers' => $header, 'json' => $data]);
-        $content = $resp->getContent();
-        return $this->json($content);
+        $content = json_decode($resp->getContent(), true);
+
+        $mchid = $this->mchid;
+        $appid = $this->appid;
+        $timestamp = time();
+        $nonce = md5(uniqid());
+        $prepayid = $content['prepay_id'];
+        $msg = $appid . "\n".
+            $timestamp . "\n" .
+            $nonce . "\n" .
+            $prepayid . "\n";
+
+        openssl_sign($msg, $raw_sign, $this->getMchPrivatekey(), 'sha256WithRSAEncryption');
+        $sig1 = base64_encode($raw_sign);
+
+        $d = [
+            'appid' => $appid,
+            'partnerid' => $mchid,
+            'prepayid' => $prepayid,
+            'package' => 'Sign=WXPay',
+            'noncestr' => $nonce,
+            'timestamp' => $timestamp,
+            'sign' => $sig1
+        ];
+
+        return $this->json($d);
     }
 
     /**
