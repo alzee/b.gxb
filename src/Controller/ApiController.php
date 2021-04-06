@@ -14,6 +14,7 @@ use GuzzleHttp\Exception\RequestException;
 use WechatPay\GuzzleMiddleware\WechatPayMiddleware;
 use WechatPay\GuzzleMiddleware\Util\PemUtil;
 use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Client;
 
 /**
  * @Route("/api", name="api")
@@ -59,9 +60,11 @@ class ApiController extends AbstractController
             $timestamp."\n".
             $nonce."\n".
             $body."\n";
+        dump($message);
 
         openssl_sign($message, $raw_sign, $mch_private_key, 'sha256WithRSAEncryption');
         $sign = base64_encode($raw_sign);
+        dump($sign);
 
         $schema = 'Authorization: WECHATPAY2-SHA256-RSA2048';
         $token = $schema . ' ' . sprintf('mchid="%s",nonce_str="%s",timestamp="%d",serial_no="%s",signature="%s"',
@@ -79,6 +82,10 @@ class ApiController extends AbstractController
         return $mch_private_key;
     }
 
+    public static function getCertificate($filepath) {
+        return openssl_x509_read(file_get_contents($filepath));
+    }
+
     /**
      * @Route("/cert", name="_cert")
      */
@@ -92,18 +99,20 @@ class ApiController extends AbstractController
         $header[] = 'Accept:application/json';
         $header[] = $auth;
         $resp = $this->httpclient->request('GET', $url ,['headers' => $header]);
-        $content = $resp->getContent();
-        return $this->json($resp);
+        $content = $resp->getContent(false);
+        // $content = $resp->toArray();
+        dump($content);
+        // return $this->json($resp);
     }
 
     /**
      * @Route("/prepayid", name="_prepayid")
      */
-    function generatePrepayId($app_id, $mch_id)
+    function generatePrepayId($app_id, $mchid)
     {
         $params = array(
             'appid'            => $app_id,
-            'mch_id'           => $mch_id,
+            'mchid'           => $mchid,
             'nonce_str'        => generateNonce(),
             'body'             => 'Test product name',
             'out_trade_no'     => time(),
@@ -144,12 +153,12 @@ class ApiController extends AbstractController
     public function wxpay(): Response
     {
         // 商户相关配置，
-        $merchantId = '1606036532'; // 商户号
-        $merchantSerialNumber = '58ECB0644D50C6454BE2BDA53BA2422CA20B45A2'; // 商户API证书序列号
+        $merchantId = $this->mchid; // 商户号
+        $merchantSerialNumber = $this->api_cert_sn; // 商户API证书序列号
         $merchantPrivateKey = PemUtil::loadPrivateKey('/home/al/cert/wxpay/apiclient_key.pem'); // 商户私钥文件路径
 
         // 微信支付平台配置
-        $wechatpayCertificate = PemUtil::loadCertificate('/home/al/cert/wxpay/apiclient_cert.pem'); // 微信支付平台证书文件路径
+        $wechatpayCertificate = PemUtil::loadCertificate('/home/al/cert/wxpay/wechatpay_5772C642163189E65783E430BDBDD78AB52A840D.pem'); // 微信支付平台证书文件路径
 
         // 构造一个WechatPayMiddleware
         $wechatpayMiddleware = WechatPayMiddleware::builder()
@@ -158,11 +167,41 @@ class ApiController extends AbstractController
             ->build();
 
         // 将WechatPayMiddleware添加到Guzzle的HandlerStack中
-        $stack = GuzzleHttp\HandlerStack::create();
+        $stack = HandlerStack::create();
         $stack->push($wechatpayMiddleware, 'wechatpay');
 
         // 创建Guzzle HTTP Client时，将HandlerStack传入，接下来，正常使用Guzzle发起API请求，WechatPayMiddleware会自动地处理签名和验签
-        $client = new GuzzleHttp\Client(['handler' => $stack]);
+        $client = new Client(['handler' => $stack]);
+
+        // 接下来，正常使用Guzzle发起API请求，WechatPayMiddleware会自动地处理签名和验签
+        try {
+            $resp = $client->request('GET', 'https://api.mch.weixin.qq.com/v3/certificates', [ // 注意替换为实际URL
+                'headers' => [ 'Accept' => 'application/json' ]
+            ]);
+
+            echo $resp->getStatusCode().' '.$resp->getReasonPhrase()."\n";
+            echo $resp->getBody()."\n";
+
+            // $resp = $client->request('POST', 'https://api.mch.weixin.qq.com/v3/...', [
+            //     'json' => [ // JSON请求体
+            //         'field1' => 'value1',
+            //         'field2' => 'value2'
+            //     ],
+            //     'headers' => [ 'Accept' => 'application/json' ]
+            // ]);
+
+            // echo $resp->getStatusCode().' '.$resp->getReasonPhrase()."\n";
+            // echo $resp->getBody()."\n";
+        } catch (RequestException $e) {
+            // 进行错误处理
+            echo $e->getMessage()."\n";
+            if ($e->hasResponse()) {
+                echo $e->getResponse()->getStatusCode().' '.$e->getResponse()->getReasonPhrase()."\n";
+                echo $e->getResponse()->getBody();
+            }
+            dump($e->getResponse()->getBody());
+            return 1;
+        }
     }
 
     /**
