@@ -143,7 +143,7 @@ class ApiController extends AbstractController
         $sig1 = base64_encode($raw_sign);
 
         $d = [
-            //'appid' => $appid,
+            'appid' => $appid,
             'partnerid' => $mchid,
             'prepayid' => $prepayid,
             //'package' => 'Sign=WXPay',
