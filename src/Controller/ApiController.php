@@ -25,7 +25,7 @@ class ApiController extends AbstractController
     private $apikey_v3;
     private $mch_private_key_file;
 
-    function __construct(HttpClientInterface $client)
+    public function __construct(HttpClientInterface $client)
     {
         $this->httpclient = $client;
         $this->mchid = $_ENV['mchid'];
@@ -38,9 +38,21 @@ class ApiController extends AbstractController
     }
 
     /**
+     * @Route("/paid", name="_paid")
+     */
+    public function paid()
+    {
+        $msg = [
+            "code" => "success",
+            "message" => "成功"
+        ];
+        return $this->json($msg);
+    }
+
+    /**
      * @Route("/genSig", name="_gensig")
      */
-    function genSig($url = "https://api.mch.weixin.qq.com/v3/certificates", $http_method = "GET", $body = "")
+    public function genSig($url = "https://api.mch.weixin.qq.com/v3/certificates", $http_method = "GET", $body = "")
     {
         $url_parts = parse_url($url);
         $canonical_url = ($url_parts['path'] . (!empty($url_parts['query']) ? "?${url_parts['query']}" : ""));
@@ -71,7 +83,6 @@ class ApiController extends AbstractController
     public function getMchPrivatekey()
     {
         $mch_private_key  = openssl_get_privatekey($this->mch_private_key_file);
-        // $mch_private_key  = openssl_get_privatekey(file_get_contents($this->mch_private_key_file));
         return $mch_private_key;
     }
 
@@ -112,7 +123,7 @@ class ApiController extends AbstractController
             'mchid' => $this->mchid,
             'description' => '达人共享宝-在线支付',
             'out_trade_no' => uniqid() . time(),
-            'notify_url' => 'http://backend.drgxb.com',
+            'notify_url' => 'http://backend.drgxb.com/api/paid',
             'amount' => [
                 'total' => $amount
             ]
@@ -125,6 +136,7 @@ class ApiController extends AbstractController
         $resp = $this->httpclient->request($method, $url ,['headers' => $header, 'json' => $data]);
         $content = json_decode($resp->getContent(), true);
 
+        // params app needed for invoke payment. It's more convenient to get them on server.
         $mchid = $this->mchid;
         $appid = $this->appid;
         $timestamp = time();
@@ -135,7 +147,6 @@ class ApiController extends AbstractController
             $nonce . "\n" .
             $prepayid . "\n";
 
-        // dump($msg);
         openssl_sign($msg, $raw_sign, $this->getMchPrivatekey(), 'sha256WithRSAEncryption');
         $sig1 = base64_encode($raw_sign);
 
