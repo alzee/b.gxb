@@ -135,10 +135,11 @@ class ApiController extends AbstractController
         $nonce = md5(uniqid());
         $prepayid = $content['prepay_id'];
         $msg = $appid . "\n".
-            $timestamp . "\n" .
-            $nonce . "\n" .
+            "$timestamp" . "\n" .
+            "$nonce" . "\n" .
             $prepayid . "\n";
 
+        dump($msg);
         openssl_sign($msg, $raw_sign, $this->getMchPrivatekey(), 'sha256WithRSAEncryption');
         $sig1 = base64_encode($raw_sign);
 
@@ -152,7 +153,7 @@ class ApiController extends AbstractController
             'sign' => $sig1
         ];
 
-        return $this->json($d);
+        // return $this->json($d);
     }
 
     /**
