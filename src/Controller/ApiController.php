@@ -90,16 +90,16 @@ class ApiController extends AbstractController
     public function getCertificates()
     {
         $url = "https://api.mch.weixin.qq.com/v3/certificates";
+        $method = 'GET';
         $merchant_id =$this->mchid;
         $serial_no = $this->api_cert_sn;
-        $auth = $this->auth($url, "GET", "");
+        $auth = $this->auth($url, $method, "");
         // $header[] = 'User-Agent:https://zh.wikipedia.org/wiki/User_agent';
         $header[] = 'Content-Type: application/json';
         $header[] = 'Accept:application/json';
         $header[] = $auth;
-        $resp = $this->httpclient->request('GET', $url ,['headers' => $header]);
+        $resp = $this->httpclient->request($method, $url ,['headers' => $header]);
         $content = $resp->getContent(false);
-        // $content = $resp->toArray();
         dump($content);
         // return $this->json($resp);
     }
@@ -107,43 +107,28 @@ class ApiController extends AbstractController
     /**
      * @Route("/prepayid", name="_prepayid")
      */
-    function generatePrepayId($app_id, $mchid)
+    function generatePrepayId()
     {
-        $params = array(
-            'appid'            => $app_id,
-            'mchid'           => $mchid,
-            'nonce_str'        => generateNonce(),
-            'body'             => 'Test product name',
-            'out_trade_no'     => time(),
-            'total_fee'        => 1,
-            'spbill_create_ip' => '8.8.8.8',
-            'notify_url'       => 'http://localhost',
-            'trade_type'       => 'APP',
-        );
+        $url = "https://api.mch.weixin.qq.com/v3/pay/transactions/app";
+        $method = 'POST';
+        $data = [
+            'appid' => $this->appid,
+            'mchid' => $this->mchid,
+            'description' => 'desc',
+            'out_trade_no' => 'd12345678',
+            'notify_url' => 'http://backend.drgxb.com',
+            'amount' => [
+                'total' => 1
+            ]
+        ];
 
-        // add sign
-        $params['sign'] = calculateSign($params, APP_KEY);
-
-        // create xml
-        $xml = getXMLFromArray($params);
-
-        // send request
-        $ch = curl_init();
-
-        curl_setopt_array($ch, array(
-            CURLOPT_URL            => "https://api.mch.weixin.qq.com/pay/unifiedorder",
-            CURLOPT_POST           => true,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_HTTPHEADER     => array('Content-Type: text/xml'),
-            CURLOPT_POSTFIELDS     => $xml,
-        ));
-
-        $result = curl_exec($ch);
-        curl_close($ch);
-
-        // get the prepay id from response
-        $xml = simplexml_load_string($result);
-        return (string)$xml->prepay_id;
+        $auth = $this->auth($url, $method, json_encode($data));
+        $header[] = 'Content-Type: application/json';
+        $header[] = 'Accept:application/json';
+        $header[] = $auth;
+        $resp = $this->httpclient->request($method, $url ,['headers' => $header, 'json' => $data]);
+        $content = $resp->getContent();
+        return $this->json($content);
     }
 
     /**
