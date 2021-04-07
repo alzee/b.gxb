@@ -111,18 +111,24 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Route("/prepayid/{amount<\d+>}", name="_prepayid")
+     * @Route("/prepayid", name="_prepayid")
      */
-    function generatePrepayId(int $amount = 1)
+    function generatePrepayId(Request $request): Response
     {
+        $params  = $request->toArray();
+        $amount = $params['amount'];
         $amount = 1;
+        $uid = $params['uid'];
+        $orderId = uniqid() . time();
+
+        // 微信支付统一下单
         $url = "https://api.mch.weixin.qq.com/v3/pay/transactions/app";
         $method = 'POST';
         $data = [
             'appid' => $this->appid,
             'mchid' => $this->mchid,
             'description' => '达人共享宝-在线支付',
-            'out_trade_no' => uniqid() . time(),
+            'out_trade_no' => $orderId,
             'notify_url' => 'http://backend.drgxb.com/api/paid',
             'amount' => [
                 'total' => $amount
@@ -135,6 +141,10 @@ class ApiController extends AbstractController
         $header[] = $sig;
         $resp = $this->httpclient->request($method, $url ,['headers' => $header, 'json' => $data]);
         $content = json_decode($resp->getContent(), true);
+
+        // new order record
+        $em = $this->getDoctrine()->getManager();
+        $order = $this->getDoctrine()->getRepository(Order::class)->find();
 
         // params app needed for invoke payment. It's more convenient to get them on server.
         $mchid = $this->mchid;
