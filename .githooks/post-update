@@ -7,4 +7,4 @@
 
 
 cd ..
-bin/console doc:mig:mig
+bin/console doc:mig:mig --dry-run
