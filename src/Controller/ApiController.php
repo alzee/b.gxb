@@ -42,8 +42,15 @@ class ApiController extends AbstractController
     /**
      * @Route("/paid", name="_paid")
      */
-    public function paid()
+    public function paid($orderid = '')
     {
+        // update order status
+        $em = $this->getDoctrine()->getManager();
+        $order = $this->getDoctrine()->getRepository(Finance::class)->findOneBy(['orderid' => $orderid]);
+        $order->setStatus(5);
+        $em->persist($order);
+        $em->flush();
+
         $msg = [
             "code" => "success",
             "message" => "成功"
@@ -122,7 +129,7 @@ class ApiController extends AbstractController
         $uid = $params['uid'];
         $type = $params['type'];
         $note = $params['note'];
-        $orderId = uniqid() . time();
+        $orderid = uniqid() . time();
 
         // 微信支付统一下单
         $url = "https://api.mch.weixin.qq.com/v3/pay/transactions/app";
@@ -131,7 +138,7 @@ class ApiController extends AbstractController
             'appid' => $this->appid,
             'mchid' => $this->mchid,
             'description' => '达人共享宝-在线支付',
-            'out_trade_no' => $orderId,
+            'out_trade_no' => $orderid,
             'notify_url' => 'http://backend.drgxb.com/api/paid',
             'amount' => [
                 'total' => 1
@@ -153,11 +160,15 @@ class ApiController extends AbstractController
         $order->setNote($note);
         $order->setType($type);
         $order->setPrepayid($prepayid);
-        $order->setOrderid($orderId);
+        $order->setOrderid($orderid);
         $order->setUser($user);
         $order->setAmount($amount);
         $em->persist($order);
         $em->flush();
+
+        // ONLY FOR TESTING
+        // update order status to success
+        $this->paid($orderid);
 
         // params app needed for invoke payment. It's more convenient to get them on server.
         $mchid = $this->mchid;
