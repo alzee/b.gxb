@@ -49,6 +49,7 @@ class Gxb
     private $user;
 
     /**
+     * @Groups({"gxb:read", "gxb:write"})
      * @ORM\Column(type="smallint", nullable=true)
      */
     private $type;
