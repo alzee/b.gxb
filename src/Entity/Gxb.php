@@ -48,6 +48,11 @@ class Gxb
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $type;
+
     public function __construct()
     {
         $this->date = new \DateTimeImmutable();
@@ -91,6 +96,18 @@ class Gxb
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getType(): ?int
+    {
+        return $this->type;
+    }
+
+    public function setType(?int $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }
