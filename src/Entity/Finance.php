@@ -36,7 +36,7 @@ class Finance
     private $amount;
 
     /**
-     * @ORM\OneToOne(targetEntity=User::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=User::class, cascade={"persist", "remove"})
      */
     private $user;
 
@@ -55,6 +55,11 @@ class Finance
      */
     private $wx_orderid;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $type;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -65,9 +70,9 @@ class Finance
         return $this->note;
     }
 
-    public function setType(string $note): self
+    public function setNote(string $note): self
     {
-        $this->note= $note;
+        $this->note = $note;
 
         return $this;
     }
@@ -140,6 +145,18 @@ class Finance
     public function setWxOrderid(string $wx_orderid): self
     {
         $this->wx_orderid = $wx_orderid;
+
+        return $this;
+    }
+
+    public function getType(): ?int
+    {
+        return $this->type;
+    }
+
+    public function setType(?int $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }
