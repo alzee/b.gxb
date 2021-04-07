@@ -284,6 +284,11 @@ class User implements UserInterface
      */
     private $frozen = 100;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $refcode;
+
     public function __construct()
     {
         $this->applies = new ArrayCollection();
@@ -379,6 +384,18 @@ class User implements UserInterface
     public function setFrozen(?int $frozen): self
     {
         $this->frozen = $frozen;
+
+        return $this;
+    }
+
+    public function getRefcode(): ?string
+    {
+        return $this->refcode;
+    }
+
+    public function setRefcode(string $refcode): self
+    {
+        $this->refcode = $refcode;
 
         return $this;
     }
