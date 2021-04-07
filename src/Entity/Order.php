@@ -2,16 +2,16 @@
 
 namespace App\Entity;
 
-use App\Repository\FinanceRepository;
+use App\Repository\OrderRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource()
- * @ORM\Entity(repositoryClass=FinanceRepository::class)
+ * @ORM\Entity(repositoryClass=OrderRepository::class)
  */
-class Finance
+class Order
 {
     /**
      * @ORM\Id

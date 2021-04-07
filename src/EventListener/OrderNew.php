@@ -9,11 +9,11 @@
 namespace App\EventListener;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Entity\Finance;
+use App\Entity\Order;
 use App\Entity\User;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 
-class FinanceNew extends AbstractController
+class OrderNew extends AbstractController
 {
     private $a;
     private $b;
@@ -23,12 +23,12 @@ class FinanceNew extends AbstractController
     {
     }
 
-    public function prePersist(Finance $finance, LifecycleEventArgs $event): void
+    public function prePersist(Order $order, LifecycleEventArgs $event): void
     {
-        $uid = $finance->getUser();
-        $type = $finance->getType();
-        $note = $finance->getNote();
-        $amount = $finance->getAmount();
+        $uid = $order->getUser();
+        $type = $order->getType();
+        $note = $order->getNote();
+        $amount = $order->getAmount();
 
         $em = $this->getDoctrine()->getManager();
         $user = $this->getDoctrine()->getRepository(User::class)->find($uid);
