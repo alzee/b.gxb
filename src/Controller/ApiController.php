@@ -10,6 +10,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 use AlibabaCloud\SDK\Dysmsapi\V20170525\Dysmsapi;
 use Darabonba\OpenApi\Models\Config;
 use AlibabaCloud\SDK\Dysmsapi\V20170525\Models\SendSmsRequest;
+use App\Entity\Order;
 
 /**
  * @Route("/api", name="api")
@@ -117,8 +118,9 @@ class ApiController extends AbstractController
     {
         $params  = $request->toArray();
         $amount = $params['amount'];
-        $amount = 1;
         $uid = $params['uid'];
+        $type = $params['type'];
+        $note = $params['note'];
         $orderId = uniqid() . time();
 
         // 微信支付统一下单
@@ -131,7 +133,7 @@ class ApiController extends AbstractController
             'out_trade_no' => $orderId,
             'notify_url' => 'http://backend.drgxb.com/api/paid',
             'amount' => [
-                'total' => $amount
+                'total' => 1
             ]
         ];
 
@@ -141,17 +143,25 @@ class ApiController extends AbstractController
         $header[] = $sig;
         $resp = $this->httpclient->request($method, $url ,['headers' => $header, 'json' => $data]);
         $content = json_decode($resp->getContent(), true);
+        $prepayid = $content['prepay_id'];
 
-        // new order record
+        // create new order
         $em = $this->getDoctrine()->getManager();
-        $order = $this->getDoctrine()->getRepository(Order::class)->find();
+        $order = new Order();
+        $order->setNote($note);
+        $order->setType($type);
+        $order->setPrepayid($prepayid);
+        $order->setOrderid($orderId);
+        $order->setUser($uid);
+        $order->setAmount($amount);
+        $em->persist($order);
+        $em->flush();
 
         // params app needed for invoke payment. It's more convenient to get them on server.
         $mchid = $this->mchid;
         $appid = $this->appid;
         $timestamp = time();
         $nonce = md5(uniqid());
-        $prepayid = $content['prepay_id'];
         $msg = $appid . "\n".
             $timestamp . "\n" .
             $nonce . "\n" .
