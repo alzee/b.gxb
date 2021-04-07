@@ -31,9 +31,9 @@ class Finance
     private $date;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="integer")
      */
-    private $amount;
+    private $amount = 0;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, cascade={"persist", "remove"})
@@ -99,14 +99,14 @@ class Finance
         return $this;
     }
 
-    public function getAmount(): ?float
+    public function getAmount(): ?int
     {
-        return $this->amount;
+        return $this->amount / 100;
     }
 
-    public function setAmount(float $amount): self
+    public function setAmount(int $amount): self
     {
-        $this->amount = $amount;
+        $this->amount = $amount * 100;
 
         return $this;
     }

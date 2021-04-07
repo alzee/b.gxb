@@ -142,6 +142,7 @@ class ApiController extends AbstractController
             'notify_url' => 'http://backend.drgxb.com/api/paid',
             'amount' => [
                 'total' => 1
+                // 'total' => $amount * 100
             ]
         ];
 

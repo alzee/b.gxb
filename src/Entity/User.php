@@ -93,16 +93,16 @@ class User implements UserInterface
     private $phone;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      * @Groups({"user:read", "user:write"})
      */
-    private $topup = 400;
+    private $topup = 40000;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      * @Groups({"user:read", "user:write"})
      */
-    private $earnings = 100;
+    private $earnings = 10000;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -224,26 +224,26 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getTopup(): ?float
+    public function getTopup(): ?int
     {
-        return $this->topup;
+        return $this->topup / 100;
     }
 
-    public function setTopup(float $balanceTopup): self
+    public function setTopup(int $topup): self
     {
-        $this->topup = $balanceTopup;
+        $this->topup = $topup * 100;
 
         return $this;
     }
 
-    public function getEarnings(): ?float
+    public function getEarnings(): ?int
     {
-        return $this->earnings;
+        return $this->earnings / 100;
     }
 
-    public function setEarnings(float $earnings): self
+    public function setEarnings(int $earnings): self
     {
-        $this->earnings = $earnings;
+        $this->earnings = $earnings * 100;
 
         return $this;
     }
@@ -282,7 +282,7 @@ class User implements UserInterface
      * @Groups({"user:read", "user:write"})
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $frozen = 100;
+    private $frozen = 10000;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -378,12 +378,12 @@ class User implements UserInterface
 
     public function getFrozen(): ?int
     {
-        return $this->frozen;
+        return $this->frozen / 100;
     }
 
     public function setFrozen(?int $frozen): self
     {
-        $this->frozen = $frozen;
+        $this->frozen = $frozen * 100;
 
         return $this;
     }
