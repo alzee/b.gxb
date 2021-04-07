@@ -35,5 +35,5 @@ services:
         tags:
             -
                 name: 'doctrine.orm.entity_listener'
-                event: 'prePersist'
+                event: 'postUpdate'
                 entity: 'App\Entity\Finance'

@@ -23,18 +23,25 @@ class FinanceNew extends AbstractController
     {
     }
 
-    public function prePersist(Finance $finance, LifecycleEventArgs $event): void
+    public function postUpdate(Finance $finance, LifecycleEventArgs $event): void
     {
         $uid = $finance->getUser();
         $type = $finance->getType();
         $note = $finance->getNote();
         $amount = $finance->getAmount();
+        $status = $finance->getStatus();
 
-        $em = $this->getDoctrine()->getManager();
-        $user = $this->getDoctrine()->getRepository(User::class)->find($uid);
-        $user->setTopup($user->getTopup() + $amount);
-        $em->persist($user);
-        $em->flush();
+        if ($status == 5) {
+            $em = $this->getDoctrine()->getManager();
+            $user = $this->getDoctrine()->getRepository(User::class)->find($uid);
+            $user->setTopup($user->getTopup() + $amount);
+            $em->persist($user);
+            $em->flush();
+        }
+    }
+
+    public function prePersist(Finance $finance, LifecycleEventArgs $event): void
+    {
     }
 }
 
