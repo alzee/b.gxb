@@ -11,6 +11,7 @@ use AlibabaCloud\SDK\Dysmsapi\V20170525\Dysmsapi;
 use Darabonba\OpenApi\Models\Config;
 use AlibabaCloud\SDK\Dysmsapi\V20170525\Models\SendSmsRequest;
 use App\Entity\Order;
+use App\Entity\User;
 
 /**
  * @Route("/api", name="api")
@@ -147,12 +148,13 @@ class ApiController extends AbstractController
 
         // create new order
         $em = $this->getDoctrine()->getManager();
+        $user = $this->getDoctrine()->getRepository(User::class)->find($uid);
         $order = new Order();
         $order->setNote($note);
         $order->setType($type);
         $order->setPrepayid($prepayid);
         $order->setOrderid($orderId);
-        $order->setUser($uid);
+        $order->setUser($user);
         $order->setAmount($amount);
         $em->persist($order);
         $em->flush();
