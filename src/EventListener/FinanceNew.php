@@ -15,10 +15,6 @@ use Doctrine\Persistence\Event\LifecycleEventArgs;
 
 class FinanceNew extends AbstractController
 {
-    private $a;
-    private $b;
-    private $c;
-    
     public function __construct()
     {
     }

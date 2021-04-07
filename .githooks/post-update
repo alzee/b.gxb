@@ -7,4 +7,5 @@
 
 
 cd ..
+echo Migrating...
 bin/console doc:mig:mig -q
