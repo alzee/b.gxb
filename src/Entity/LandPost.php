@@ -41,7 +41,7 @@ class LandPost
 
     /**
      * @Groups({"landpost:read", "landpost:write"})
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="integer")
      */
     private $price;
 
@@ -53,7 +53,7 @@ class LandPost
 
     /**
      * @Groups({"landpost:read", "landpost:write"})
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $title;
 
@@ -104,14 +104,14 @@ class LandPost
         return $this;
     }
 
-    public function getPrice(): ?string
+    public function getPrice(): ?int
     {
-        return $this->price;
+        return $this->price / 100;
     }
 
-    public function setPrice(string $price): self
+    public function setPrice(int $price): self
     {
-        $this->price = $price;
+        $this->price = $price * 100;
 
         return $this;
     }
