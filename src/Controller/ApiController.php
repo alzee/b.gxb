@@ -258,7 +258,7 @@ class ApiController extends AbstractController
         }
 
         return $this->json([
-            'code' => $code,
+            'code' => "$code",
             'phone' => $phone,
             'type' => $type,
             'msg' => $msg
