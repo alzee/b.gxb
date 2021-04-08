@@ -44,6 +44,8 @@ class ApiController extends AbstractController
      */
     public function paid($orderid = '')
     {
+        // get order info from wx callback
+        
         // update order status
         $em = $this->getDoctrine()->getManager();
         $order = $this->getDoctrine()->getRepository(Finance::class)->findOneBy(['orderid' => $orderid]);
