@@ -289,9 +289,21 @@ class User implements UserInterface
      */
     private $refcode;
 
+    /**
+     * @Groups({"user:read", "user:write"})
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $coin;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Coin::class, mappedBy="user")
+     */
+    private $coins;
+
     public function __construct()
     {
         $this->applies = new ArrayCollection();
+        $this->coins = new ArrayCollection();
     }
 
     public function getPlainPassword(): ?string
@@ -396,6 +408,48 @@ class User implements UserInterface
     public function setRefcode(string $refcode): self
     {
         $this->refcode = $refcode;
+
+        return $this;
+    }
+
+    public function getCoin(): ?int
+    {
+        return $this->coin;
+    }
+
+    public function setCoin(?int $coin): self
+    {
+        $this->coin = $coin;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Coin[]
+     */
+    public function getCoins(): Collection
+    {
+        return $this->coins;
+    }
+
+    public function addCoin(Coin $coin): self
+    {
+        if (!$this->coins->contains($coin)) {
+            $this->coins[] = $coin;
+            $coin->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCoin(Coin $coin): self
+    {
+        if ($this->coins->removeElement($coin)) {
+            // set the owning side to null (unless already changed)
+            if ($coin->getUser() === $this) {
+                $coin->setUser(null);
+            }
+        }
 
         return $this;
     }
