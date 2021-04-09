@@ -27,7 +27,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
  * @ApiFilter(OrderFilter::class, properties={"bidPosition", "date", "price", "stickyUntil", "recommendUntil"})
  * @ApiFilter(RangeFilter::class, properties={"bidPosition"})
  * @ApiFilter(PropertyFilter::class)
- * @ApiFilter(DateFilter::class, properties={"stickyUntil", "recommendUntil", "applyUntil", "approveUntil"})
+ * @ApiFilter(DateFilter::class, properties={"stickyUntil", "recommendUntil", "applyUntil", "approveUntil", "showUntil"})
  */
 class Task
 {
@@ -100,12 +100,6 @@ class Task
      * @Groups({"apply:read"})
      */
     private $tag;
-
-    /**
-     * @ORM\Column(type="integer")
-     * @Groups({"task:read", "task:write"})
-     */
-    private $showdays;
 
     /**
      * @ORM\Column(type="integer")
@@ -206,6 +200,12 @@ class Task
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $approveUntil;
+
+    /**
+     * @Groups({"task:read", "task:write"})
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $showUntil;
 
     public function __construct()
     {
@@ -341,18 +341,6 @@ class Task
     public function __toString(): string
     {
         return $this->name;
-    }
-
-    public function getShowdays(): ?int
-    {
-        return $this->showdays;
-    }
-
-    public function setShowdays(int $showdays): self
-    {
-        $this->showdays = $showdays;
-
-        return $this;
     }
 
     public function getQuantity(): ?int
@@ -542,6 +530,18 @@ class Task
     public function setApproveUntil(?\DateTimeInterface $approveUntil): self
     {
         $this->approveUntil = $approveUntil;
+
+        return $this;
+    }
+
+    public function getShowUntil(): ?\DateTimeInterface
+    {
+        return $this->showUntil;
+    }
+
+    public function setShowUntil(?\DateTimeInterface $showUntil): self
+    {
+        $this->showUntil = $showUntil;
 
         return $this;
     }
