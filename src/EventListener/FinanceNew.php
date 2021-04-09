@@ -55,7 +55,14 @@ class FinanceNew extends AbstractController
         case 0: // post task
             $user->setFrozen($user->getFrozen() + $amount);
         case 2: // other payment
-            $user->setTopup($user->getTopup() - $amount);
+            $topup = $user->getTopup();
+            if ($topup < $amount) {
+                $user->setEarnings($user->getEarnings() - ($amount - $topup));
+                $user->setTopup(0);
+            }
+            else {
+                $user->setTopup($user->getTopup() - $amount);
+            }
             break;
         case 3:
             break;
