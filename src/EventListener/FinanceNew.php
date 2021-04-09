@@ -19,6 +19,7 @@ class FinanceNew extends AbstractController
     {
     }
 
+    // wxpay
     public function postUpdate(Finance $finance, LifecycleEventArgs $event): void
     {
         $uid = $finance->getUser();
@@ -27,6 +28,7 @@ class FinanceNew extends AbstractController
         $amount = $finance->getAmount();
         $status = $finance->getStatus();
 
+        // topup and success
         if ($type == 1 && $status == 5) {
             $em = $this->getDoctrine()->getManager();
             $user = $this->getDoctrine()->getRepository(User::class)->find($uid);
@@ -37,6 +39,7 @@ class FinanceNew extends AbstractController
 
     }
 
+    // balance
     public function prePersist(Finance $finance, LifecycleEventArgs $event): void
     {
         $uid = $finance->getUser();
@@ -45,13 +48,23 @@ class FinanceNew extends AbstractController
         $amount = $finance->getAmount();
         $status = $finance->getStatus();
 
-        if ($type == 2) {
-            $em = $this->getDoctrine()->getManager();
-            $user = $this->getDoctrine()->getRepository(User::class)->find($uid);
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getDoctrine()->getRepository(User::class)->find($uid);
+
+        switch ($type) {
+        case 0: // post task
+            $user->setFrozen($user->getFrozen() + $amount);
+        case 2: // other payment
             $user->setTopup($user->getTopup() - $amount);
-            $em->persist($user);
-            $em->flush();
+            break;
+        case 3:
+            break;
+        default:
+            break;
         }
+
+        $em->persist($user);
+        $em->flush();
     }
 }
 
