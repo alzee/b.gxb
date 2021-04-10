@@ -57,6 +57,7 @@ class Bid
     private $date;
 
     /**
+     * @Groups({"bid:read", "bid:write"})
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $isBuyNow;
