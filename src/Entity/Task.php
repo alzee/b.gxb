@@ -27,7 +27,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
  * @ApiFilter(OrderFilter::class, properties={"bidPosition", "date", "price", "stickyUntil", "recommendUntil"})
  * @ApiFilter(RangeFilter::class, properties={"bidPosition"})
  * @ApiFilter(PropertyFilter::class)
- * @ApiFilter(DateFilter::class, properties={"stickyUntil", "recommendUntil", "applyUntil", "approveUntil", "showUntil"})
+ * @ApiFilter(DateFilter::class, properties={"stickyUntil", "recommendUntil", "showUntil"})
  */
 class Task
 {
@@ -193,19 +193,21 @@ class Task
      * @Groups({"task:read", "task:write"})
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $applyUntil;
-
-    /**
-     * @Groups({"task:read", "task:write"})
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $approveUntil;
-
-    /**
-     * @Groups({"task:read", "task:write"})
-     * @ORM\Column(type="datetime", nullable=true)
-     */
     private $showUntil;
+
+    /**
+     * @Groups({"apply:read"})
+     * @Groups({"task:read", "task:write"})
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $workHours;
+
+    /**
+     * @Groups({"apply:read"})
+     * @Groups({"task:read", "task:write"})
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $reviewHours;
 
     public function __construct()
     {
@@ -510,30 +512,6 @@ class Task
         return $this;
     }
 
-    public function getApplyUntil(): ?\DateTimeInterface
-    {
-        return $this->applyUntil;
-    }
-
-    public function setApplyUntil(?\DateTimeInterface $applyUntil): self
-    {
-        $this->applyUntil = $applyUntil;
-
-        return $this;
-    }
-
-    public function getApproveUntil(): ?\DateTimeInterface
-    {
-        return $this->approveUntil;
-    }
-
-    public function setApproveUntil(?\DateTimeInterface $approveUntil): self
-    {
-        $this->approveUntil = $approveUntil;
-
-        return $this;
-    }
-
     public function getShowUntil(): ?\DateTimeInterface
     {
         return $this->showUntil;
@@ -542,6 +520,30 @@ class Task
     public function setShowUntil(?\DateTimeInterface $showUntil): self
     {
         $this->showUntil = $showUntil;
+
+        return $this;
+    }
+
+    public function getWorkHours(): ?int
+    {
+        return $this->workHours;
+    }
+
+    public function setWorkHours(?int $workHours): self
+    {
+        $this->workHours = $workHours;
+
+        return $this;
+    }
+
+    public function getReviewHours(): ?int
+    {
+        return $this->reviewHours;
+    }
+
+    public function setReviewHours(?int $reviewHours): self
+    {
+        $this->reviewHours = $reviewHours;
 
         return $this;
     }
