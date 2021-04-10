@@ -56,6 +56,11 @@ class Bid
      */
     private $date;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isBuyNow;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -113,6 +118,18 @@ class Bid
     {
         $this->date = new \DateTimeImmutable();
         //$this->date = $this->date->setTimezone(new \DateTimeZone('Asia/Shanghai'));
+    }
+
+    public function getIsBuyNow(): ?bool
+    {
+        return $this->isBuyNow;
+    }
+
+    public function setIsBuyNow(?bool $isBuyNow): self
+    {
+        $this->isBuyNow = $isBuyNow;
+
+        return $this;
     }
 
 }

@@ -58,6 +58,7 @@ class Apply
     /**
      * @ORM\Column(type="datetime")
      * @Groups({"apply:read"})
+     * @Groups({"task:read"})
      */
     private $date;
 
