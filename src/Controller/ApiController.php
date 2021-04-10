@@ -97,14 +97,14 @@ class ApiController extends AbstractController
         return $mch_private_key;
     }
 
-    public static function getCertificate($filepath) {
+    public function getWXCert($filepath) {
         return openssl_x509_read(file_get_contents($filepath));
     }
 
     /**
      * @Route("/cert", name="_cert")
      */
-    public function getCertificates()
+    public function getWXCertList()
     {
         $url = "https://api.mch.weixin.qq.com/v3/certificates";
         $method = 'GET';
@@ -124,7 +124,7 @@ class ApiController extends AbstractController
     /**
      * @Route("/prepayid", name="_prepayid")
      */
-    function generatePrepayId(Request $request): Response
+    function getPrepayId(Request $request): Response
     {
         $params  = $request->toArray();
         $amount = $params['amount'];
