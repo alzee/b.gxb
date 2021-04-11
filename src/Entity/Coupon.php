@@ -23,7 +23,7 @@ class Coupon
     private $value;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      */
     private $type;
 
