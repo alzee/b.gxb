@@ -65,6 +65,11 @@ class Finance
      */
     private $status = 0;
 
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $couponId;
+
     public function __construct()
     {
         $this->date = new \DateTimeImmutable();
@@ -179,6 +184,18 @@ class Finance
     public function setStatus(?int $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getCouponId(): ?int
+    {
+        return $this->couponId;
+    }
+
+    public function setCouponId(?int $couponId): self
+    {
+        $this->couponId = $couponId;
 
         return $this;
     }

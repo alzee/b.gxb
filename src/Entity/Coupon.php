@@ -19,6 +19,7 @@ class Coupon
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
+     * @Groups({"user:read"})
      * @ORM\Column(type="integer")
      */
     private $id;
