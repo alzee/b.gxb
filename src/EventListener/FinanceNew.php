@@ -11,6 +11,7 @@ namespace App\EventListener;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Finance;
 use App\Entity\User;
+use App\Entity\Coupon;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 
 class FinanceNew extends AbstractController
@@ -27,15 +28,23 @@ class FinanceNew extends AbstractController
         $note = $finance->getNote();
         $amount = $finance->getAmount();
         $status = $finance->getStatus();
+        $couponId = $finance->getCouponId();
+
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getDoctrine()->getRepository(User::class)->find($uid);
+
+        if ($couponId != 0) {
+            $coupon = $this->getDoctrine()->getRepository(Coupon::class)->find($couponId);
+            $user->removeCoupon($coupon);
+        }
 
         // topup and success
         if ($type == 0 && $status == 5) {
-            $em = $this->getDoctrine()->getManager();
-            $user = $this->getDoctrine()->getRepository(User::class)->find($uid);
             $user->setTopup($user->getTopup() + $amount);
-            $em->persist($user);
-            $em->flush();
         }
+
+        $em->persist($user);
+        $em->flush();
 
     }
 
@@ -47,9 +56,15 @@ class FinanceNew extends AbstractController
         $note = $finance->getNote();
         $amount = $finance->getAmount();
         $status = $finance->getStatus();
+        $couponId = $finance->getCouponId();
 
         $em = $this->getDoctrine()->getManager();
         $user = $this->getDoctrine()->getRepository(User::class)->find($uid);
+
+        if ($couponId != 0) {
+            $coupon = $this->getDoctrine()->getRepository(Coupon::class)->find($couponId);
+            $user->removeCoupon($coupon);
+        }
 
         switch ($type) {
         case 1: // post task
