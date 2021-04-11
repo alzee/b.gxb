@@ -4,8 +4,14 @@ namespace App\Entity;
 
 use App\Repository\CouponRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
+ * @ApiResource(
+ * normalizationContext={"groups"={"coupon:read"}},
+ * denormalizationContext={"groups"={"coupon:write"}}
+ * )
  * @ORM\Entity(repositoryClass=CouponRepository::class)
  */
 class Coupon
@@ -18,16 +24,19 @@ class Coupon
     private $id;
 
     /**
+     * @Groups({"user:read"})
      * @ORM\Column(type="integer", nullable=true)
      */
     private $value;
 
     /**
+     * @Groups({"user:read"})
      * @ORM\Column(type="smallint", nullable=true)
      */
     private $type;
 
     /**
+     * @Groups({"user:read"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $note;

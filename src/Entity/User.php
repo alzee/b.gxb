@@ -300,10 +300,17 @@ class User implements UserInterface
      */
     private $coins;
 
+    /**
+     * @Groups({"user:read", "user:write"})
+     * @ORM\ManyToMany(targetEntity=Coupon::class)
+     */
+    private $coupon;
+
     public function __construct()
     {
         $this->applies = new ArrayCollection();
         $this->coins = new ArrayCollection();
+        $this->coupon = new ArrayCollection();
     }
 
     public function getPlainPassword(): ?string
@@ -450,6 +457,30 @@ class User implements UserInterface
                 $coin->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Coupon[]
+     */
+    public function getCoupon(): Collection
+    {
+        return $this->coupon;
+    }
+
+    public function addCoupon(Coupon $coupon): self
+    {
+        if (!$this->coupon->contains($coupon)) {
+            $this->coupon[] = $coupon;
+        }
+
+        return $this;
+    }
+
+    public function removeCoupon(Coupon $coupon): self
+    {
+        $this->coupon->removeElement($coupon);
 
         return $this;
     }
