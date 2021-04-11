@@ -70,6 +70,11 @@ class Finance
      */
     private $couponId;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $fee;
+
     public function __construct()
     {
         $this->date = new \DateTimeImmutable();
@@ -196,6 +201,18 @@ class Finance
     public function setCouponId(?int $couponId): self
     {
         $this->couponId = $couponId;
+
+        return $this;
+    }
+
+    public function getFee(): ?int
+    {
+        return $this->fee;
+    }
+
+    public function setFee(?int $fee): self
+    {
+        $this->fee = $fee;
 
         return $this;
     }
