@@ -276,7 +276,7 @@ class User implements UserInterface
      * @Groups({"user:read", "user:write"})
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $equity;
+    private $equity = 1;
 
     /**
      * @Groups({"user:read", "user:write"})
