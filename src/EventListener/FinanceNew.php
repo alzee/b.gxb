@@ -29,7 +29,7 @@ class FinanceNew extends AbstractController
         $status = $finance->getStatus();
 
         // topup and success
-        if ($type == 1 && $status == 5) {
+        if ($type == 0 && $status == 5) {
             $em = $this->getDoctrine()->getManager();
             $user = $this->getDoctrine()->getRepository(User::class)->find($uid);
             $user->setTopup($user->getTopup() + $amount);
@@ -52,9 +52,16 @@ class FinanceNew extends AbstractController
         $user = $this->getDoctrine()->getRepository(User::class)->find($uid);
 
         switch ($type) {
-        case 0: // post task
+        case 1: // post task
             $user->setFrozen($user->getFrozen() + $amount);
-        case 2: // other payment
+        case 2: // stick
+        case 3: // recommend
+        case 4: // bid
+        case 5: // equity
+        case 6: // occupy
+        case 7: // landLord
+        case 8: // buyVip
+        default:
             $topup = $user->getTopup();
             if ($topup < $amount) {
                 $user->setEarnings($user->getEarnings() - ($amount - $topup));
@@ -63,11 +70,6 @@ class FinanceNew extends AbstractController
             else {
                 $user->setTopup($user->getTopup() - $amount);
             }
-            break;
-        case 3:
-            break;
-        default:
-            break;
         }
 
         $em->persist($user);
