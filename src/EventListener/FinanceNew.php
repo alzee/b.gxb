@@ -57,6 +57,7 @@ class FinanceNew extends AbstractController
         $amount = $finance->getAmount();
         $status = $finance->getStatus();
         $couponId = $finance->getCouponId();
+        $fee = $finance->getFee();
 
         $em = $this->getDoctrine()->getManager();
         $user = $this->getDoctrine()->getRepository(User::class)->find($uid);
@@ -68,7 +69,7 @@ class FinanceNew extends AbstractController
 
         switch ($type) {
         case 1: // post task
-            $user->setFrozen($user->getFrozen() + $amount);
+            $user->setFrozen($user->getFrozen() + $amount - $fee);
         case 2: // stick
         case 3: // recommend
         case 4: // bid
