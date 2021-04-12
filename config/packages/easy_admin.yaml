@@ -209,8 +209,10 @@ easy_admin:
       class: App\Entity\Level
       label: level
       list:
-        fields: ['name','price','taskLeast','postFee','withdrawFee','stickyFee', 'Level.days']
+        fields: ['name','price','days','taskLimit','postFee','withdrawFee','stickyPrice','recommendPrice','landTradeRatio','topupRatio','taskLeast']
         title: '会员等级'
+      form:
+        fields: ['name','price','days','taskLimit','postFee','withdrawFee','stickyPrice','recommendPrice','landTradeRatio','topupRatio','taskLeast']
     Config:
       class: App\Entity\Config
       label: config

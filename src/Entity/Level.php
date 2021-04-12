@@ -36,17 +36,17 @@ class Level
     private $taskLeast;
 
     /**
-     * @ORM\Column(type="decimal", precision=3, scale=2)
+     * @ORM\Column(type="float", nullable=true)
      */
     private $postFee;
 
     /**
-     * @ORM\Column(type="decimal", precision=3, scale=2)
+     * @ORM\Column(type="float", nullable=true)
      */
     private $withdrawFee;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="float", nullable=true)
      */
     private $stickyFee;
 
@@ -54,6 +54,31 @@ class Level
      * @ORM\Column(type="integer")
      */
     private $days;
+
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $taskLimit;
+
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $stickyPrice;
+
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $recommendPrice;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $landTradeRatio;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $topupRatio;
 
     public function getId(): ?int
     {
@@ -96,36 +121,36 @@ class Level
         return $this;
     }
 
-    public function getPostFee(): ?string
+    public function getPostFee(): ?float
     {
         return $this->postFee;
     }
 
-    public function setPostFee(string $postFee): self
+    public function setPostFee(float $postFee): self
     {
         $this->postFee = $postFee;
 
         return $this;
     }
 
-    public function getWithdrawFee(): ?string
+    public function getWithdrawFee(): ?float
     {
         return $this->withdrawFee;
     }
 
-    public function setWithdrawFee(string $withdrawFee): self
+    public function setWithdrawFee(float $withdrawFee): self
     {
         $this->withdrawFee = $withdrawFee;
 
         return $this;
     }
 
-    public function getStickyFee(): ?int
+    public function getStickyFee(): ?float
     {
         return $this->stickyFee;
     }
 
-    public function setStickyFee(int $stickyFee): self
+    public function setStickyFee(float $stickyFee): self
     {
         $this->stickyFee = $stickyFee;
 
@@ -140,6 +165,66 @@ class Level
     public function setDays(int $days): self
     {
         $this->days = $days;
+
+        return $this;
+    }
+
+    public function getTaskLimit(): ?int
+    {
+        return $this->taskLimit;
+    }
+
+    public function setTaskLimit(?int $taskLimit): self
+    {
+        $this->taskLimit = $taskLimit;
+
+        return $this;
+    }
+
+    public function getStickyPrice(): ?int
+    {
+        return $this->stickyPrice;
+    }
+
+    public function setStickyPrice(?int $stickyPrice): self
+    {
+        $this->stickyPrice = $stickyPrice;
+
+        return $this;
+    }
+
+    public function getRecommendPrice(): ?int
+    {
+        return $this->recommendPrice;
+    }
+
+    public function setRecommendPrice(?int $recommendPrice): self
+    {
+        $this->recommendPrice = $recommendPrice;
+
+        return $this;
+    }
+
+    public function getLandTradeRatio(): ?float
+    {
+        return $this->landTradeRatio;
+    }
+
+    public function setLandTradeRatio(?float $landTradeRatio): self
+    {
+        $this->landTradeRatio = $landTradeRatio;
+
+        return $this;
+    }
+
+    public function getTopupRatio(): ?float
+    {
+        return $this->topupRatio;
+    }
+
+    public function setTopupRatio(?float $topupRatio): self
+    {
+        $this->topupRatio = $topupRatio;
 
         return $this;
     }
