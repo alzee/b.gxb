@@ -10,7 +10,10 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ * normalizationContext={"groups"={"level:read"}},
+ * denormalizationContext={"groups"={"level:write"}}
+ * )
  * @ORM\Entity(repositoryClass=LevelRepository::class)
  */
 class Level
@@ -18,61 +21,85 @@ class Level
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
+     * @Groups({"user:read"})
+     * @Groups({"level:read", "level:write"})
      * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
+     * @Groups({"user:read"})
+     * @Groups({"level:read", "level:write"})
      * @ORM\Column(type="string", length=255)
      */
     private $name;
 
     /**
+     * @Groups({"user:read"})
+     * @Groups({"level:read", "level:write"})
      * @ORM\Column(type="integer")
      */
     private $price;
 
     /**
+     * @Groups({"user:read"})
+     * @Groups({"level:read", "level:write"})
      * @ORM\Column(type="integer")
      */
     private $taskLeast;
 
     /**
+     * @Groups({"user:read"})
+     * @Groups({"level:read", "level:write"})
      * @ORM\Column(type="float", nullable=true)
      */
     private $postFee;
 
     /**
+     * @Groups({"user:read"})
+     * @Groups({"level:read", "level:write"})
      * @ORM\Column(type="float", nullable=true)
      */
     private $withdrawFee;
 
     /**
+     * @Groups({"user:read"})
+     * @Groups({"level:read", "level:write"})
      * @ORM\Column(type="integer")
      */
     private $days;
 
     /**
+     * @Groups({"user:read"})
+     * @Groups({"level:read", "level:write"})
      * @ORM\Column(type="smallint", nullable=true)
      */
     private $taskLimit;
 
     /**
+     * @Groups({"user:read"})
+     * @Groups({"level:read", "level:write"})
      * @ORM\Column(type="smallint", nullable=true)
      */
     private $stickyPrice;
 
     /**
+     * @Groups({"user:read"})
+     * @Groups({"level:read", "level:write"})
      * @ORM\Column(type="smallint", nullable=true)
      */
     private $recommendPrice;
 
     /**
+     * @Groups({"user:read"})
+     * @Groups({"level:read", "level:write"})
      * @ORM\Column(type="float", nullable=true)
      */
     private $landTradeRatio;
 
     /**
+     * @Groups({"user:read"})
+     * @Groups({"level:read", "level:write"})
      * @ORM\Column(type="float", nullable=true)
      */
     private $topupRatio;
