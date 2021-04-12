@@ -306,6 +306,11 @@ class User implements UserInterface
      */
     private $coupon;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Level::class, inversedBy="users")
+     */
+    private $level;
+
     public function __construct()
     {
         $this->applies = new ArrayCollection();
@@ -481,6 +486,18 @@ class User implements UserInterface
     public function removeCoupon(Coupon $coupon): self
     {
         $this->coupon->removeElement($coupon);
+
+        return $this;
+    }
+
+    public function getLevel(): ?Level
+    {
+        return $this->level;
+    }
+
+    public function setLevel(?Level $level): self
+    {
+        $this->level = $level;
 
         return $this;
     }
