@@ -307,6 +307,7 @@ class User implements UserInterface
     private $coupon;
 
     /**
+     * @Groups({"user:read"})
      * @ORM\ManyToOne(targetEntity=Level::class, inversedBy="users")
      */
     private $level;

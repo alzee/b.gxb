@@ -133,6 +133,7 @@ easy_admin:
           - { property: 'avatarFile', type: 'vich_image', label: 'avatar',  type_options: { allow_delete: false } }
           - { property: 'nick', type_options: { required: false } }
           - { property: 'phone',  type_options: { required: false } }
+          - { property: 'level'}
     Tag:
       class: App\Entity\Tag
       label: tag
