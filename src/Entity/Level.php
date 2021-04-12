@@ -8,12 +8,15 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
 /**
  * @ApiResource(
  * normalizationContext={"groups"={"level:read"}},
  * denormalizationContext={"groups"={"level:write"}}
  * )
+ * @ApiFilter(OrderFilter::class, properties={"level"})
  * @ORM\Entity(repositoryClass=LevelRepository::class)
  */
 class Level
