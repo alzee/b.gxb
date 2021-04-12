@@ -35,6 +35,7 @@ CREATE TABLE `level` (
   `recommend_price` smallint(6) DEFAULT NULL,
   `land_trade_ratio` double DEFAULT NULL,
   `topup_ratio` double DEFAULT NULL,
+  `level` smallint(6) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -45,7 +46,7 @@ CREATE TABLE `level` (
 
 LOCK TABLES `level` WRITE;
 /*!40000 ALTER TABLE `level` DISABLE KEYS */;
-INSERT INTO `level` VALUES (1,'体验卡',10,5,0.1,0.05,2,0,5,2,0.2,0.1),(2,'周卡',28,5,0.1,0.05,7,0,5,2,0.2,0.1),(3,'月卡',68,5,0.1,0.05,30,0,5,2,0.25,0.15),(4,'季卡',188,5,0.1,0.05,90,0,5,2,0.3,0.2),(5,'年卡',688,5,0.1,0.05,360,0,5,2,0.35,0.25),(6,'银卡',1288,3,0.1,0.05,720,0,5,2,0.4,0.3),(7,'金卡',1688,2,0.1,0.05,1080,0,5,2,0.45,0.35),(8,'钻卡',2688,1,0.1,0.05,1800,0,5,2,0.5,0.4),(9,'普通会员',0,10,0.15,0.1,0,3,10,5,0.2,0.1);
+INSERT INTO `level` VALUES (1,'体验卡',10,5,0.1,0.05,2,0,5,2,0.2,0.1,1),(2,'周卡',28,5,0.1,0.05,7,0,5,2,0.2,0.1,1),(3,'月卡',68,5,0.1,0.05,30,0,5,2,0.25,0.15,3),(4,'季卡',188,5,0.1,0.05,90,0,5,2,0.3,0.2,4),(5,'年卡',688,5,0.1,0.05,360,0,5,2,0.35,0.25,5),(6,'银卡',1288,3,0.1,0.05,720,0,5,2,0.4,0.3,6),(7,'金卡',1688,2,0.1,0.05,1080,0,5,2,0.45,0.35,7),(8,'钻卡',2688,1,0.1,0.05,1800,0,5,2,0.5,0.4,8),(9,'普通会员',0,10,0.15,0.1,0,3,10,5,0.2,0.1,0);
 /*!40000 ALTER TABLE `level` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -58,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-12 12:00:32
+-- Dump completed on 2021-04-12 14:16:39

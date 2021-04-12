@@ -109,6 +109,13 @@ class Level
      */
     private $users;
 
+    /**
+     * @Groups({"user:read"})
+     * @Groups({"level:read", "level:write"})
+     * @ORM\Column(type="smallint")
+     */
+    private $level;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -284,5 +291,17 @@ class Level
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    public function getLevel(): ?int
+    {
+        return $this->level;
+    }
+
+    public function setLevel(int $level): self
+    {
+        $this->level = $level;
+
+        return $this;
     }
 }
