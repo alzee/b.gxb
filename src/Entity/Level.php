@@ -46,11 +46,6 @@ class Level
     private $withdrawFee;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private $stickyFee;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $days;
@@ -141,18 +136,6 @@ class Level
     public function setWithdrawFee(float $withdrawFee): self
     {
         $this->withdrawFee = $withdrawFee;
-
-        return $this;
-    }
-
-    public function getStickyFee(): ?float
-    {
-        return $this->stickyFee;
-    }
-
-    public function setStickyFee(float $stickyFee): self
-    {
-        $this->stickyFee = $stickyFee;
 
         return $this;
     }
