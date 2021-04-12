@@ -21,41 +21,87 @@ class Report
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity=Task::class, cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Apply::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $task;
+    private $apply;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $description;
+    private $descA;
 
-    public function getId(): ?int
+    /**
+     * @ORM\Column(type="simple_array", nullable=true)
+     */
+    private $picsA = [];
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $descB;
+
+    /**
+     * @ORM\Column(type="simple_array", nullable=true)
+     */
+    private $picsB = [];
+
+    public function getApply(): ?Apply
     {
-        return $this->id;
+        return $this->apply;
     }
 
-    public function getTask(): ?Task
+    public function setApply(Apply $apply): self
     {
-        return $this->task;
-    }
-
-    public function setTask(Task $task): self
-    {
-        $this->task = $task;
+        $this->apply = $apply;
 
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getDescA(): ?string
     {
-        return $this->description;
+        return $this->descA;
     }
 
-    public function setDescription(string $description): self
+    public function setDescA(?string $descA): self
     {
-        $this->description = $description;
+        $this->descA = $descA;
+
+        return $this;
+    }
+
+    public function getPicsA(): ?array
+    {
+        return $this->picsA;
+    }
+
+    public function setPicsA(?array $picsA): self
+    {
+        $this->picsA = $picsA;
+
+        return $this;
+    }
+
+    public function getDescB(): ?string
+    {
+        return $this->descB;
+    }
+
+    public function setDescB(?string $descB): self
+    {
+        $this->descB = $descB;
+
+        return $this;
+    }
+
+    public function getPicsB(): ?array
+    {
+        return $this->picsB;
+    }
+
+    public function setPicsB(?array $picsB): self
+    {
+        $this->picsB = $picsB;
 
         return $this;
     }
