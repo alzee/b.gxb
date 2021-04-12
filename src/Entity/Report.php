@@ -4,11 +4,14 @@ namespace App\Entity;
 
 use App\Repository\ReportRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource()
+ * @ApiFilter(SearchFilter::class, properties={"apply.id": "exact"})
  * @ORM\Entity(repositoryClass=ReportRepository::class)
  */
 class Report
