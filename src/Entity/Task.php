@@ -44,6 +44,7 @@ class Task
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"task:read", "task:write"})
+     * @Groups({"apply:read"})
      */
     private $name;
 
