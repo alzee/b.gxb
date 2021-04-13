@@ -327,6 +327,7 @@ class User implements UserInterface
         $this->applies = new ArrayCollection();
         $this->coins = new ArrayCollection();
         $this->coupon = new ArrayCollection();
+        $this->refcode = substr(md5(uniqid()),0,8);
     }
 
     public function getPlainPassword(): ?string
