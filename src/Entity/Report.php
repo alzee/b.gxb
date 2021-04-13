@@ -35,28 +35,28 @@ class Report
     private $apply;
 
     /**
-     * @Groups({"report:read"})
+     * @Groups({"report:read", "report:write"})
      * @Groups({"task:read", "task:write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $descA;
 
     /**
-     * @Groups({"report:read"})
+     * @Groups({"report:read", "report:write"})
      * @Groups({"task:read", "task:write"})
      * @ORM\Column(type="simple_array", nullable=true)
      */
     private $picsA = [];
 
     /**
-     * @Groups({"report:read"})
+     * @Groups({"report:read", "report:write"})
      * @Groups({"task:read", "task:write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $descB;
 
     /**
-     * @Groups({"report:read"})
+     * @Groups({"report:read", "report:write"})
      * @Groups({"task:read", "task:write"})
      * @ORM\Column(type="simple_array", nullable=true)
      */
@@ -69,7 +69,7 @@ class Report
     private $date;
 
     /**
-     * @Groups({"report:read"})
+     * @Groups({"report:read", "report:write"})
      * @ORM\Column(type="smallint", nullable=true)
      */
     private $status = 0;
