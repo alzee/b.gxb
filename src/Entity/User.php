@@ -288,6 +288,7 @@ class User implements UserInterface
     private $frozen;
 
     /**
+     * @Groups({"user:read", "user:write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $refcode;
@@ -314,6 +315,12 @@ class User implements UserInterface
      * @ORM\ManyToOne(targetEntity=Level::class, inversedBy="users")
      */
     private $level;
+
+    /**
+     * @Groups({"user:read", "user:write"})
+     * @ORM\ManyToOne(targetEntity=User::class)
+     */
+    private $referrer;
 
     public function __construct()
     {
@@ -502,6 +509,18 @@ class User implements UserInterface
     public function setLevel(?Level $level): self
     {
         $this->level = $level;
+
+        return $this;
+    }
+
+    public function getReferrer(): ?self
+    {
+        return $this->referrer;
+    }
+
+    public function setReferrer(?self $referrer): self
+    {
+        $this->referrer = $referrer;
 
         return $this;
     }
