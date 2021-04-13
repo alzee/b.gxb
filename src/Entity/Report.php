@@ -10,8 +10,11 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
- * @ApiFilter(SearchFilter::class, properties={"apply.id": "exact"})
+ * @ApiResource(
+ * normalizationContext={"groups"={"report:read"}},
+ * denormalizationContext={"groups"={"report:write"}}
+ * )
+ * @ApiFilter(SearchFilter::class, properties={"apply": "exact", "apply.applicant": "exact", "apply.task.owner": "exact"})
  * @ORM\Entity(repositoryClass=ReportRepository::class)
  */
 class Report
@@ -20,34 +23,61 @@ class Report
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"report:read"})
      */
     private $id;
 
     /**
+     * @Groups({"report:read", "report:write"})
      * @ORM\OneToOne(targetEntity=Apply::class, cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $apply;
 
     /**
+     * @Groups({"report:read"})
+     * @Groups({"task:read", "task:write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $descA;
 
     /**
+     * @Groups({"report:read"})
+     * @Groups({"task:read", "task:write"})
      * @ORM\Column(type="simple_array", nullable=true)
      */
     private $picsA = [];
 
     /**
+     * @Groups({"report:read"})
+     * @Groups({"task:read", "task:write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $descB;
 
     /**
+     * @Groups({"report:read"})
+     * @Groups({"task:read", "task:write"})
      * @ORM\Column(type="simple_array", nullable=true)
      */
     private $picsB = [];
+
+    /**
+     * @Groups({"report:read"})
+     * @ORM\Column(type="datetime_immutable", nullable=true)
+     */
+    private $date;
+
+    /**
+     * @Groups({"report:read"})
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $status = 0;
+
+    public function __construct()
+    {
+        $this->date = new \DateTimeImmutable();
+    }
 
     public function getApply(): ?Apply
     {
@@ -112,5 +142,29 @@ class Report
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getDate(): ?\DateTimeImmutable
+    {
+        return $this->date;
+    }
+
+    public function setDate(?\DateTimeImmutable $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?int $status): self
+    {
+        $this->status = $status;
+
+        return $this;
     }
 }

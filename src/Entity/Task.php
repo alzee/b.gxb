@@ -38,6 +38,7 @@ class Task
      * @Groups({"task:read"})
      * @Groups({"bid:read"})
      * @Groups({"apply:read"})
+     * @Groups({"report:read"})
      */
     private $id;
 
@@ -45,6 +46,7 @@ class Task
      * @ORM\Column(type="string", length=255)
      * @Groups({"task:read", "task:write"})
      * @Groups({"apply:read"})
+     * @Groups({"report:read"})
      */
     private $name;
 
@@ -53,6 +55,7 @@ class Task
      * @Groups({"task:read", "task:write"})
      * @Groups({"apply:read"})
      * @Groups({"bid:read"})
+     * @Groups({"report:read"})
      */
     private $title;
 
@@ -61,12 +64,14 @@ class Task
      * @Groups({"task:read", "task:write"})
      * @Groups({"apply:read"})
      * @Groups({"bid:read"})
+     * @Groups({"report:read"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="text")
      * @Groups({"task:read", "task:write"})
+     * @Groups({"report:read"})
      */
     private $description;
 
@@ -76,6 +81,7 @@ class Task
      * @Groups({"task:read", "task:write"})
      * @Groups({"apply:read"})
      * @Groups({"bid:read"})
+     * @Groups({"report:read"})
      */
     private $owner;
 
@@ -92,6 +98,7 @@ class Task
      * @Groups({"task:read", "task:write"})
      * @Groups({"apply:read"})
      * @Groups({"bid:read"})
+     * @Groups({"report:read"})
      */
     private $category;
 
@@ -99,18 +106,21 @@ class Task
      * @ORM\ManyToMany(targetEntity=Tag::class)
      * @Groups({"task:read", "task:write"})
      * @Groups({"apply:read"})
+     * @Groups({"report:read"})
      */
     private $tag;
 
     /**
      * @ORM\Column(type="integer")
      * @Groups({"task:read", "task:write"})
+     * @Groups({"report:read"})
      */
     private $quantity;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      * @Groups({"task:read"})
+     * @Groups({"report:read"})
      */
     private $date;
 
@@ -156,6 +166,7 @@ class Task
      * @ORM\Column(type="array", nullable=true)
      * @Groups({"task:read", "task:write"})
      * @Groups({"apply:read"})
+     * @Groups({"report:read"})
      */
     private $guides = [];
 
@@ -163,6 +174,7 @@ class Task
      * @ORM\Column(type="array", nullable=true)
      * @Groups({"task:read", "task:write"})
      * @Groups({"apply:read"})
+     * @Groups({"report:read"})
      */
     private $reviews = [];
 

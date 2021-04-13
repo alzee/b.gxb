@@ -28,6 +28,7 @@ class Apply
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups({"apply:read"})
+     * @Groups({"report:read"})
      * @Groups({"task:read"})
      */
     private $id;
@@ -35,6 +36,7 @@ class Apply
     /**
      * @ORM\ManyToOne(targetEntity=Task::class, inversedBy="applies")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"report:read"})
      * @Groups({"apply:read", "apply:write"})
      */
     private $task;
@@ -42,6 +44,7 @@ class Apply
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="applies")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"report:read"})
      * @Groups({"apply:read", "apply:write"})
      * @Groups({"task:read", "task:write"})
      */
@@ -51,6 +54,7 @@ class Apply
      * @ORM\ManyToOne(targetEntity=Status::class)
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"apply:read", "apply:write"})
+     * @Groups({"report:read"})
      * @Groups({"task:read", "task:write"})
      */
     private $status;
@@ -70,6 +74,7 @@ class Apply
     /**
      * @Groups({"apply:read", "apply:write"})
      * @Groups({"task:read"})
+     * @Groups({"report:read"})
      * @ORM\Column(type="simple_array", nullable=true)
      */
     private $pic = [];
