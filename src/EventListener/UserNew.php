@@ -20,17 +20,6 @@ class UserNew extends AbstractController
 {
     public function preUpdate(User $user, PreUpdateEventArgs $event): void
     {
-        $em = $this->getDoctrine()->getManager();
-        if ($event->hasChangedField('level')) {
-            $referrer = $user->getReferrer();
-            $level = $user->getLevel();
-            $back = $level->getPrice() * $level->getTopupRatio();
-            $user->setTopup($referrer->getTopup());
-            // $referrer->setTopup($referrer->getTopup() + $back);
-            $referrer->setTopup(666666);
-            $em->persist($referrer);
-            $em->flush();
-        }
     }
 
     public function prePersist(User $user, LifecycleEventArgs $event): void
@@ -44,10 +33,6 @@ class UserNew extends AbstractController
             $user->addCoupon($i);
         }
         $user->setLevel($level);
-
-        // $em->persist($referer);
-        // $em->persist($user);
-        // $em->flush();
     }
 }
 

@@ -43,9 +43,36 @@ class FinanceNew extends AbstractController
             $user->setTopup($user->getTopup() + $amount);
         }
 
+        if ($status == 5) {
+            switch ($type) {
+            case 1: // post task
+                $user->setFrozen($user->getFrozen() + $amount - $fee);
+                break;
+            case 2: // stick
+                break;
+            case 3: // recommend
+                break;
+            case 4: // bid
+                break;
+            case 5: // equity
+                break;
+            case 6: // occupy
+                break;
+            case 7: // landLord
+                break;
+            case 8: // buyVip
+                $level = $user->getLevel();
+                $rebate = $level->getPrice() * $level->getTopupRatio();
+                $referrer = $user->getReferrer();
+                $referrer->setTopup($referrer->getTopup() + $rebate);
+                $em->persist($referrer);
+                break;
+            default:
+            }
+        }
+
         $em->persist($user);
         $em->flush();
-
     }
 
     // balance
@@ -70,26 +97,39 @@ class FinanceNew extends AbstractController
         switch ($type) {
         case 1: // post task
             $user->setFrozen($user->getFrozen() + $amount - $fee);
+            break;
         case 2: // stick
+            break;
         case 3: // recommend
+            break;
         case 4: // bid
+            break;
         case 5: // equity
+            break;
         case 6: // occupy
+            break;
         case 7: // landLord
+            break;
         case 8: // buyVip
+            $level = $user->getLevel();
+            $rebate = $level->getPrice() * $level->getTopupRatio();
+            $referrer = $user->getReferrer();
+            $referrer->setTopup($referrer->getTopup() + $rebate);
+            $em->persist($referrer);
+            break;
         default:
-            $topup = $user->getTopup();
-            if ($topup < $amount) {
-                $user->setEarnings($user->getEarnings() - ($amount - $topup));
-                $user->setTopup(0);
-            }
-            else {
-                $user->setTopup($user->getTopup() - $amount);
-            }
+        }
+
+        $topup = $user->getTopup();
+        if ($topup < $amount) {
+            $user->setEarnings($user->getEarnings() - ($amount - $topup));
+            $user->setTopup(0);
+        }
+        else {
+            $user->setTopup($user->getTopup() - $amount);
         }
 
         $em->persist($user);
         $em->flush();
     }
 }
-
