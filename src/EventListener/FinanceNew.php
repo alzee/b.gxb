@@ -116,6 +116,13 @@ class FinanceNew extends AbstractController
             $referrer = $user->getReferrer();
             $referrer->setTopup($referrer->getTopup() + $rebate);
             $em->persist($referrer);
+
+            // $newFin = new Finance();
+            // $newFin->setUser($referrer);
+            // $newFin->setAmount($rebate);
+            // $newFin->setType(9);
+            // $newFin->setNote('会员充值返利');
+            // $em->persist($newFin);
             break;
         default:
         }
