@@ -61,7 +61,7 @@ class FinanceNew extends AbstractController
             case 7: // landLord
                 break;
             case 8: // buyVip
-                $level = $user->getLevel();
+                $level = $finance->getLevel();
                 $rebate = $level->getPrice() * $level->getTopupRatio();
                 $referrer = $user->getReferrer();
                 $referrer->setTopup($referrer->getTopup() + $rebate);
@@ -111,7 +111,7 @@ class FinanceNew extends AbstractController
         case 7: // landLord
             break;
         case 8: // buyVip
-            $level = $user->getLevel();
+            $level = $finance->getLevel();
             $rebate = $level->getPrice() * $level->getTopupRatio();
             $referrer = $user->getReferrer();
             $referrer->setTopup($referrer->getTopup() + $rebate);

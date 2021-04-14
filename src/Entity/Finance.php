@@ -75,6 +75,11 @@ class Finance
      */
     private $fee;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Level::class)
+     */
+    private $level;
+
     public function __construct()
     {
         $this->date = new \DateTimeImmutable();
@@ -213,6 +218,18 @@ class Finance
     public function setFee(?int $fee): self
     {
         $this->fee = $fee;
+
+        return $this;
+    }
+
+    public function getLevel(): ?Level
+    {
+        return $this->level;
+    }
+
+    public function setLevel(?Level $level): self
+    {
+        $this->level = $level;
 
         return $this;
     }
