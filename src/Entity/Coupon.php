@@ -82,4 +82,9 @@ class Coupon
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return $this->note;
+    }
 }

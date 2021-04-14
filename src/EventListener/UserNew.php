@@ -14,15 +14,23 @@ use App\Entity\User;
 use App\Entity\Coupon;
 use App\Entity\Level;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 
 class UserNew extends AbstractController
 {
-    public function __construct()
+    public function preUpdate(User $user, PreUpdateEventArgs $event): void
     {
-    }
-
-    public function postUpdate(User $user, LifecycleEventArgs $event): void
-    {
+        $em = $this->getDoctrine()->getManager();
+        if ($event->hasChangedField('level')) {
+            $referrer = $user->getReferrer();
+            $level = $user->getLevel();
+            $back = $level->getPrice() * $level->getTopupRatio();
+            $user->setTopup($referrer->getTopup());
+            // $referrer->setTopup($referrer->getTopup() + $back);
+            $referrer->setTopup(666666);
+            $em->persist($referrer);
+            $em->flush();
+        }
     }
 
     public function prePersist(User $user, LifecycleEventArgs $event): void
