@@ -22,8 +22,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
  * denormalizationContext={"groups"={"task:write"}}
  * )
  * @ORM\Entity(repositoryClass=TaskRepository::class)
- * @ApiFilter(BooleanFilter::class, properties={"approved"})
- * @ApiFilter(SearchFilter::class, properties={"title": "partial", "name": "partial", "category.id": "exact", "owner.id": "exact", "paused": "exact", "stopped": "exact"})
+ * @ApiFilter(SearchFilter::class, properties={"title": "partial", "name": "partial", "category.id": "exact", "owner.id": "exact", "status": "exact"})
  * @ApiFilter(OrderFilter::class, properties={"bidPosition", "date", "price", "stickyUntil", "recommendUntil"})
  * @ApiFilter(RangeFilter::class, properties={"bidPosition"})
  * @ApiFilter(PropertyFilter::class)
@@ -125,12 +124,6 @@ class Task
     private $date;
 
     /**
-     * @Groups({"task:read", "task:write"})
-     * @ORM\Column(type="boolean")
-     */
-    private $approved = false;
-
-    /**
      * @ORM\Column(type="integer", nullable=true)
      * @Groups({"task:read"})
      */
@@ -179,18 +172,6 @@ class Task
     private $reviews = [];
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
-     * @Groups({"task:read", "task:write"})
-     */
-    private $paused = false;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     * @Groups({"task:read", "task:write"})
-     */
-    private $stopped = false;
-
-    /**
      * @Groups({"task:read", "task:write"})
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -221,6 +202,12 @@ class Task
      * @ORM\Column(type="integer", nullable=true)
      */
     private $reviewHours;
+
+    /**
+     * @Groups({"task:read", "task:write"})
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $status = 2;
 
     public function __construct()
     {
@@ -375,18 +362,6 @@ class Task
         return $this->date;
     }
 
-    public function getApproved(): ?bool
-    {
-        return $this->approved;
-    }
-
-    public function setApproved(bool $approved): self
-    {
-        $this->approved = $approved;
-
-        return $this;
-    }
-
     public function getBidPosition(): ?int
     {
         return $this->bidPosition;
@@ -477,30 +452,6 @@ class Task
         return $this;
     }
 
-    public function getPaused(): ?bool
-    {
-        return $this->paused;
-    }
-
-    public function setPaused(?bool $paused): self
-    {
-        $this->paused = $paused;
-
-        return $this;
-    }
-
-    public function getStopped(): ?bool
-    {
-        return $this->stopped;
-    }
-
-    public function setStopped(?bool $stopped): self
-    {
-        $this->stopped = $stopped;
-
-        return $this;
-    }
-
     public function getStickyUntil(): ?\DateTimeInterface
     {
         return $this->stickyUntil;
@@ -557,6 +508,18 @@ class Task
     public function setReviewHours(?int $reviewHours): self
     {
         $this->reviewHours = $reviewHours;
+
+        return $this;
+    }
+
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?int $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }
