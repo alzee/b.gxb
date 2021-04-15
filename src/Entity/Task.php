@@ -205,9 +205,9 @@ class Task
 
     /**
      * @Groups({"task:read", "task:write"})
-     * @ORM\Column(type="smallint", nullable=true)
+     * @ORM\ManyToOne(targetEntity=Status::class)
      */
-    private $status = 2;
+    private $status;
 
     public function __construct()
     {
@@ -512,12 +512,12 @@ class Task
         return $this;
     }
 
-    public function getStatus(): ?int
+    public function getStatus(): ?Status
     {
         return $this->status;
     }
 
-    public function setStatus(?int $status): self
+    public function setStatus(?Status $status): self
     {
         $this->status = $status;
 
