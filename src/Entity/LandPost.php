@@ -77,6 +77,11 @@ class LandPost
      */
     private $pics = [];
 
+    /**
+     * @ORM\Column(type="datetime_immutable", nullable=true)
+     */
+    private $date;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -174,6 +179,18 @@ class LandPost
     public function setPics(?array $pics): self
     {
         $this->pics = $pics;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeImmutable
+    {
+        return $this->date;
+    }
+
+    public function setDate(?\DateTimeImmutable $date): self
+    {
+        $this->date = $date;
 
         return $this;
     }
