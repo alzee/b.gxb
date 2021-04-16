@@ -229,7 +229,7 @@ class User implements UserInterface
 
     public function getTopup(): ?int
     {
-        return $this->topup / 100;
+        return $this->topup;
     }
 
     public function setTopup(int $topup): self
@@ -241,7 +241,7 @@ class User implements UserInterface
 
     public function getEarnings(): ?int
     {
-        return $this->earnings / 100;
+        return $this->earnings;
     }
 
     public function setEarnings(int $earnings): self
@@ -414,7 +414,7 @@ class User implements UserInterface
 
     public function getFrozen(): ?int
     {
-        return $this->frozen / 100;
+        return $this->frozen;
     }
 
     public function setFrozen(?int $frozen): self

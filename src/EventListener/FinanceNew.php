@@ -41,13 +41,13 @@ class FinanceNew extends AbstractController
 
         // topup and success
         if ($type == 0 && $status == 5) {
-            $user->setTopup($user->getTopup() * 100  + $amount);
+            $user->setTopup($user->getTopup()  + $amount);
         }
 
         if ($status == 5) {
             switch ($type) {
             case 1: // post task
-                $user->setFrozen($user->getFrozen() * 100 + $amount - $fee);
+                $user->setFrozen($user->getFrozen() + $amount - $fee);
                 break;
             case 2: // stick
                 break;
@@ -65,7 +65,7 @@ class FinanceNew extends AbstractController
                 $level = $finance->getLevel();
                 $rebate = $level->getPrice() * $level->getTopupRatio();
                 $referrer = $user->getReferrer();
-                $referrer->setTopup(($referrer->getTopup() + $rebate) * 100);
+                $referrer->setTopup($referrer->getTopup() + $rebate);
                 // $em->persist($referrer);
                 break;
             default:
@@ -100,7 +100,7 @@ class FinanceNew extends AbstractController
         case 0: // topup
             return; // do nothing here, since we put things in postUpdate
         case 1: // post task
-            $user->setFrozen($user->getFrozen() * 100 + $amount - $fee);
+            $user->setFrozen($user->getFrozen() + $amount - $fee);
             break;
         case 2: // stick
             break;
@@ -118,7 +118,7 @@ class FinanceNew extends AbstractController
             $level = $finance->getLevel();
             $rebate = $level->getPrice() * $level->getTopupRatio();
             $referrer = $user->getReferrer();
-            $referrer->setTopup(($referrer->getTopup() + $rebate) * 100);
+            $referrer->setTopup($referrer->getTopup() + $rebate);
             // $em->persist($referrer);
 
             // $newFin = new Finance();
@@ -131,13 +131,13 @@ class FinanceNew extends AbstractController
         default:
         }
 
-        $topup = $user->getTopup() * 100;
+        $topup = $user->getTopup();
         if ($topup < $amount) {
-            $user->setEarnings($user->getEarnings() * 100 - ($amount - $topup));
+            $user->setEarnings($user->getEarnings() - ($amount - $topup));
             $user->setTopup(0);
         }
         else {
-            $user->setTopup($user->getTopup() * 100 - $amount);
+            $user->setTopup($user->getTopup() - $amount);
         }
 
         // $em->persist($user);
