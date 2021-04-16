@@ -95,6 +95,8 @@ class FinanceNew extends AbstractController
         }
 
         switch ($type) {
+        case 0: // topup
+            return; // do nothing here, since we put things in postUpdate
         case 1: // post task
             $user->setFrozen($user->getFrozen() + $amount - $fee);
             break;
@@ -115,7 +117,7 @@ class FinanceNew extends AbstractController
             $rebate = $level->getPrice() * $level->getTopupRatio();
             $referrer = $user->getReferrer();
             $referrer->setTopup($referrer->getTopup() + $rebate);
-            $em->persist($referrer);
+            // $em->persist($referrer);
 
             // $newFin = new Finance();
             // $newFin->setUser($referrer);
@@ -136,7 +138,7 @@ class FinanceNew extends AbstractController
             $user->setTopup($user->getTopup() - $amount);
         }
 
-        $em->persist($user);
-        $em->flush();
+        // $em->persist($user);
+        // $em->flush();
     }
 }
