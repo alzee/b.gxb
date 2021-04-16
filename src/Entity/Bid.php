@@ -42,7 +42,7 @@ class Bid
      * @Groups({"bid:read", "bid:write"})
      * @ORM\Column(type="integer")
      */
-    private $bid;
+    private $price;
 
     /**
      * @Groups({"bid:read", "bid:write"})
@@ -79,14 +79,14 @@ class Bid
         return $this;
     }
 
-    public function getBid(): ?int
+    public function getPrice(): ?int
     {
-        return $this->bid;
+        return $this->price;
     }
 
-    public function setBid(int $bid): self
+    public function setPrice(int $price): self
     {
-        $this->bid = $bid;
+        $this->price = $price;
 
         return $this;
     }
