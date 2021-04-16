@@ -21,7 +21,7 @@ class ApplyUpdate extends AbstractController
 
     public function postUpdate(Apply $apply, LifecycleEventArgs $event): void
     {
-        if ($apply->getStatus()->getId() == 4) {
+        if ($apply->getStatus()->getId() == 14) {
             $em = $this->getDoctrine()->getManager();
             $price = $apply->getTask()->getPrice();
             $applicant = $apply->getApplicant();
