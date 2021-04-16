@@ -36,7 +36,7 @@ CREATE TABLE `status` (
 
 LOCK TABLES `status` WRITE;
 /*!40000 ALTER TABLE `status` DISABLE KEYS */;
-INSERT INTO `status` VALUES (1,'待审核',NULL),(2,'已审核',NULL),(3,'已暂停',NULL),(4,'已下架',NULL),(5,'不符合',NULL),(11,'待提交',NULL),(12,'审核中',NULL),(13,'不合格',NULL),(14,'已完成',NULL);
+INSERT INTO `status` VALUES (1,'待审核',NULL),(2,'已审核',NULL),(3,'已暂停',NULL),(4,'已下架',NULL),(5,'审核拒绝',NULL),(11,'待提交',NULL),(12,'验收中',NULL),(13,'不合格',NULL),(14,'已完成',NULL);
 /*!40000 ALTER TABLE `status` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
