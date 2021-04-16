@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 use App\Repository\LandPostRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -15,6 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  * denormalizationContext={"groups"={"landpost:write"}}
  * )
  * @ApiFilter(SearchFilter::class, properties={"land": "exact"})
+ * @ApiFilter(OrderFilter::class, properties={"price"})
  * @ORM\Entity(repositoryClass=LandPostRepository::class)
  */
 class LandPost
