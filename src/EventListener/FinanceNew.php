@@ -30,7 +30,8 @@ class FinanceNew extends AbstractController
         $status = $finance->getStatus();
         $couponId = $finance->getCouponId();
 
-        $em = $this->getDoctrine()->getManager();
+        // $em = $this->getDoctrine()->getManager();
+        // $em = $event->getEntityManager();
         $user = $this->getDoctrine()->getRepository(User::class)->find($uid);
 
         if ($couponId != 0) {
@@ -40,13 +41,13 @@ class FinanceNew extends AbstractController
 
         // topup and success
         if ($type == 0 && $status == 5) {
-            $user->setTopup($user->getTopup() + $amount);
+            $user->setTopup($user->getTopup() * 100  + $amount);
         }
 
         if ($status == 5) {
             switch ($type) {
             case 1: // post task
-                $user->setFrozen($user->getFrozen() + $amount - $fee);
+                $user->setFrozen($user->getFrozen() * 100 + $amount - $fee);
                 break;
             case 2: // stick
                 break;
@@ -64,15 +65,15 @@ class FinanceNew extends AbstractController
                 $level = $finance->getLevel();
                 $rebate = $level->getPrice() * $level->getTopupRatio();
                 $referrer = $user->getReferrer();
-                $referrer->setTopup($referrer->getTopup() + $rebate);
-                $em->persist($referrer);
+                $referrer->setTopup(($referrer->getTopup() + $rebate) * 100);
+                // $em->persist($referrer);
                 break;
             default:
             }
         }
 
-        $em->persist($user);
-        $em->flush();
+        // $em->persist($user);
+        // $em->flush();
     }
 
     // balance
@@ -86,7 +87,8 @@ class FinanceNew extends AbstractController
         $couponId = $finance->getCouponId();
         $fee = $finance->getFee();
 
-        $em = $this->getDoctrine()->getManager();
+        // $em = $this->getDoctrine()->getManager();
+        // $em = $event->getEntityManager();
         $user = $this->getDoctrine()->getRepository(User::class)->find($uid);
 
         if ($couponId != 0) {
@@ -98,7 +100,7 @@ class FinanceNew extends AbstractController
         case 0: // topup
             return; // do nothing here, since we put things in postUpdate
         case 1: // post task
-            $user->setFrozen($user->getFrozen() + $amount - $fee);
+            $user->setFrozen($user->getFrozen() * 100 + $amount - $fee);
             break;
         case 2: // stick
             break;
@@ -116,7 +118,7 @@ class FinanceNew extends AbstractController
             $level = $finance->getLevel();
             $rebate = $level->getPrice() * $level->getTopupRatio();
             $referrer = $user->getReferrer();
-            $referrer->setTopup($referrer->getTopup() + $rebate);
+            $referrer->setTopup(($referrer->getTopup() + $rebate) * 100);
             // $em->persist($referrer);
 
             // $newFin = new Finance();
@@ -129,13 +131,13 @@ class FinanceNew extends AbstractController
         default:
         }
 
-        $topup = $user->getTopup();
+        $topup = $user->getTopup() * 100;
         if ($topup < $amount) {
-            $user->setEarnings($user->getEarnings() - ($amount - $topup));
+            $user->setEarnings($user->getEarnings() * 100 - ($amount - $topup));
             $user->setTopup(0);
         }
         else {
-            $user->setTopup($user->getTopup() - $amount);
+            $user->setTopup($user->getTopup() * 100 - $amount);
         }
 
         // $em->persist($user);

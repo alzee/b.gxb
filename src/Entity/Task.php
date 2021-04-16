@@ -59,7 +59,7 @@ class Task
     private $title;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="integer")
      * @Groups({"task:read", "task:write"})
      * @Groups({"apply:read"})
      * @Groups({"bid:read"})
@@ -256,12 +256,12 @@ class Task
         return $this;
     }
 
-    public function getPrice(): ?float
+    public function getPrice(): ?int
     {
-        return $this->price;
+        return $this->price / 100;
     }
 
-    public function setPrice(float $price): self
+    public function setPrice(int $price): self
     {
         $this->price = $price;
 

@@ -234,7 +234,7 @@ class User implements UserInterface
 
     public function setTopup(int $topup): self
     {
-        $this->topup = $topup * 100;
+        $this->topup = $topup;
 
         return $this;
     }
@@ -246,7 +246,7 @@ class User implements UserInterface
 
     public function setEarnings(int $earnings): self
     {
-        $this->earnings = $earnings * 100;
+        $this->earnings = $earnings;
 
         return $this;
     }
@@ -419,7 +419,7 @@ class User implements UserInterface
 
     public function setFrozen(?int $frozen): self
     {
-        $this->frozen = $frozen * 100;
+        $this->frozen = $frozen;
 
         return $this;
     }
