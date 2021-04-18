@@ -31,7 +31,7 @@ class FinanceNew extends AbstractController
         $couponId = $finance->getCouponId();
 
         // $em = $this->getDoctrine()->getManager();
-        // $em = $event->getEntityManager();
+        $em = $event->getEntityManager();
         $user = $this->getDoctrine()->getRepository(User::class)->find($uid);
 
         if ($couponId != 0) {
@@ -73,7 +73,7 @@ class FinanceNew extends AbstractController
         }
 
         // $em->persist($user);
-        // $em->flush();
+        $em->flush();
     }
 
     // balance
