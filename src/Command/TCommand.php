@@ -10,6 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use App\Entity\User;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
 class TCommand extends Command
 {
@@ -17,9 +18,12 @@ class TCommand extends Command
 
     private $userRepo;
 
-    public function __construct(UserRepository $userRepo)
+    private $em;
+
+    public function __construct(UserRepository $userRepo, EntityManagerInterface $em)
     {
         $this->userRepo = $userRepo;
+        $this->em = $em;
         parent::__construct();
     }
 
@@ -39,7 +43,10 @@ class TCommand extends Command
 
         if ($arg1) {
             // $io->note(sprintf('You passed an argument: %s', $arg1));
-            $io->success($this->userRepo->getHim($arg1)->getUsername());
+            $him = $this->userRepo->getHim($arg1);
+            // $him->setNick('test');
+            // $this->em->flush();
+            $io->success($him->getUsername());
         }
 
         if ($input->getOption('option1')) {
