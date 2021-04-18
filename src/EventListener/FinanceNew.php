@@ -116,10 +116,11 @@ class FinanceNew extends AbstractController
             break;
         case 8: // buyVip
             $level = $finance->getLevel();
-            $rebate = $level->getPrice() * $level->getTopupRatio();
-            $referrer = $user->getReferrer();
-            $referrer->setTopup($referrer->getTopup() + $rebate);
-            // $em->persist($referrer);
+            $rebate = $level->getPrice() * 100 * $level->getTopupRatio();
+            if ($referrer = $user->getReferrer()) {
+                $referrer->setTopup($referrer->getTopup() + $rebate);
+                // $em->persist($referrer);
+            }
 
             // $newFin = new Finance();
             // $newFin->setUser($referrer);
