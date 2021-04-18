@@ -39,7 +39,7 @@ class TCommand extends Command
 
         if ($arg1) {
             // $io->note(sprintf('You passed an argument: %s', $arg1));
-            $io->success($this->userRepo->getHim($arg1)[0]->getUsername());
+            $io->success($this->userRepo->getHim($arg1)->getUsername());
         }
 
         if ($input->getOption('option1')) {

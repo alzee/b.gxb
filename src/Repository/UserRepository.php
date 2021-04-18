@@ -40,10 +40,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $this->createQueryBuilder('u')
             ->andWhere('u.id = :val')
             ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
+            ->getOneOrNullResult()
         ;
     }
 
