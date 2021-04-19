@@ -48,6 +48,8 @@ class ApiController extends AbstractController
         // get order info from wx callback
 
         $wxsig = $request->headers->get('Wechatpay-Signature');
+        // verify Wechatpay-Signature
+
         $params  = $request->toArray();
         $id = $params['id'];
         $time = $params['create_time'];
@@ -59,6 +61,13 @@ class ApiController extends AbstractController
         $ciphertext = $resource['ciphertext'];
         $nonce = $resource['nonce'];
         $associated_data = $resource['associated_data'];
+        $data = sodium_crypto_aead_aes256gcm_decrypt(base64_decode($ciphertext), $associated_data, $nonce, $apikey_v3);
+        $wxorderid = $data['transaction_id'];
+        $orderid = $data['out_trade_no'];
+        $trade_state = $data['trade_state'];
+        // $success_time = $data['success_time'];
+        // $payer = $data['payer'];
+        // $amount = $data['amount'];
 
         $logger->info('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
         $logger->info($wxsig);
@@ -71,13 +80,18 @@ class ApiController extends AbstractController
         $logger->info($ciphertext);
         $logger->info($nonce);
         $logger->info($associated_data);
+        $logger->info($data);
+        $logger->info($wxorderid);
+        $logger->info($orderid);
+        $logger->info($trade_state);
         $logger->info('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
         
-        // update order status
-        $orderid = '';
         $em = $this->getDoctrine()->getManager();
-        if (false) {
-            $order = $this->getDoctrine()->getRepository(Finance::class)->findOneBy(['orderid' => $orderid]);
+        $order = $this->getDoctrine()->getRepository(Finance::class)->findOneBy(['orderid' => $orderid]);
+        $order->setWxpayData($data);
+        $order->setWxOrderid($wxorderid);
+        // update order status
+        if ($trade_state == 'SUCCESS') {
             $order->setStatus(5);
         }
         $em->flush();
