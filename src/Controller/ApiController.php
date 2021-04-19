@@ -43,7 +43,7 @@ class ApiController extends AbstractController
     /**
      * @Route("/paid", name="_paid")
      */
-    public function paid(Request $request, LoggerInterface $logger, $orderid = '', $status = 0): Response
+    public function paid($orderid = '', Request $request, LoggerInterface $logger): Response
     {
         // get order info from wx callback
 
