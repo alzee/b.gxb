@@ -54,6 +54,10 @@ class ApiController extends AbstractController
         $evType = $params['event_type'];
         $resource = $params['resource'];
         $summary = $params['summary'];
+        $algorithm = $resource['algorithm'];
+        $ciphertext = $resource['ciphertext'];
+        $nonce = $resource['nonce'];
+        $associated_data = $resource['associated_data'];
 
         $logger->info('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
         $logger->info($id);
@@ -61,8 +65,11 @@ class ApiController extends AbstractController
         $logger->info($resType);
         $logger->info($evType);
         $logger->info($summary);
+        $logger->info($algorithm);
+        $logger->info($ciphertext);
+        $logger->info($nonce);
+        $logger->info($associated_data);
         $logger->info('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-
         
         // update order status
         $orderid = '';
