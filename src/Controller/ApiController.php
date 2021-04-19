@@ -47,9 +47,22 @@ class ApiController extends AbstractController
     {
         // get order info from wx callback
 
-        // $params  = $request->toArray();
-        // $logger->info($params);
-        $logger->info('>>>>>>>>>>>>>>>>>>>>>>>>>test>>>>>>>>>>>>>>>>>>>');
+        $params  = $request->toArray();
+        $id = $params['id'];
+        $time = $params['create_time'];
+        $resType = $params['resource_type'];
+        $evType = $params['event_type'];
+        $resource = $params['resource'];
+        $summary = $params['summary'];
+
+        $logger->info('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+        $logger->info($id);
+        $logger->info($time);
+        $logger->info($resType);
+        $logger->info($evType);
+        $logger->info($summary);
+        $logger->info('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+
         
         // update order status
         $orderid = '';
