@@ -161,7 +161,7 @@ class ApiController extends AbstractController
         else if ($method == 1) {
             // 微信支付统一下单
             $url = "https://api.mch.weixin.qq.com/v3/pay/transactions/app";
-            $method = 'POST';
+            $httpMethod = 'POST';
             $data0 = [
                 'appid' => $this->appid,
                 'mchid' => $this->mchid,
@@ -174,11 +174,11 @@ class ApiController extends AbstractController
                 ]
             ];
 
-            $sig = $this->genSig($url, $method, json_encode($data0));
+            $sig = $this->genSig($url, $httpMethod, json_encode($data0));
             $header[] = 'Content-Type: application/json';
             $header[] = 'Accept:application/json';
             $header[] = $sig;
-            $resp = $this->httpclient->request($method, $url ,['headers' => $header, 'json' => $data0]);
+            $resp = $this->httpclient->request($httpMethod, $url ,['headers' => $header, 'json' => $data0]);
             $content = json_decode($resp->getContent(), true);
             $prepayid = $content['prepay_id'];
 
