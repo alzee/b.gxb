@@ -43,16 +43,18 @@ class ApiController extends AbstractController
     /**
      * @Route("/paid", name="_paid")
      */
-    public function paid($orderid = '', Request $request, LoggerInterface $logger): Response
+    public function paid(Request $request, LoggerInterface $logger): Response
     {
         // get order info from wx callback
 
-        $params  = $request->toArray();
-        $logger->info($params);
+        // $params  = $request->toArray();
+        // $logger->info($params);
+        $logger->info('>>>>>>>>>>>>>>>>>>>>>>>>>test>>>>>>>>>>>>>>>>>>>');
         
         // update order status
+        $orderid = '';
         $em = $this->getDoctrine()->getManager();
-        if ($orderid) {
+        if (false) {
             $order = $this->getDoctrine()->getRepository(Finance::class)->findOneBy(['orderid' => $orderid]);
             $order->setStatus(5);
         }
