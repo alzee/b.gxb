@@ -16,6 +16,7 @@ use App\Entity\Level;
 use App\Entity\Task;
 use App\Entity\Category;
 use App\Entity\Status;
+use App\Entity\Bid;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 
 class FinanceNew extends AbstractController
@@ -81,6 +82,13 @@ class FinanceNew extends AbstractController
                 $t->setRecommendUntil(new \DateTimeImmutable($postData['recommendUntil']));
                 break;
             case 4: // bid
+                $t = $this->getDoctrine()->getRepository(Task::class)->find($postData['taskId']);
+                $bid = new Bid();
+                $bid->setIsBuyNow($postData['isBuyNow']);
+                $bid->setPosition($postData['position']);
+                $bid->setPrice($postData['price']);
+                $bid->setTask($t);
+                $em->persist($bid);
                 break;
             case 5: // equity
                 break;
