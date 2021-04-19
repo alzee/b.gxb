@@ -211,12 +211,9 @@ class ApiController extends AbstractController
         $em->persist($order);
         $em->flush();
 
-        // if ($method == 0) {
-        //     $this->paid($orderid);
-        // }
-
-        $this->paid($orderid);
-
+        if ($method == 0) {
+            $this->paid($orderid);
+        }
 
         return $this->json($d);
     }
