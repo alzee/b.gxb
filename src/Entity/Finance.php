@@ -85,6 +85,11 @@ class Finance
      */
     private $data = [];
 
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $wxpayData = [];
+
     public function __construct()
     {
         $this->date = new \DateTimeImmutable();
@@ -247,6 +252,18 @@ class Finance
     public function setData(?array $data): self
     {
         $this->data = $data;
+
+        return $this;
+    }
+
+    public function getWxpayData(): ?array
+    {
+        return $this->wxpayData;
+    }
+
+    public function setWxpayData(?array $wxpayData): self
+    {
+        $this->wxpayData = $wxpayData;
 
         return $this;
     }
