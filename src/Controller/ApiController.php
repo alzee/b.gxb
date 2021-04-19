@@ -70,22 +70,22 @@ class ApiController extends AbstractController
         // $payer = $data['payer'];
         // $amount = $data['amount'];
 
-        $logger->info('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-        $logger->info($wxsig);
-        $logger->info($id);
-        $logger->info($time);
-        $logger->info($resType);
-        $logger->info($evType);
-        $logger->info($summary);
-        $logger->info($algorithm);
-        $logger->info($ciphertext);
-        $logger->info($nonce);
-        $logger->info($associated_data);
-        $logger->info($json);
-        $logger->info($wxorderid);
-        $logger->info($orderid);
-        $logger->info($trade_state);
-        $logger->info('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+        // $logger->info('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+        // $logger->info($wxsig);
+        // $logger->info($id);
+        // $logger->info($time);
+        // $logger->info($resType);
+        // $logger->info($evType);
+        // $logger->info($summary);
+        // $logger->info($algorithm);
+        // $logger->info($ciphertext);
+        // $logger->info($nonce);
+        // $logger->info($associated_data);
+        // $logger->info($json);
+        // $logger->info($wxorderid);
+        // $logger->info($orderid);
+        // $logger->info($trade_state);
+        // $logger->info('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
         
         $em = $this->getDoctrine()->getManager();
         $order = $this->getDoctrine()->getRepository(Finance::class)->findOneBy(['orderid' => $orderid]);
