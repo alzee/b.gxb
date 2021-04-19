@@ -122,7 +122,6 @@ class FinanceNew extends AbstractController
                     $referrer->setTopup($referrer->getTopup() + $rebate);
                 }
                 break;
-            default:
             }
 
             if ($type != 0) {
