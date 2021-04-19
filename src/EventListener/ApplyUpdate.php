@@ -29,9 +29,9 @@ class ApplyUpdate extends AbstractController
 
             $owner->setFrozen($owner->getFrozen() - $price);
             $applicant->setEarnings($applicant->getEarnings() + $price);
-            $applicant->setCoin($applicant->getCoin() + intval($price));
-            $em->persist($owner);
-            $em->persist($applicant);
+            $applicant->setCoin($applicant->getCoin() + intval($price / 100));
+            // $em->persist($owner);
+            // $em->persist($applicant);
             $em->flush();
         }
     }
