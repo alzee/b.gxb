@@ -12,6 +12,7 @@ use Darabonba\OpenApi\Models\Config;
 use AlibabaCloud\SDK\Dysmsapi\V20170525\Models\SendSmsRequest;
 use App\Entity\Finance;
 use App\Entity\User;
+use Psr\Log\LoggerInterface;
 
 /**
  * @Route("/api", name="api")
@@ -42,12 +43,13 @@ class ApiController extends AbstractController
     /**
      * @Route("/paid", name="_paid")
      */
-    public function paid(Request $request, $orderid = '', $status = 0): Response
+    public function paid(Request $request, LoggerInterface $logger, $orderid = '', $status = 0): Response
     {
         // get order info from wx callback
         // $params  = $request->toArray();
         
         // update order status
+        $logger->info('test');
         $em = $this->getDoctrine()->getManager();
         if ($orderid) {
             $order = $this->getDoctrine()->getRepository(Finance::class)->findOneBy(['orderid' => $orderid]);
