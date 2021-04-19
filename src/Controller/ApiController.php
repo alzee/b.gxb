@@ -42,15 +42,16 @@ class ApiController extends AbstractController
     /**
      * @Route("/paid", name="_paid")
      */
-    public function paid($orderid = '')
+    public function paid($orderid = '', $status = 0)
     {
         // get order info from wx callback
         
         // update order status
         $em = $this->getDoctrine()->getManager();
-        $order = $this->getDoctrine()->getRepository(Finance::class)->findOneBy(['orderid' => $orderid]);
-        $order->setStatus(5);
-        $em->persist($order);
+        if ($orderid) {
+            $order = $this->getDoctrine()->getRepository(Finance::class)->findOneBy(['orderid' => $orderid]);
+            $order->setStatus(5);
+        }
         $em->flush();
 
         $msg = [
@@ -122,39 +123,19 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Route("/prepayid", name="_prepayid")
+     * @Route("/order", name="_order")
      */
-    function getPrepayId(Request $request): Response
+    function order(Request $request): Response
     {
         $params  = $request->toArray();
         $amount = $params['amount'];
         $uid = $params['uid'];
         $type = $params['type'];
+        $method = $params['method'];
         $note = $params['note'];
+        $couponId = isset($params['couponId']) ? $params['couponId'] : 0;
+        $data = isset($params['data']) ? $params['data'] : [];
         $orderid = uniqid() . time();
-
-        // 微信支付统一下单
-        $url = "https://api.mch.weixin.qq.com/v3/pay/transactions/app";
-        $method = 'POST';
-        $data = [
-            'appid' => $this->appid,
-            'mchid' => $this->mchid,
-            'description' => '达人共享宝-在线支付',
-            'out_trade_no' => $orderid,
-            'notify_url' => 'http://backend.drgxb.com/api/paid',
-            'amount' => [
-                'total' => 1
-                // 'total' => $amount
-            ]
-        ];
-
-        $sig = $this->genSig($url, $method, json_encode($data));
-        $header[] = 'Content-Type: application/json';
-        $header[] = 'Accept:application/json';
-        $header[] = $sig;
-        $resp = $this->httpclient->request($method, $url ,['headers' => $header, 'json' => $data]);
-        $content = json_decode($resp->getContent(), true);
-        $prepayid = $content['prepay_id'];
 
         // create new order
         $em = $this->getDoctrine()->getManager();
@@ -162,39 +143,76 @@ class ApiController extends AbstractController
         $order = new Finance();
         $order->setNote($note);
         $order->setType($type);
-        $order->setPrepayid($prepayid);
         $order->setOrderid($orderid);
         $order->setUser($user);
         $order->setAmount($amount);
+        $order->setData($data);
+
+        if ($method == 0) {
+            $d = [
+                'code' => 0,
+                'msg' => 'success'
+            ];
+        }
+        else if ($method == 1) {
+            // 微信支付统一下单
+            $url = "https://api.mch.weixin.qq.com/v3/pay/transactions/app";
+            $method = 'POST';
+            $data0 = [
+                'appid' => $this->appid,
+                'mchid' => $this->mchid,
+                'description' => '达人共享宝-在线支付',
+                'out_trade_no' => $orderid,
+                'notify_url' => 'http://backend.drgxb.com/api/paid',
+                'amount' => [
+                    'total' => 1
+                    // 'total' => $amount
+                ]
+            ];
+
+            $sig = $this->genSig($url, $method, json_encode($data0));
+            $header[] = 'Content-Type: application/json';
+            $header[] = 'Accept:application/json';
+            $header[] = $sig;
+            $resp = $this->httpclient->request($method, $url ,['headers' => $header, 'json' => $data0]);
+            $content = json_decode($resp->getContent(), true);
+            $prepayid = $content['prepay_id'];
+
+            $order->setPrepayid($prepayid);
+            
+            // params app needed for invoke payment. It's more convenient to get them on server.
+            $mchid = $this->mchid;
+            $appid = $this->appid;
+            $timestamp = time();
+            $nonce = md5(uniqid());
+            $msg = $appid . "\n".
+                $timestamp . "\n" .
+                $nonce . "\n" .
+                $prepayid . "\n";
+
+            openssl_sign($msg, $raw_sign, $this->getMchPrivatekey(), 'sha256WithRSAEncryption');
+            $sig1 = base64_encode($raw_sign);
+
+            $d = [
+                'appid' => $appid,
+                'partnerid' => $mchid,
+                'prepayid' => $prepayid,
+                //'package' => 'Sign=WXPay',
+                'noncestr' => $nonce,
+                'timestamp' => $timestamp,
+                'sign' => $sig1
+            ];
+        }
+
         $em->persist($order);
         $em->flush();
 
-        // ONLY FOR TESTING
-        // update order status to success
+        // if ($method == 0) {
+        //     $this->paid($orderid);
+        // }
+
         $this->paid($orderid);
 
-        // params app needed for invoke payment. It's more convenient to get them on server.
-        $mchid = $this->mchid;
-        $appid = $this->appid;
-        $timestamp = time();
-        $nonce = md5(uniqid());
-        $msg = $appid . "\n".
-            $timestamp . "\n" .
-            $nonce . "\n" .
-            $prepayid . "\n";
-
-        openssl_sign($msg, $raw_sign, $this->getMchPrivatekey(), 'sha256WithRSAEncryption');
-        $sig1 = base64_encode($raw_sign);
-
-        $d = [
-            'appid' => $appid,
-            'partnerid' => $mchid,
-            'prepayid' => $prepayid,
-            //'package' => 'Sign=WXPay',
-            'noncestr' => $nonce,
-            'timestamp' => $timestamp,
-            'sign' => $sig1
-        ];
 
         return $this->json($d);
     }
