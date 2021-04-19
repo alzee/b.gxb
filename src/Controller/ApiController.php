@@ -45,7 +45,7 @@ class ApiController extends AbstractController
     public function paid(Request $request, $orderid = '', $status = 0): Response
     {
         // get order info from wx callback
-        $params  = $request->toArray();
+        // $params  = $request->toArray();
         
         // update order status
         $em = $this->getDoctrine()->getManager();
@@ -56,7 +56,7 @@ class ApiController extends AbstractController
         $em->flush();
 
         $msg = [
-            "code" => "success",
+            "code" => "SUCCESS",
             "message" => "成功"
         ];
         return $this->json($msg);
