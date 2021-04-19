@@ -134,6 +134,7 @@ class ApiController extends AbstractController
         $method = $params['method'];
         $note = $params['note'];
         $couponId = isset($params['couponId']) ? $params['couponId'] : 0;
+        $fee = isset($params['fee']) ? $params['fee'] : 0;
         $data = isset($params['data']) ? $params['data'] : [];
         $orderid = uniqid() . time();
 
@@ -146,6 +147,9 @@ class ApiController extends AbstractController
         $order->setOrderid($orderid);
         $order->setUser($user);
         $order->setAmount($amount);
+        $order->setMethod($method);
+        $order->setCouponId($couponId);
+        $order->setFee($fee);
         $order->setData($data);
 
         if ($method == 0) {

@@ -14,6 +14,8 @@ use App\Entity\User;
 use App\Entity\Coupon;
 use App\Entity\Level;
 use App\Entity\Task;
+use App\Entity\Category;
+use App\Entity\Status;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 
 class FinanceNew extends AbstractController
@@ -22,7 +24,6 @@ class FinanceNew extends AbstractController
     {
     }
 
-    // wxpay
     public function postUpdate(Finance $finance, LifecycleEventArgs $event): void
     {
         $em = $event->getEntityManager();
@@ -51,14 +52,33 @@ class FinanceNew extends AbstractController
                 break;
             case 1: // post task
                 $user->setFrozen($user->getFrozen() + $amount - $fee);
+                $t = new Task();
+                $cate = $this->getDoctrine()->getRepository(Category::class)->find($postData['cateId']);
+                $t->setCategory($cate);
+                $t->setDescription($postData['description']);
+                $t->setGuides($postData['guides']);
+                $t->setLink($postData['link']);
+                $t->setName($postData['name']);
+                $t->setNote($postData['note']);
+                $owner = $this->getDoctrine()->getRepository(User::class)->find($postData['ownerId']);
+                $t->setOwner($owner);
+                $t->setPrice($postData['price']);
+                $t->setQuantity($postData['quantity']);
+                $t->setReviewHours($postData['reviewHours']);
+                $t->setReviews($postData['reviews']);
+                $t->setTitle($postData['title']);
+                $t->setWorkHours($postData['workHours']);
+                $tStatus = $this->getDoctrine()->getRepository(Status::class)->find(2);
+                $t->setStatus($tStatus);
+                $em->persist($t);
                 break;
             case 2: // stick
-                $task = $this->getDoctrine()->getRepository(Task::class)->find($data['entityId']);
-                $task->setStickyUntil(new \DateTimeImmutable($postData['stickyUntil']));
+                $t = $this->getDoctrine()->getRepository(Task::class)->find($data['entityId']);
+                $t->setStickyUntil(new \DateTimeImmutable($postData['stickyUntil']));
                 break;
             case 3: // recommend
-                $task = $this->getDoctrine()->getRepository(Task::class)->find($data['entityId']);
-                $task->setRecommendUntil(new \DateTimeImmutable($postData['recommendUntil']));
+                $t = $this->getDoctrine()->getRepository(Task::class)->find($data['entityId']);
+                $t->setRecommendUntil(new \DateTimeImmutable($postData['recommendUntil']));
                 break;
             case 4: // bid
                 break;
@@ -92,10 +112,5 @@ class FinanceNew extends AbstractController
         }
 
         $em->flush();
-    }
-
-    // balance
-    public function prePersist(Finance $finance, LifecycleEventArgs $event): void
-    {
     }
 }

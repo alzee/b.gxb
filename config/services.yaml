@@ -37,10 +37,6 @@ services:
                 name: 'doctrine.orm.entity_listener'
                 event: 'postUpdate'
                 entity: 'App\Entity\Finance'
-            -
-                name: 'doctrine.orm.entity_listener'
-                event: 'prePersist'
-                entity: 'App\Entity\Finance'
 
     App\EventListener\GxbNew:
         tags:
@@ -62,10 +58,3 @@ services:
                 name: 'doctrine.orm.entity_listener'
                 event: 'postUpdate'
                 entity: 'App\Entity\Apply'
-
-    App\EventListener\TaskNew:
-        tags:
-            -
-                name: 'doctrine.orm.entity_listener'
-                event: 'prePersist'
-                entity: 'App\Entity\Task'
