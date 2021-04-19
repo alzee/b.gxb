@@ -12,6 +12,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Finance;
 use App\Entity\User;
 use App\Entity\Coupon;
+use App\Entity\Level;
+use App\Entity\Task;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 
 class FinanceNew extends AbstractController
@@ -23,35 +25,40 @@ class FinanceNew extends AbstractController
     // wxpay
     public function postUpdate(Finance $finance, LifecycleEventArgs $event): void
     {
+        $em = $event->getEntityManager();
         $uid = $finance->getUser();
+        $user = $this->getDoctrine()->getRepository(User::class)->find($uid);
         $type = $finance->getType();
         $note = $finance->getNote();
         $amount = $finance->getAmount();
         $status = $finance->getStatus();
         $couponId = $finance->getCouponId();
+        $fee = $finance->getFee();
+        $method = $finance->getMethod();
+        $data = $finance->getData();
+        $postData = isset($data['postData']) ? $data['postData'] : [];
 
-        // $em = $this->getDoctrine()->getManager();
-        $em = $event->getEntityManager();
-        $user = $this->getDoctrine()->getRepository(User::class)->find($uid);
-
-        if ($couponId != 0) {
-            $coupon = $this->getDoctrine()->getRepository(Coupon::class)->find($couponId);
-            $user->removeCoupon($coupon);
-        }
-
-        // topup and success
-        if ($type == 0 && $status == 5) {
-            $user->setTopup($user->getTopup()  + $amount);
-        }
 
         if ($status == 5) {
+            if ($couponId != 0) {
+                $coupon = $this->getDoctrine()->getRepository(Coupon::class)->find($couponId);
+                $user->removeCoupon($coupon);
+            }
+
             switch ($type) {
+            case 0: // topup
+                $user->setTopup($user->getTopup()  + $amount);
+                break;
             case 1: // post task
                 $user->setFrozen($user->getFrozen() + $amount - $fee);
                 break;
             case 2: // stick
+                $task = $this->getDoctrine()->getRepository(Task::class)->find($data['entityId']);
+                $task->setStickyUntil(new \DateTimeImmutable($postData['stickyUntil']));
                 break;
             case 3: // recommend
+                $task = $this->getDoctrine()->getRepository(Task::class)->find($data['entityId']);
+                $task->setRecommendUntil(new \DateTimeImmutable($postData['recommendUntil']));
                 break;
             case 4: // bid
                 break;
@@ -62,87 +69,33 @@ class FinanceNew extends AbstractController
             case 7: // landLord
                 break;
             case 8: // buyVip
-                $level = $finance->getLevel();
-                $rebate = $level->getPrice() * $level->getTopupRatio();
-                $referrer = $user->getReferrer();
-                $referrer->setTopup($referrer->getTopup() + $rebate);
-                // $em->persist($referrer);
+                $levelId = $finance->getLevel();
+                $level = $this->getDoctrine()->getRepository(Level::class)->find($levelId);
+                $rebate = $level->getPrice() * 100 * $level->getTopupRatio();
+                if ($referrer = $user->getReferrer()) {
+                    $referrer->setTopup($referrer->getTopup() + $rebate);
+                }
                 break;
             default:
             }
+
+            if ($type != 0) {
+                $topup = $user->getTopup();
+                if ($topup < $amount) {
+                    $user->setEarnings($user->getEarnings() - ($amount - $topup));
+                    $user->setTopup(0);
+                }
+                else {
+                    $user->setTopup($user->getTopup() - $amount);
+                }
+            }
         }
 
-        // $em->persist($user);
         $em->flush();
     }
 
     // balance
     public function prePersist(Finance $finance, LifecycleEventArgs $event): void
     {
-        if ($finance->getPrepayid()) {
-            return; // do nothing if it's wxpay
-        }
-        $uid = $finance->getUser();
-        $type = $finance->getType();
-        $note = $finance->getNote();
-        $amount = $finance->getAmount();
-        $status = $finance->getStatus();
-        $couponId = $finance->getCouponId();
-        $fee = $finance->getFee();
-
-        // $em = $this->getDoctrine()->getManager();
-        // $em = $event->getEntityManager();
-        $user = $this->getDoctrine()->getRepository(User::class)->find($uid);
-
-        if ($couponId != 0) {
-            $coupon = $this->getDoctrine()->getRepository(Coupon::class)->find($couponId);
-            $user->removeCoupon($coupon);
-        }
-
-        switch ($type) {
-        case 1: // post task
-            $user->setFrozen($user->getFrozen() + $amount - $fee);
-            break;
-        case 2: // stick
-            break;
-        case 3: // recommend
-            break;
-        case 4: // bid
-            break;
-        case 5: // equity
-            break;
-        case 6: // occupy
-            break;
-        case 7: // landLord
-            break;
-        case 8: // buyVip
-            $level = $finance->getLevel();
-            $rebate = $level->getPrice() * 100 * $level->getTopupRatio();
-            if ($referrer = $user->getReferrer()) {
-                $referrer->setTopup($referrer->getTopup() + $rebate);
-                // $em->persist($referrer);
-            }
-
-            // $newFin = new Finance();
-            // $newFin->setUser($referrer);
-            // $newFin->setAmount($rebate);
-            // $newFin->setType(9);
-            // $newFin->setNote('会员充值返利');
-            // $em->persist($newFin);
-            break;
-        default:
-        }
-
-        $topup = $user->getTopup();
-        if ($topup < $amount) {
-            $user->setEarnings($user->getEarnings() - ($amount - $topup));
-            $user->setTopup(0);
-        }
-        else {
-            $user->setTopup($user->getTopup() - $amount);
-        }
-
-        // $em->persist($user);
-        // $em->flush();
     }
 }
