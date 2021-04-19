@@ -79,6 +79,9 @@ class FinanceNew extends AbstractController
     // balance
     public function prePersist(Finance $finance, LifecycleEventArgs $event): void
     {
+        if ($finance->getPrepayid()) {
+            return; // do nothing if it's wxpay
+        }
         $uid = $finance->getUser();
         $type = $finance->getType();
         $note = $finance->getNote();
@@ -97,8 +100,6 @@ class FinanceNew extends AbstractController
         }
 
         switch ($type) {
-        case 0: // topup
-            return; // do nothing here, since we put things in postUpdate
         case 1: // post task
             $user->setFrozen($user->getFrozen() + $amount - $fee);
             break;
