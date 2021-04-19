@@ -168,7 +168,7 @@ class ApiController extends AbstractController
                 'mchid' => $this->mchid,
                 'description' => '达人共享宝-在线支付',
                 'out_trade_no' => $orderid,
-                'notify_url' => 'http://backend.drgxb.com/api/paid',
+                'notify_url' => 'https://backend.drgxb.com/api/paid',
                 'amount' => [
                     'total' => 1
                     // 'total' => $amount
