@@ -115,8 +115,8 @@ class FinanceNew extends AbstractController
                 $land->setForSale($postData['forSale']);
                 break;
             case 8: // buyVip
-                $levelId = $finance->getLevel();
-                $level = $this->getDoctrine()->getRepository(Level::class)->find($levelId);
+                $level = $this->getDoctrine()->getRepository(Level::class)->find($postData['levelId']);
+                $user->setLevel($level);
                 $rebate = $level->getPrice() * 100 * $level->getTopupRatio();
                 if ($referrer = $user->getReferrer()) {
                     $referrer->setTopup($referrer->getTopup() + $rebate);
