@@ -37,7 +37,7 @@ CREATE TABLE `coupon` (
 
 LOCK TABLES `coupon` WRITE;
 /*!40000 ALTER TABLE `coupon` DISABLE KEYS */;
-INSERT INTO `coupon` VALUES (1,5,1,'任务发布'),(2,5,2,'任务置顶'),(3,5,3,'任务推荐'),(4,5,8,'VIP充值');
+INSERT INTO `coupon` VALUES (1,500,1,'任务发布'),(2,500,2,'任务置顶'),(3,500,3,'任务推荐'),(4,500,8,'VIP充值');
 /*!40000 ALTER TABLE `coupon` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
