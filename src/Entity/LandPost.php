@@ -82,6 +82,11 @@ class LandPost
      */
     private $date;
 
+    public function __construct()
+    {
+        $this->date = new \DateTimeImmutable();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

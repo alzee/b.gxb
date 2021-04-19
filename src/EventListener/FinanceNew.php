@@ -17,6 +17,8 @@ use App\Entity\Task;
 use App\Entity\Category;
 use App\Entity\Status;
 use App\Entity\Bid;
+use App\Entity\Land;
+use App\Entity\LandPost;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 
 class FinanceNew extends AbstractController
@@ -93,6 +95,17 @@ class FinanceNew extends AbstractController
             case 5: // equity
                 break;
             case 6: // occupy
+                $owner = $this->getDoctrine()->getRepository(User::class)->find($postData['ownerId']);
+                $land = $this->getDoctrine()->getRepository(Land::class)->find($postData['landId']);
+                $landPost = new LandPost();
+                $landPost->setOwner($owner);
+                $landPost->setLand($land);
+                $landPost->setBody($postData['body']);
+                $landPost->setDays($postData['days']);
+                $landPost->setPrice($postData['price']);
+                $landPost->setCover($postData['cover']);
+                $landPost->setPics($postData['pics']);
+                $em->persist($landPost);
                 break;
             case 7: // landLord
                 break;
