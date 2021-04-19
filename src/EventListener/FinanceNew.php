@@ -108,6 +108,11 @@ class FinanceNew extends AbstractController
                 $em->persist($landPost);
                 break;
             case 7: // landLord
+                $owner = $this->getDoctrine()->getRepository(User::class)->find($postData['ownerId']);
+                $land = $this->getDoctrine()->getRepository(Land::class)->find($data['entityId']);
+                $land->setPrePrice($postData['prePrice']);
+                $land->setOwner($owner);
+                $land->setForSale($postData['forSale']);
                 break;
             case 8: // buyVip
                 $levelId = $finance->getLevel();
