@@ -80,6 +80,16 @@ class Finance
      */
     private $level;
 
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $method = 0;
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $data = [];
+
     public function __construct()
     {
         $this->date = new \DateTimeImmutable();
@@ -230,6 +240,30 @@ class Finance
     public function setLevel(?Level $level): self
     {
         $this->level = $level;
+
+        return $this;
+    }
+
+    public function getMethod(): ?int
+    {
+        return $this->method;
+    }
+
+    public function setMethod(?int $method): self
+    {
+        $this->method = $method;
+
+        return $this;
+    }
+
+    public function getData(): ?array
+    {
+        return $this->data;
+    }
+
+    public function setData(?array $data): self
+    {
+        $this->data = $data;
 
         return $this;
     }
