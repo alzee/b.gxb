@@ -47,6 +47,7 @@ class ApiController extends AbstractController
     {
         // get order info from wx callback
 
+        $wxsig = $request->headers->get('Wechatpay-Signature');
         $params  = $request->toArray();
         $id = $params['id'];
         $time = $params['create_time'];
@@ -60,6 +61,7 @@ class ApiController extends AbstractController
         $associated_data = $resource['associated_data'];
 
         $logger->info('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+        $logger->info($wxsig);
         $logger->info($id);
         $logger->info($time);
         $logger->info($resType);
