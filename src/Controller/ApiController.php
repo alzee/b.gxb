@@ -61,7 +61,7 @@ class ApiController extends AbstractController
         $ciphertext = $resource['ciphertext'];
         $nonce = $resource['nonce'];
         $associated_data = $resource['associated_data'];
-        $json= sodium_crypto_aead_aes256gcm_decrypt(base64_decode($ciphertext), $associated_data, $nonce, $this->apikey_v3);
+        $json = sodium_crypto_aead_aes256gcm_decrypt(base64_decode($ciphertext), $associated_data, $nonce, $this->apikey_v3);
         $data = json_decode($json, true);
         $wxorderid = $data['transaction_id'];
         $orderid = $data['out_trade_no'];
@@ -81,7 +81,7 @@ class ApiController extends AbstractController
         $logger->info($ciphertext);
         $logger->info($nonce);
         $logger->info($associated_data);
-        $logger->info($data);
+        $logger->info($json);
         $logger->info($wxorderid);
         $logger->info($orderid);
         $logger->info($trade_state);
