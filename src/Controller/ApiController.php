@@ -46,10 +46,11 @@ class ApiController extends AbstractController
     public function paid(Request $request, LoggerInterface $logger, $orderid = '', $status = 0): Response
     {
         // get order info from wx callback
-        // $params  = $request->toArray();
+
+        $params  = $request->toArray();
+        $logger->info($params);
         
         // update order status
-        $logger->info('test');
         $em = $this->getDoctrine()->getManager();
         if ($orderid) {
             $order = $this->getDoctrine()->getRepository(Finance::class)->findOneBy(['orderid' => $orderid]);
