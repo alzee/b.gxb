@@ -153,7 +153,7 @@ class Task
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $contact;
+    private $note;
 
     /**
      * @ORM\Column(type="array", nullable=true)
@@ -416,14 +416,14 @@ class Task
         return $this;
     }
 
-    public function getContact(): ?string
+    public function getNote(): ?string
     {
-        return $this->contact;
+        return $this->note;
     }
 
-    public function setContact(?string $contact): self
+    public function setNote(?string $note): self
     {
-        $this->contact = $contact;
+        $this->note = $note;
 
         return $this;
     }
