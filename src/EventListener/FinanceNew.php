@@ -124,7 +124,8 @@ class FinanceNew extends AbstractController
                 break;
             }
 
-            if ($type != 0) {
+            // deduct balance
+            if ($type != 0 && $method == 0) {
                 $topup = $user->getTopup();
                 if ($topup < $amount) {
                     $user->setEarnings($user->getEarnings() - ($amount - $topup));
