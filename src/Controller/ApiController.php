@@ -42,9 +42,10 @@ class ApiController extends AbstractController
     /**
      * @Route("/paid", name="_paid")
      */
-    public function paid($orderid = '', $status = 0)
+    public function paid(Request $request, $orderid = '', $status = 0): Response
     {
         // get order info from wx callback
+        $params  = $request->toArray();
         
         // update order status
         $em = $this->getDoctrine()->getManager();

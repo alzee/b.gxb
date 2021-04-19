@@ -76,11 +76,6 @@ class Finance
     private $fee;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Level::class)
-     */
-    private $level;
-
-    /**
      * @ORM\Column(type="smallint", nullable=true)
      */
     private $method = 0;
@@ -228,18 +223,6 @@ class Finance
     public function setFee(?int $fee): self
     {
         $this->fee = $fee;
-
-        return $this;
-    }
-
-    public function getLevel(): ?Level
-    {
-        return $this->level;
-    }
-
-    public function setLevel(?Level $level): self
-    {
-        $this->level = $level;
 
         return $this;
     }
