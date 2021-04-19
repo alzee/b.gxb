@@ -62,6 +62,7 @@ class ApiController extends AbstractController
         $nonce = $resource['nonce'];
         $associated_data = $resource['associated_data'];
         $data = sodium_crypto_aead_aes256gcm_decrypt(base64_decode($ciphertext), $associated_data, $nonce, $this->apikey_v3);
+        $data = json_decode($data);
         $wxorderid = $data['transaction_id'];
         $orderid = $data['out_trade_no'];
         $trade_state = $data['trade_state'];
