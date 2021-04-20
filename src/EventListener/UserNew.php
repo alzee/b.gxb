@@ -28,7 +28,9 @@ class UserNew extends AbstractController
         $coupons = $this->getDoctrine()->getRepository(Coupon::class)->findAll();
         $level = $this->getDoctrine()->getRepository(Level::class)->find(9);
         $referer = $user->getReferrer();
-        $referer->setGxb($referer->getGxb() + 100);
+        if (!is_null($referer)) {
+            $referer->setGxb($referer->getGxb() + 100);
+        }
         foreach ($coupons as $i) {
             $user->addCoupon($i);
         }
