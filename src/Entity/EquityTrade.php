@@ -53,6 +53,17 @@ class EquityTrade
      */
     private $date;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $seller;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $status;
+
     public function __construct()
     {
         $this->date = new \DateTimeImmutable();
@@ -132,6 +143,30 @@ class EquityTrade
     public function setDate(\DateTimeImmutable $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getSeller(): ?User
+    {
+        return $this->seller;
+    }
+
+    public function setSeller(?User $seller): self
+    {
+        $this->seller = $seller;
+
+        return $this;
+    }
+
+    public function getStatus(): ?int
+    {
+        return $this->status;
+    }
+
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }
