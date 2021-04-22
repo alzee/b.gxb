@@ -48,6 +48,7 @@ class User implements UserInterface
      * @Groups({"bid:read"})
      * @Groups({"node:read"})
      * @Groups({"report:read"})
+     * @Groups({"equity:read"})
      */
     private $username;
 

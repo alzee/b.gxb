@@ -7,10 +7,15 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ * normalizationContext={"groups"={"equity:read"}},
+ * denormalizationContext={"groups"={"equity:write"}}
+ * )
  * @ORM\Entity(repositoryClass=EquityTradeRepository::class)
+ * @ApiFilter(SearchFilter::class, properties={"seller":"exact", "status": "exact"})
  */
 class EquityTrade
 {
@@ -18,37 +23,44 @@ class EquityTrade
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"equity:read"})
      */
     private $id;
 
     /**
+     * @Groups({"equity:read", "equity:write"})
      * @ORM\ManyToOne(targetEntity=User::class)
      * @ORM\JoinColumn(nullable=true)
      */
     private $buyer;
 
     /**
+     * @Groups({"equity:read", "equity:write"})
      * @ORM\Column(type="integer")
      */
     private $equity;
 
     /**
+     * @Groups({"equity:read", "equity:write"})
      * @ORM\Column(type="integer", nullable=true)
      */
     private $rmb;
 
     /**
+     * @Groups({"equity:read"})
      * @ORM\Column(type="datetime_immutable")
      */
     private $date;
 
     /**
+     * @Groups({"equity:read", "equity:write"})
      * @ORM\ManyToOne(targetEntity=User::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $seller;
 
     /**
+     * @Groups({"equity:read", "equity:write"})
      * @ORM\Column(type="smallint")
      */
     private $status = 0;
