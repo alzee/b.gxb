@@ -111,18 +111,6 @@ class EquityTrade
         return $this;
     }
 
-    public function getShop(): ?EquityShop
-    {
-        return $this->shop;
-    }
-
-    public function setShop(?EquityShop $shop): self
-    {
-        $this->shop = $shop;
-
-        return $this;
-    }
-
     public function getDate(): ?\DateTimeImmutable
     {
         return $this->date;
