@@ -38,17 +38,6 @@ class EquityTrade
     private $rmb;
 
     /**
-     * @ORM\Column(type="float")
-     */
-    private $rate;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=EquityShop::class)
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $shop;
-
-    /**
      * @ORM\Column(type="datetime_immutable")
      */
     private $date;
@@ -67,7 +56,6 @@ class EquityTrade
     public function __construct()
     {
         $this->date = new \DateTimeImmutable();
-        //$this->date = $this->date->setTimezone(new \DateTimeZone('Asia/Shanghai'));
     }
 
     public function getId(): ?int
