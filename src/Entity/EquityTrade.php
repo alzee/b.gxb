@@ -23,7 +23,7 @@ class EquityTrade
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class)
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $buyer;
 
@@ -33,7 +33,7 @@ class EquityTrade
     private $equity;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $rmb;
 
@@ -51,7 +51,7 @@ class EquityTrade
     /**
      * @ORM\Column(type="smallint")
      */
-    private $status;
+    private $status = 0;
 
     public function __construct()
     {
@@ -95,18 +95,6 @@ class EquityTrade
     public function setRmb(int $rmb): self
     {
         $this->rmb = $rmb;
-
-        return $this;
-    }
-
-    public function getRate(): ?float
-    {
-        return $this->rate;
-    }
-
-    public function setRate(float $rate): self
-    {
-        $this->rate = $rate;
 
         return $this;
     }
