@@ -19,6 +19,7 @@ use App\Entity\Status;
 use App\Entity\Bid;
 use App\Entity\Land;
 use App\Entity\LandPost;
+use App\Entity\EquityTrade;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 
 class FinanceNew extends AbstractController
@@ -93,6 +94,12 @@ class FinanceNew extends AbstractController
                 $em->persist($bid);
                 break;
             case 5: // equity
+                $e = $this->getDoctrine()->getRepository(EquityTrade::class)->find($data['entityId']);
+                $e->setBuyer($user);
+                $seller = $e->getSeller();
+                $user->setEquity($user->getEquity() + $e->getEquity());
+                $seller->setEquity($seller->getEquity() - $e->getEquity());
+                $e->setStatus(1);
                 break;
             case 6: // occupy
                 $owner = $this->getDoctrine()->getRepository(User::class)->find($postData['ownerId']);
