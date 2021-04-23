@@ -129,6 +129,8 @@ class FinanceNew extends AbstractController
                     $referrer->setTopup($referrer->getTopup() + $rebate);
                 }
                 break;
+            case 19: // withdraw
+                break;
             }
 
             // deduct balance
