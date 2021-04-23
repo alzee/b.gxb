@@ -11,6 +11,7 @@ namespace App\EventListener;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\User;
 use App\Entity\Apply;
+use App\Entity\Conifg;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 
 class ApplyUpdate extends AbstractController
@@ -30,8 +31,19 @@ class ApplyUpdate extends AbstractController
             $owner->setFrozen($owner->getFrozen() - $price);
             $applicant->setEarnings($applicant->getEarnings() + $price);
             $applicant->setCoin($applicant->getCoin() + intval($price / 100));
-            // $em->persist($owner);
-            // $em->persist($applicant);
+            $referer = $applicant->getReferrer();
+            if (!is_null($referer)) {
+                $configRepo = $em->getRepository(Config::class);
+                $rewardRate = $configRepo->findOneBy(['label' => 'referReward']);
+                $referer->setTopup($referer->getTopup() + ($price * $rewardRate));
+                // new finance for $referer
+                $rOfReferer = $referer->getReferrer();
+                if (!is_null($rOfReferer)) {
+                    $rewardRate2 = $configRepo->findOneBy(['label' => 'referReward2']);
+                    $rOfReferer->setTopup($rOfReferer->getTopup() + ($price * $rewardRate2));
+                    // new finance for $rOfReferer
+                }
+            }
             $em->flush();
         }
     }
