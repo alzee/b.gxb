@@ -8,11 +8,13 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass=FinanceRepository::class)
  * @ApiFilter(SearchFilter::class, properties={"user": "exact"})
+ * @ApiFilter(OrderFilter::class, properties={"date"})
  */
 class Finance
 {
