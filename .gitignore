@@ -9,7 +9,6 @@
 /public/update/
 /public/media/
 /public/download/*.apk
-/public/.user.ini
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
