@@ -35,12 +35,6 @@ class Node
 
     /**
      * @Groups({"node:read", "node:write"})
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $body;
-
-    /**
-     * @Groups({"node:read", "node:write"})
      * @ORM\Column(type="datetime_immutable")
      */
     private $date;
@@ -69,6 +63,11 @@ class Node
      */
     private $type;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $body;
+
     public function __construct()
     {
         $this->date = new \DateTimeImmutable();
@@ -88,18 +87,6 @@ class Node
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function getBody(): ?string
-    {
-        return $this->body;
-    }
-
-    public function setBody(?string $body): self
-    {
-        $this->body = $body;
 
         return $this;
     }
@@ -160,6 +147,18 @@ class Node
     public function setType(?NodeType $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getBody(): ?string
+    {
+        return $this->body;
+    }
+
+    public function setBody(?string $body): self
+    {
+        $this->body = $body;
 
         return $this;
     }
