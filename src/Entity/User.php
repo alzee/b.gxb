@@ -101,19 +101,19 @@ class User implements UserInterface
      * @ORM\Column(type="integer", nullable=true)
      * @Groups({"user:read", "user:write"})
      */
-    private $topup;
+    private $topup = 0;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @Groups({"user:read", "user:write"})
      */
-    private $earnings;
+    private $earnings = 0;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      * @Groups({"user:read", "user:write"})
      */
-    private $gxb;
+    private $gxb = 0;
 
     public function getId(): ?int
     {
@@ -287,7 +287,7 @@ class User implements UserInterface
      * @Groups({"user:read", "user:write"})
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $frozen;
+    private $frozen = 0;
 
     /**
      * @Groups({"user:read", "user:write"})
@@ -299,7 +299,7 @@ class User implements UserInterface
      * @Groups({"user:read", "user:write"})
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $coin;
+    private $coin = 0;
 
     /**
      * @ORM\OneToMany(targetEntity=Coin::class, mappedBy="user")
