@@ -6,10 +6,13 @@ use App\Repository\FinanceRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass=FinanceRepository::class)
+ * @ApiFilter(SearchFilter::class, properties={"user": "exact"})
  */
 class Finance
 {
