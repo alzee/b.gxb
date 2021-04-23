@@ -64,6 +64,7 @@ class Node
     private $type;
 
     /**
+     * @Groups({"node:read", "node:write"})
      * @ORM\Column(type="text", nullable=true)
      */
     private $body;
