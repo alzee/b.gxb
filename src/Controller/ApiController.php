@@ -331,4 +331,25 @@ class ApiController extends AbstractController
             //'keySec' => $accessKeySecret,
         ]);
     }
+
+    /**
+     * @Route("/ranking", name="_ranking")
+     */
+    public function ranking(Request $request, LoggerInterface $logger): Response
+    {
+        $conn = $this->getDoctrine()->getManager()->getConnection();
+
+        $sql = '
+            SELECT referrer_id, count(referrer_id) as count FROM user u
+            where referrer_id is not null
+            group by u.referrer_id
+            ORDER BY count desc
+            ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        // returns an array of arrays (i.e. a raw data set)
+        $r = $stmt->fetchAllAssociative();
+        return $this->json($r);
+    }
 }
