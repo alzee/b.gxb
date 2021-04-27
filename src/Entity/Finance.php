@@ -13,7 +13,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass=FinanceRepository::class)
- * @ApiFilter(SearchFilter::class, properties={"user": "exact"})
+ * @ApiFilter(SearchFilter::class, properties={"user": "exact", "status": "exact"})
  * @ApiFilter(OrderFilter::class, properties={"date"})
  */
 class Finance
