@@ -54,9 +54,11 @@ class UserNew extends AbstractController
 
             // Allocate A Color For The Text
             if ($k == 1) {
+                $user->setNick('1');
                 $color = imagecolorallocate($jpg_image, 218, 22, 22);
             }
             else {
+                $user->setNick('2');
                 $color = imagecolorallocate($jpg_image, 255, 255, 255);
             }
 
@@ -68,12 +70,15 @@ class UserNew extends AbstractController
             // Print Text On Image
             switch($k){
             case 0:
+                $user->setNick('3');
                 imagettftext($jpg_image, 20, 0, 610, 1288, $color, $font_path, $text);
                 break;
             case 1:
+                $user->setNick('4');
                 imagettftext($jpg_image, 25, 0, 280, 645, $color, $font_path, $text);
                 break;
             case 2:
+                $user->setNick('5');
                 imagettftext($jpg_image, 18, 0, 242, 422, $color, $font_path, $text);
                 break;
             }
