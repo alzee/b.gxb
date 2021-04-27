@@ -19,7 +19,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * normalizationContext={"groups"={"user:read"}},
  * denormalizationContext={"groups"={"user:write"}}
  * )
- * @ApiFilter(SearchFilter::class, properties={"username": "exact", "phone": "exact", "refcode": "exact"})
+ * @ApiFilter(SearchFilter::class, properties={"username": "exact", "phone": "exact", "refcode": "exact", "referrer": "exact"})
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
  * @Vich\Uploadable
