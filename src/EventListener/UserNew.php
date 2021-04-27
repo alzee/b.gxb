@@ -46,6 +46,7 @@ class UserNew extends AbstractController
 
         foreach ($posters as $k => $v) {
             //Set the Content Type
+            $user->setNick('yes');
             header('Content-type: image/jpeg');
 
             // Create Image From Existing File
