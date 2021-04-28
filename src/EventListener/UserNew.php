@@ -30,7 +30,13 @@ class UserNew extends AbstractController
         $referer = $user->getReferrer();
         if (!is_null($referer)) {
             $referer->setGxb($referer->getGxb() + 100);
+
+            $ror = $referer->getReferrer();
+            if (!is_null($ror)) {
+                $user->setRor($ror);
+            }
         }
+
         foreach ($coupons as $i) {
             $user->addCoupon($i);
         }
