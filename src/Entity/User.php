@@ -331,6 +331,7 @@ class User implements UserInterface
     private $ror;
 
     /**
+     * @Groups({"user:read"})
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private $date;
