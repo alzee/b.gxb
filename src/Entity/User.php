@@ -341,6 +341,7 @@ class User implements UserInterface
         $this->coins = new ArrayCollection();
         $this->coupon = new ArrayCollection();
         $this->refcode = substr(md5(uniqid()),0,8);
+        $this->date = new \DateTimeImmutable();
     }
 
     public function getPlainPassword(): ?string
