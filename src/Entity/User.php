@@ -19,7 +19,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * normalizationContext={"groups"={"user:read"}},
  * denormalizationContext={"groups"={"user:write"}}
  * )
- * @ApiFilter(SearchFilter::class, properties={"username": "exact", "phone": "exact", "refcode": "exact", "referrer": "exact"})
+ * @ApiFilter(SearchFilter::class, properties={"username": "exact", "phone": "exact", "refcode": "exact", "referrer": "exact", "ror": "exact"})
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
  * @Vich\Uploadable
@@ -324,6 +324,12 @@ class User implements UserInterface
      */
     private $referrer;
 
+    /**
+     * @Groups({"user:read", "user:write"})
+     * @ORM\ManyToOne(targetEntity=User::class)
+     */
+    private $ror;
+
     public function __construct()
     {
         $this->applies = new ArrayCollection();
@@ -524,6 +530,18 @@ class User implements UserInterface
     public function setReferrer(?self $referrer): self
     {
         $this->referrer = $referrer;
+
+        return $this;
+    }
+
+    public function getRor(): ?self
+    {
+        return $this->ror;
+    }
+
+    public function setRor(?self $ror): self
+    {
+        $this->ror = $ror;
 
         return $this;
     }
