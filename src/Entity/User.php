@@ -330,6 +330,11 @@ class User implements UserInterface
      */
     private $ror;
 
+    /**
+     * @ORM\Column(type="datetime_immutable", nullable=true)
+     */
+    private $date;
+
     public function __construct()
     {
         $this->applies = new ArrayCollection();
@@ -542,6 +547,18 @@ class User implements UserInterface
     public function setRor(?self $ror): self
     {
         $this->ror = $ror;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeImmutable
+    {
+        return $this->date;
+    }
+
+    public function setDate(?\DateTimeImmutable $date): self
+    {
+        $this->date = $date;
 
         return $this;
     }
