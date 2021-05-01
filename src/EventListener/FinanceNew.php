@@ -51,7 +51,7 @@ class FinanceNew extends AbstractController
             }
 
             switch ($type) {
-            case 0: // topup
+            case 50: // topup
                 $user->setTopup($user->getTopup()  + $amount);
                 break;
             case 1: // post task
