@@ -51,7 +51,7 @@ class Land
      * @Groups({"land:read", "land:write"})
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $price = 99;
+    private $price;
 
     /**
      * @Groups({"land:read", "land:write"})
@@ -63,7 +63,7 @@ class Land
      * @Groups({"land:read", "land:write"})
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $prePrice;
+    private $prePrice = 9900;
 
     public function getId(): ?int
     {
