@@ -11,6 +11,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Config;
 
 class TCommand extends Command
 {
@@ -53,6 +54,10 @@ class TCommand extends Command
             // ...
         }
 
+        $configRepo = $this->em->getRepository(Config::class);
+        $rewardRate = $configRepo->findOneBy(['label' => 'referReward']); //.getValue();
+        var_dump($rewardRate->getValue());
+        // $io->success($rewardRate.getValue());
 
 
         // $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
