@@ -35,7 +35,7 @@ class ApplyUpdate extends AbstractController
             $f0 = new Finance();
             $f0->setUser($applicant);
             $f0->setAmount($price);
-            $f0->setType(10);
+            $f0->setType(53);
             $f0->setNote('任务奖励');
             $f0->setStatus(5);
             $em->persist($f0);
@@ -50,7 +50,7 @@ class ApplyUpdate extends AbstractController
                 $f1 = new Finance();
                 $f1->setUser($referer);
                 $f1->setAmount($price * $rewardRate);
-                $f1->setType(11);
+                $f1->setType(51);
                 $f1->setNote('任务分销奖励1级 ' . $applicant->getUsername());
                 $f1->setStatus(5);
                 $em->persist($f1);
@@ -63,7 +63,7 @@ class ApplyUpdate extends AbstractController
                     $f2 = new Finance();
                     $f2->setUser($rOfReferer);
                     $f2->setAmount($price * $rewardRate2);
-                    $f2->setType(12);
+                    $f2->setType(52);
                     $f2->setNote('任务分销奖励2级 ' . $applicant->getUsername());
                     $f2->setStatus(5);
                     $em->persist($f2);
