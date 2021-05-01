@@ -31,6 +31,15 @@ class ApplyUpdate extends AbstractController
 
             $owner->setFrozen($owner->getFrozen() - $price);
             $applicant->setEarnings($applicant->getEarnings() + $price);
+            // new finance for $applicant
+            $f0 = new Finance();
+            $f0->setUser($applicant);
+            $f0->setAmount($price);
+            $f0->setType(10);
+            $f0->setNote('任务奖励');
+            $f0->setStatus(5);
+            $em->persist($f0);
+
             $applicant->setCoin($applicant->getCoin() + intval($price / 100));
             $referer = $applicant->getReferrer();
             if (!is_null($referer)) {
