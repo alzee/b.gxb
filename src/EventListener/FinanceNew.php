@@ -98,7 +98,6 @@ class FinanceNew extends AbstractController
                 $e->setBuyer($user);
                 $seller = $e->getSeller();
                 $user->setEquity($user->getEquity() + $e->getEquity());
-                // $seller->setEquity($seller->getEquity() - $e->getEquity());
                 $seller->setTopup($seller->getTopup()  + $amount);
                 $e->setStatus(1);
                 break;
