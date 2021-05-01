@@ -19,7 +19,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * normalizationContext={"groups"={"user:read"}},
  * denormalizationContext={"groups"={"user:write"}}
  * )
- * @ApiFilter(SearchFilter::class, properties={"username": "exact", "phone": "exact", "refcode": "exact"})
+ * @ApiFilter(SearchFilter::class, properties={"username": "exact", "phone": "exact", "refcode": "exact", "referrer": "exact", "ror": "exact"})
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
  * @Vich\Uploadable
@@ -324,12 +324,25 @@ class User implements UserInterface
      */
     private $referrer;
 
+    /**
+     * @Groups({"user:read", "user:write"})
+     * @ORM\ManyToOne(targetEntity=User::class)
+     */
+    private $ror;
+
+    /**
+     * @Groups({"user:read"})
+     * @ORM\Column(type="datetime_immutable", nullable=true)
+     */
+    private $date;
+
     public function __construct()
     {
         $this->applies = new ArrayCollection();
         $this->coins = new ArrayCollection();
         $this->coupon = new ArrayCollection();
         $this->refcode = substr(md5(uniqid()),0,8);
+        $this->date = new \DateTimeImmutable();
     }
 
     public function getPlainPassword(): ?string
@@ -524,6 +537,30 @@ class User implements UserInterface
     public function setReferrer(?self $referrer): self
     {
         $this->referrer = $referrer;
+
+        return $this;
+    }
+
+    public function getRor(): ?self
+    {
+        return $this->ror;
+    }
+
+    public function setRor(?self $ror): self
+    {
+        $this->ror = $ror;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeImmutable
+    {
+        return $this->date;
+    }
+
+    public function setDate(?\DateTimeImmutable $date): self
+    {
+        $this->date = $date;
 
         return $this;
     }

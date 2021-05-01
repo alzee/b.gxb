@@ -22,7 +22,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
  * denormalizationContext={"groups"={"task:write"}}
  * )
  * @ORM\Entity(repositoryClass=TaskRepository::class)
- * @ApiFilter(SearchFilter::class, properties={"title": "partial", "name": "partial", "category.id": "exact", "owner.id": "exact", "status": "exact"})
+ * @ApiFilter(SearchFilter::class, properties={"id": "exact", "title": "partial", "name": "partial", "category.id": "exact", "owner.id": "exact", "owner.username": "exact", "status": "exact"})
  * @ApiFilter(OrderFilter::class, properties={"bidPosition", "date", "price", "stickyUntil", "recommendUntil"})
  * @ApiFilter(RangeFilter::class, properties={"bidPosition"})
  * @ApiFilter(PropertyFilter::class)
