@@ -51,7 +51,7 @@ class Land
      * @Groups({"land:read", "land:write"})
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $price;
+    private $price = 9900;
 
     /**
      * @Groups({"land:read", "land:write"})
