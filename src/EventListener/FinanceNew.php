@@ -100,6 +100,14 @@ class FinanceNew extends AbstractController
                 $user->setEquity($user->getEquity() + $e->getEquity());
                 $seller = $e->getSeller();
                 $seller->setTopup($seller->getTopup()  + $amount);
+                // new finance for $seller
+                $f = new Finance();
+                $f->setUser($seller);
+                $f->setAmount($amount);
+                $f->setType(53);
+                $f->setNote('出售股权');
+                $f->setStatus(5);
+                $em->persist($f);
                 break;
             case 6: // occupy
                 $owner = $this->getDoctrine()->getRepository(User::class)->find($postData['ownerId']);
