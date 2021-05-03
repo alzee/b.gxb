@@ -24,8 +24,61 @@ use Doctrine\Persistence\Event\LifecycleEventArgs;
 
 class FinanceNew extends AbstractController
 {
-    public function __construct()
+    public function prePersist(Finance $finance, LifecycleEventArgs $event): void
     {
+        $t = $finance->getType();
+        switch ($t) {
+        case 1:
+            $note = '任务发布';
+            break;
+        case 2:
+            $note = '任务置顶';
+            break;
+        case 3:
+            $note = '任务推荐';
+            break;
+        case 4:
+            $note = '任务竞价';
+            break;
+        case 5:
+            $note = '购买股权';
+            break;
+        case 6:
+            $note = '占领格子';
+            break;
+        case 7:
+            $note = '购买领地';
+            break;
+        case 8:
+            $note = '购买会员';
+            break;
+        case 19:
+            $note = '提现';
+            break;
+        case 50:
+            $note = '充值';
+            break;
+        case 51:
+            // $note = '任务分销奖励1级';
+            $note = $finance->getNote();
+            break;
+        case 52:
+            // $note = '任务分销奖励2级';
+            $note = $finance->getNote();
+            break;
+        case 53:
+            $note = '任务奖励';
+            break;
+        case 54:
+            $note = '出售股权';
+            break;
+        case 55:
+            $note = '出售领地';
+            break;
+        default:
+            $note = 'unkown';
+        }
+        $finance->setNote($note);
     }
 
     public function postUpdate(Finance $finance, LifecycleEventArgs $event): void
@@ -104,8 +157,7 @@ class FinanceNew extends AbstractController
                 $f = new Finance();
                 $f->setUser($seller);
                 $f->setAmount($amount);
-                $f->setType(53);
-                $f->setNote('出售股权');
+                $f->setType(54);
                 $f->setStatus(5);
                 $em->persist($f);
                 break;
@@ -132,8 +184,7 @@ class FinanceNew extends AbstractController
                     $f = new Finance();
                     $f->setUser($originalOwner);
                     $f->setAmount($amount);
-                    $f->setType(54);
-                    $f->setNote('出售领地');
+                    $f->setType(55);
                     $f->setStatus(5);
                     $em->persist($f);
                 }

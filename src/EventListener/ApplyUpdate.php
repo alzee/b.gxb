@@ -36,7 +36,6 @@ class ApplyUpdate extends AbstractController
             $f0->setUser($applicant);
             $f0->setAmount($price);
             $f0->setType(53);
-            $f0->setNote('任务奖励');
             $f0->setStatus(5);
             $em->persist($f0);
 
