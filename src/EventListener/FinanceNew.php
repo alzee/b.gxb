@@ -96,10 +96,10 @@ class FinanceNew extends AbstractController
             case 5: // equity
                 $e = $this->getDoctrine()->getRepository(EquityTrade::class)->find($data['entityId']);
                 $e->setBuyer($user);
-                $seller = $e->getSeller();
-                $user->setEquity($user->getEquity() + $e->getEquity());
-                $seller->setTopup($seller->getTopup()  + $amount);
                 $e->setStatus(1);
+                $user->setEquity($user->getEquity() + $e->getEquity());
+                $seller = $e->getSeller();
+                $seller->setTopup($seller->getTopup()  + $amount);
                 break;
             case 6: // occupy
                 $owner = $this->getDoctrine()->getRepository(User::class)->find($postData['ownerId']);
@@ -118,7 +118,17 @@ class FinanceNew extends AbstractController
                 $owner = $this->getDoctrine()->getRepository(User::class)->find($postData['ownerId']);
                 $land = $this->getDoctrine()->getRepository(Land::class)->find($data['entityId']);
                 $originalOwner = $land->getOwner();
-                $originalOwner->setTopup($originalOwner->getTopup()  + $amount);
+                if (!is_null($originalOwner)) {
+                    $originalOwner->setTopup($originalOwner->getTopup()  + $amount);
+                    // new finance for $originalOwner
+                    $f = new Finance();
+                    $f->setUser($originalOwner);
+                    $f->setAmount($amount);
+                    $f->setType(54);
+                    $f->setNote('出售领地');
+                    $f->setStatus(5);
+                    $em->persist($f);
+                }
                 $land->setPrePrice($postData['prePrice']);
                 $land->setOwner($owner);
                 $land->setForSale($postData['forSale']);
