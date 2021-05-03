@@ -117,6 +117,8 @@ class FinanceNew extends AbstractController
             case 7: // landLord
                 $owner = $this->getDoctrine()->getRepository(User::class)->find($postData['ownerId']);
                 $land = $this->getDoctrine()->getRepository(Land::class)->find($data['entityId']);
+                $originalOwner = $land->getOwner();
+                $originalOwner->setTopup($originalOwner->getTopup()  + $amount);
                 $land->setPrePrice($postData['prePrice']);
                 $land->setOwner($owner);
                 $land->setForSale($postData['forSale']);
