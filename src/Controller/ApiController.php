@@ -12,6 +12,7 @@ use Darabonba\OpenApi\Models\Config;
 use AlibabaCloud\SDK\Dysmsapi\V20170525\Models\SendSmsRequest;
 use App\Entity\Finance;
 use App\Entity\User;
+use App\Entity\EquityTrade;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -351,5 +352,14 @@ class ApiController extends AbstractController
         // returns an array of arrays (i.e. a raw data set)
         $r = $stmt->fetchAllAssociative();
         return $this->json($r);
+    }
+
+    /**
+     * @Route("/equity_trades/count", name="_count_equity_trades")
+     */
+    public function countEquityTrades(Request $request, LoggerInterface $logger): Response
+    {
+        $c = $this->getDoctrine()->getRepository(EquityTrade::class)->count(['status' => 1]);
+        return $this->json($c);
     }
 }
