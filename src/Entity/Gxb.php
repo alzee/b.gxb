@@ -15,7 +15,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  * normalizationContext={"groups"={"gxb:read"}},
  * denormalizationContext={"groups"={"gxb:write"}}
  * )
- * @ApiFilter(SearchFilter::class, properties={"user.id": "exact"})
+ * @ApiFilter(SearchFilter::class, properties={"user.id": "exact", "type": "exact"})
  * @ApiFilter(OrderFilter::class, properties={"date"})
  * @ORM\Entity(repositoryClass=GxbRepository::class)
  */
