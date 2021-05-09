@@ -336,6 +336,11 @@ class User implements UserInterface
      */
     private $date;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $vipUntil;
+
     public function __construct()
     {
         $this->applies = new ArrayCollection();
@@ -561,6 +566,18 @@ class User implements UserInterface
     public function setDate(?\DateTimeImmutable $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getVipUntil(): ?\DateTimeInterface
+    {
+        return $this->vipUntil;
+    }
+
+    public function setVipUntil(?\DateTimeInterface $vipUntil): self
+    {
+        $this->vipUntil = $vipUntil;
 
         return $this;
     }
