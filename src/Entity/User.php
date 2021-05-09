@@ -341,6 +341,16 @@ class User implements UserInterface
      */
     private $vipUntil;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $cellProfit = 0;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $landProfit = 0;
+
     public function __construct()
     {
         $this->applies = new ArrayCollection();
@@ -578,6 +588,30 @@ class User implements UserInterface
     public function setVipUntil(?\DateTimeInterface $vipUntil): self
     {
         $this->vipUntil = $vipUntil;
+
+        return $this;
+    }
+
+    public function getCellProfit(): ?int
+    {
+        return $this->cellProfit;
+    }
+
+    public function setCellProfit(?int $cellProfit): self
+    {
+        $this->cellProfit = $cellProfit;
+
+        return $this;
+    }
+
+    public function getLandProfit(): ?int
+    {
+        return $this->landProfit;
+    }
+
+    public function setLandProfit(?int $landProfit): self
+    {
+        $this->landProfit = $landProfit;
 
         return $this;
     }
