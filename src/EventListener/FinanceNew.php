@@ -78,6 +78,9 @@ class FinanceNew extends AbstractController
         case 56:
             $note = '资金解冻';
             break;
+        case 57:
+            $note = '格子收益';
+            break;
         default:
             $note = 'unkown';
         }
@@ -98,7 +101,6 @@ class FinanceNew extends AbstractController
         $method = $finance->getMethod();
         $data = $finance->getData();
         $postData = isset($data['postData']) ? $data['postData'] : [];
-
 
         if ($status == 5) {
             if ($couponId != 0) {
@@ -167,6 +169,18 @@ class FinanceNew extends AbstractController
             case 6: // occupy
                 $owner = $this->getDoctrine()->getRepository(User::class)->find($postData['ownerId']);
                 $land = $this->getDoctrine()->getRepository(Land::class)->find($postData['landId']);
+                $landOwner = $land->getOwner();
+                if (!is_null($landOwner)) {
+                    $landOwner->setTopup($landOwner->getTopup()  + $amount / 2);
+                    // new finance for $landOwner
+                    $f = new Finance();
+                    $f->setUser($landOwner);
+                    $f->setAmount($amount / 2);
+                    $f->setType(57);
+                    $f->setStatus(5);
+                    $em->persist($f);
+                }
+
                 $landPost = new LandPost();
                 $landPost->setOwner($owner);
                 $landPost->setLand($land);
