@@ -12,9 +12,9 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
-class TCommand extends Command
+class getUsernameCommand extends Command
 {
-    protected static $defaultName = 't';
+    protected static $defaultName = 'getUsername';
 
     private $userRepo;
 
@@ -52,18 +52,6 @@ class TCommand extends Command
         if ($input->getOption('option1')) {
             // ...
         }
-
-        $ranking = $this->userRepo->ranking();
-
-        dump($ranking);
-        //foreach ($ranking as $u) {
-        //    $io->success($u->getReferrer());
-        //}
-
-
-
-
-        // $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
 
         return Command::SUCCESS;
     }

@@ -12,9 +12,9 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
-class TCommand extends Command
+class proveTimeoutCommand extends Command
 {
-    protected static $defaultName = 't';
+    protected static $defaultName = 'proveTimeout';
 
     private $userRepo;
 

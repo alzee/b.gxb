@@ -12,9 +12,9 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
-class TCommand extends Command
+class vipTimeoutCommand extends Command
 {
-    protected static $defaultName = 't';
+    protected static $defaultName = 'vipTimeout';
 
     private $userRepo;
 
