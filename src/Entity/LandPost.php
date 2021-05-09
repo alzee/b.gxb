@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  * denormalizationContext={"groups"={"landpost:write"}}
  * )
  * @ApiFilter(SearchFilter::class, properties={"land": "exact"})
- * @ApiFilter(OrderFilter::class, properties={"price"})
+ * @ApiFilter(OrderFilter::class, properties={"price", "showUntil"})
  * @ORM\Entity(repositoryClass=LandPostRepository::class)
  */
 class LandPost
@@ -81,6 +81,11 @@ class LandPost
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     private $date;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $showUntil;
 
     public function __construct()
     {
@@ -196,6 +201,18 @@ class LandPost
     public function setDate(?\DateTimeImmutable $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getShowUntil(): ?\DateTimeInterface
+    {
+        return $this->showUntil;
+    }
+
+    public function setShowUntil(?\DateTimeInterface $showUntil): self
+    {
+        $this->showUntil = $showUntil;
 
         return $this;
     }
