@@ -36,13 +36,39 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
-    public function getHim($value){
+    public function getHim($value)
+    {
         return $this->createQueryBuilder('u')
             ->andWhere('u.id = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()
         ;
+    }
+
+    public function ranking()
+    {
+        /*
+        $conn = $this->_em->getConnection();
+        $sql = 'select referrer_id,count(id) c from user where referrer_id is not null group by referrer_id order by c desc';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAllAssociative();
+         */
+
+        $ranking = $this->createQueryBuilder('u')
+            ->select('uu.id as uid, count(uu.id) as count')
+            ->join('u.referrer', 'uu')
+            ->groupby('uu.id')
+            ->orderBy('count', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+
+        foreach ($ranking as $k => $r) {
+            $ranking[$k]['user'] = $this->find($r['uid']);
+        }
+        return $ranking;
     }
 
     // /**
