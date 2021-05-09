@@ -76,7 +76,7 @@ class FinanceNew extends AbstractController
             $note = '出售领地';
             break;
         case 56:
-            $note = '解冻资金';
+            $note = '资金解冻';
             break;
         default:
             $note = 'unkown';
