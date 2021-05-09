@@ -8,21 +8,20 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use App\Entity\User;
-use App\Repository\UserRepository;
+use App\Repository\ApplyRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class delSubmitTimeoutCommand extends Command
 {
     protected static $defaultName = 'delSubmitTimeout';
 
-    private $userRepo;
+    private $applyRepo;
 
     private $em;
 
-    public function __construct(UserRepository $userRepo, EntityManagerInterface $em)
+    public function __construct(ApplyRepository $applyRepo, EntityManagerInterface $em)
     {
-        $this->userRepo = $userRepo;
+        $this->applyRepo = $applyRepo;
         $this->em = $em;
         parent::__construct();
     }
@@ -39,31 +38,19 @@ class delSubmitTimeoutCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $arg1 = $input->getArgument('arg1');
 
-        if ($arg1) {
-            // $io->note(sprintf('You passed an argument: %s', $arg1));
-            $him = $this->userRepo->getHim($arg1);
-            // $him->setNick('test');
-            // $this->em->flush();
-            $io->success($him->getUsername());
+        // find all applies which status == 11
+        $applies = $this->applyRepo->findBy(['status' => 11]);
+
+        // dump($applies);
+        foreach ($applies as $apply) {
+            dump($apply->getId());
+            $hours = $apply->getTask()->getWorkHours();
+            if ($apply->getId() == 4) {
+                $this->em->remove($apply);
+                $this->em->flush();
+            }
         }
-
-        if ($input->getOption('option1')) {
-            // ...
-        }
-
-        $ranking = $this->userRepo->ranking();
-
-        dump($ranking);
-        //foreach ($ranking as $u) {
-        //    $io->success($u->getReferrer());
-        //}
-
-
-
-
-        // $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
 
         return Command::SUCCESS;
     }
