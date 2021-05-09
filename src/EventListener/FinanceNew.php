@@ -59,11 +59,11 @@ class FinanceNew extends AbstractController
             $note = '充值';
             break;
         case 51:
-            // $note = '任务分销奖励1级';
+            // $note = '任务分销奖励1级 $applicant';
             $note = $finance->getNote();
             break;
         case 52:
-            // $note = '任务分销奖励2级';
+            // $note = '任务分销奖励2级 $applicant';
             $note = $finance->getNote();
             break;
         case 53:
@@ -74,6 +74,9 @@ class FinanceNew extends AbstractController
             break;
         case 55:
             $note = '出售领地';
+            break;
+        case 56:
+            $note = '解冻资金';
             break;
         default:
             $note = 'unkown';
