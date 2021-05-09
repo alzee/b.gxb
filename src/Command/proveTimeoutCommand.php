@@ -8,21 +8,21 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use App\Entity\User;
-use App\Repository\UserRepository;
+use App\Entity\Apply;
+use App\Repository\ApplyRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class proveTimeoutCommand extends Command
 {
     protected static $defaultName = 'proveTimeout';
 
-    private $userRepo;
+    private $applyRepo;
 
     private $em;
 
-    public function __construct(UserRepository $userRepo, EntityManagerInterface $em)
+    public function __construct(ApplyRepository $applyRepo, EntityManagerInterface $em)
     {
-        $this->userRepo = $userRepo;
+        $this->applyRepo = $applyRepo;
         $this->em = $em;
         parent::__construct();
     }
@@ -41,29 +41,12 @@ class proveTimeoutCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $arg1 = $input->getArgument('arg1');
 
-        if ($arg1) {
-            // $io->note(sprintf('You passed an argument: %s', $arg1));
-            $him = $this->userRepo->getHim($arg1);
-            // $him->setNick('test');
-            // $this->em->flush();
-            $io->success($him->getUsername());
+        $applies = $this->applyRepo->findBy(['status' => 12]);
+
+        foreach ($applies as $a) {
+            dump($a);
         }
 
-        if ($input->getOption('option1')) {
-            // ...
-        }
-
-        $ranking = $this->userRepo->ranking();
-
-        dump($ranking);
-        //foreach ($ranking as $u) {
-        //    $io->success($u->getReferrer());
-        //}
-
-
-
-
-        // $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
 
         return Command::SUCCESS;
     }
