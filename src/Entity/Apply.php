@@ -79,6 +79,11 @@ class Apply
      */
     private $pic = [];
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $submitAt;
+
     public function __construct()
     {
         $this->date = new \DateTime();
@@ -182,6 +187,18 @@ class Apply
     public function setPic(array $pic): self
     {
         $this->pic = $pic;
+
+        return $this;
+    }
+
+    public function getSubmitAt(): ?\DateTimeInterface
+    {
+        return $this->submitAt;
+    }
+
+    public function setSubmitAt(?\DateTimeInterface $submitAt): self
+    {
+        $this->submitAt = $submitAt;
 
         return $this;
     }
