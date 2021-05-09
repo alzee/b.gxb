@@ -52,7 +52,7 @@ class approveTimeoutCommand extends Command
                 $hours = 0;
                 // $io->success('this task has no workhours');
             }
-            $deadline = $apply->getDate()->add(new \DateInterval('PT' . $hours . 'H'));
+            $deadline = $apply->getSubmitAt()->add(new \DateInterval('PT' . $hours . 'H'));
             if ($now > $deadline) {
                 // $io->success('auto approve apply: ' . $apply->getId());
                 $apply->setStatus($statusDone);
