@@ -226,7 +226,8 @@ class Task
 
     public function getRemain(): ?int
     {
-        return $this->quantity - $this->countApplies;
+        // return $this->quantity - $this->countApplies;
+        return $this->getQuantity() - $this->getCountApplies();
     }
 
     public function getId(): ?int
