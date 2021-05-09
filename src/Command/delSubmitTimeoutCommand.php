@@ -42,14 +42,13 @@ class delSubmitTimeoutCommand extends Command
         $applies = $this->applyRepo->findBy(['status' => 11]);
 
         foreach ($applies as $apply) {
-            $applyDate = $apply->getDate();
+            $now = new \DateTime();
             $hours = $apply->getTask()->getWorkHours();
             if (is_null($hours)) {
                 $hours = 0;
                 // $io->success('this task has no workhours');
             }
-            $deadline = $applyDate->add(new \DateInterval('PT' . $hours . 'H'));
-            $now = new \DateTime();
+            $deadline = $apply->getDate()->add(new \DateInterval('PT' . $hours . 'H'));
             // if (true) {
             if ($now > $deadline) {
                 // $io->success('youre dead');

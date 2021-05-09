@@ -9,12 +9,13 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use App\Entity\Apply;
+use App\Entity\Status;
 use App\Repository\ApplyRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
-class proveTimeoutCommand extends Command
+class approveTimeoutCommand extends Command
 {
-    protected static $defaultName = 'proveTimeout';
+    protected static $defaultName = 'approveTimeout';
 
     private $applyRepo;
 
@@ -42,11 +43,22 @@ class proveTimeoutCommand extends Command
         $arg1 = $input->getArgument('arg1');
 
         $applies = $this->applyRepo->findBy(['status' => 12]);
+        $statusDone = $this->em->getRepository(Status::class)->find(14);
 
-        foreach ($applies as $a) {
-            dump($a);
+        foreach ($applies as $apply) {
+            $now = new \DateTime();
+            $hours = $apply->getTask()->getReviewHours();
+            if (is_null($hours)) {
+                $hours = 0;
+                // $io->success('this task has no workhours');
+            }
+            $deadline = $apply->getDate()->add(new \DateInterval('PT' . $hours . 'H'));
+            if ($now > $deadline) {
+                // $io->success('auto approve apply: ' . $apply->getId());
+                $apply->setStatus($statusDone);
+                $this->em->flush();
+            }
         }
-
 
         return Command::SUCCESS;
     }
