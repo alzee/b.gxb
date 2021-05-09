@@ -85,6 +85,7 @@ class LandPost
     private $date;
 
     /**
+     * @Groups({"landpost:read", "landpost:write"})
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $showUntil;
