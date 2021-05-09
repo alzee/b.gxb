@@ -172,6 +172,7 @@ class FinanceNew extends AbstractController
                 $landPost->setPrice($postData['price']);
                 $landPost->setCover($postData['cover']);
                 $landPost->setPics($postData['pics']);
+                $landPost->setShowUntil(new \DateTime($postData['showUntil']));
                 $em->persist($landPost);
                 break;
             case 7: // landLord
