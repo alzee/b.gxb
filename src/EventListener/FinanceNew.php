@@ -179,22 +179,30 @@ class FinanceNew extends AbstractController
                 $em->persist($landPost);
                 break;
             case 7: // landLord
-                $owner = $this->getDoctrine()->getRepository(User::class)->find($postData['ownerId']);
                 $land = $this->getDoctrine()->getRepository(Land::class)->find($data['entityId']);
                 $originalOwner = $land->getOwner();
+                $owner = $this->getDoctrine()->getRepository(User::class)->find($postData['ownerId']);
+                $ratio = $originalOwner->getLevel()->getLandTradeRatio();
+                $profit = ($land->getPrice() - $land->getPrePrice()) * $ratio;
+                if ($profit > 0) {
+                    $total = $land->getPrePrice() + $profit;
+                }
+                else {
+                    $total = $land->getPrice();
+                }
                 if (!is_null($originalOwner)) {
-                    $originalOwner->setTopup($originalOwner->getTopup()  + $amount);
+                    $originalOwner->setTopup($originalOwner->getTopup()  + $total);
                     // new finance for $originalOwner
                     $f = new Finance();
                     $f->setUser($originalOwner);
-                    $f->setAmount($amount);
+                    $f->setAmount($total);
                     $f->setType(55);
                     $f->setStatus(5);
                     $em->persist($f);
                 }
                 $land->setPrePrice($postData['prePrice']);
                 $land->setOwner($owner);
-                $land->setForSale($postData['forSale']);
+                $land->setForSale(false);
                 break;
             case 8: // buyVip
                 $level = $this->getDoctrine()->getRepository(Level::class)->find($postData['levelId']);
