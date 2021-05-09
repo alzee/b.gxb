@@ -39,14 +39,19 @@ class delSubmitTimeoutCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        // find all applies which status == 11
         $applies = $this->applyRepo->findBy(['status' => 11]);
 
-        // dump($applies);
         foreach ($applies as $apply) {
-            dump($apply->getId());
+            $applyDate = $apply->getDate();
             $hours = $apply->getTask()->getWorkHours();
-            if ($apply->getId() == 4) {
+            if (is_null($hours)) {
+                $hours = 0;
+                // $io->success('this task has no workhours');
+            }
+            $deadline = $applyDate->add(new \DateInterval('PT' . $hours . 'H'));
+            $now = new \DateTime();
+            if ($now > $deadline) {
+                // $io->success('youre dead');
                 $this->em->remove($apply);
                 $this->em->flush();
             }
