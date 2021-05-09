@@ -20,7 +20,6 @@ class ApplyUpdate
 {
     public function preUpdate(Apply $apply, PreUpdateEventArgs $event): void
     {
-        $applyStatusId = $apply->getStatus()->getId();
         if ($event->hasChangedField('status') && $event->getNewValue('status')->getId() == 12) {
             $em = $event->getEntityManager();
             $apply->setSubmitAt(new \DateTime());
@@ -84,9 +83,5 @@ class ApplyUpdate
             }
             $em->flush();
         }
-    }
-
-    public function prePersist(Apply $apply, LifecycleEventArgs $event): void
-    {
     }
 }
