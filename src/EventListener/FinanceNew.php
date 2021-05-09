@@ -199,6 +199,9 @@ class FinanceNew extends AbstractController
             case 8: // buyVip
                 $level = $this->getDoctrine()->getRepository(Level::class)->find($postData['levelId']);
                 $user->setLevel($level);
+                $vipUntil = new \DateTime();
+                $vipUntil = $vipUntil->add(new \DateInterval('P' . $level->getDays(). 'D'));
+                $user->setVipUntil($vipUntil);
                 $rebate = $level->getPrice() * 100 * $level->getTopupRatio();
                 if ($referrer = $user->getReferrer()) {
                     $referrer->setTopup($referrer->getTopup() + $rebate);
