@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
@@ -14,6 +15,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  * normalizationContext={"groups"={"node:read"}},
  * denormalizationContext={"groups"={"node:write"}}
  * )
+ * @ApiFilter(OrderFilter::class, properties={"id"})
  * @ApiFilter(SearchFilter::class, properties={"type.id": "exact"})
  * @ORM\Entity(repositoryClass=NodeRepository::class)
  */

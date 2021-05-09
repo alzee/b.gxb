@@ -4,9 +4,11 @@ namespace App\Entity;
 
 use App\Repository\NodeTypeRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=NodeTypeRepository::class)
  */
 class NodeType
@@ -20,6 +22,7 @@ class NodeType
     private $id;
 
     /**
+     * @Groups({"node:read", "node:write"})
      * @ORM\Column(type="string", length=255)
      */
     private $name;
