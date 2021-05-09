@@ -50,6 +50,7 @@ class delSubmitTimeoutCommand extends Command
             }
             $deadline = $applyDate->add(new \DateInterval('PT' . $hours . 'H'));
             $now = new \DateTime();
+            // if (true) {
             if ($now > $deadline) {
                 // $io->success('youre dead');
                 $this->em->remove($apply);
