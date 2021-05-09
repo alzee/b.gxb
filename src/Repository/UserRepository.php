@@ -71,6 +71,15 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $ranking;
     }
 
+    public function findVips()
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.level != 9')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

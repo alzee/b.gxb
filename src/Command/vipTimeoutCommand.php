@@ -9,6 +9,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use App\Entity\User;
+use App\Entity\Level;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -41,29 +42,20 @@ class vipTimeoutCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $arg1 = $input->getArgument('arg1');
 
-        if ($arg1) {
-            // $io->note(sprintf('You passed an argument: %s', $arg1));
-            $him = $this->userRepo->getHim($arg1);
-            // $him->setNick('test');
-            // $this->em->flush();
-            $io->success($him->getUsername());
+        $now = new \DateTime();
+        $vips= $this->userRepo->findVips();
+        $noneVip = $this->em->getRepository(Level::class)->find(9);
+
+        foreach ($vips as $u) {
+            if ($now > $u->getVipUntil()) {
+                $io->success($u->getUsername() . ', your vip over ');
+                $u->setLevel($noneVip);
+                $u->setVipUntil(null);
+                $this->em->flush();
+            }
         }
 
-        if ($input->getOption('option1')) {
-            // ...
-        }
 
-        $ranking = $this->userRepo->ranking();
-
-        dump($ranking);
-        //foreach ($ranking as $u) {
-        //    $io->success($u->getReferrer());
-        //}
-
-
-
-
-        // $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
 
         return Command::SUCCESS;
     }
