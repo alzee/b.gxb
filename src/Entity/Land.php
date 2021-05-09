@@ -65,6 +65,11 @@ class Land
      */
     private $prePrice = 9900;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updateAt;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -138,6 +143,18 @@ class Land
     public function setPrePrice(?int $prePrice): self
     {
         $this->prePrice = $prePrice;
+
+        return $this;
+    }
+
+    public function getUpdateAt(): ?\DateTimeInterface
+    {
+        return $this->updateAt;
+    }
+
+    public function setUpdateAt(?\DateTimeInterface $updateAt): self
+    {
+        $this->updateAt = $updateAt;
 
         return $this;
     }
