@@ -14,18 +14,12 @@ use App\Entity\User;
 use App\Entity\Coupon;
 use App\Entity\EquityTrade;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
-use Doctrine\ORM\Event\PreUpdateEventArgs;
 
 class EquityNew
 {
-    public function preUpdate(EquityTrade $equity, PreUpdateEventArgs $event): void
-    {
-    }
-
     public function prePersist(EquityTrade $equity, LifecycleEventArgs $event): void
     {
         $seller = $equity->getSeller();
         $seller->setEquity($seller->getEquity() - $equity->getEquity());
     }
 }
-

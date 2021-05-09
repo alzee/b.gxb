@@ -15,14 +15,9 @@ use App\Entity\Coupon;
 use App\Entity\Level;
 use App\Entity\Gxb;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
-use Doctrine\ORM\Event\PreUpdateEventArgs;
 
 class UserNew extends AbstractController
 {
-    public function preUpdate(User $user, PreUpdateEventArgs $event): void
-    {
-    }
-
     public function prePersist(User $user, LifecycleEventArgs $event): void
     {
         $em = $event->getEntityManager();
@@ -93,4 +88,3 @@ class UserNew extends AbstractController
         }
     }
 }
-

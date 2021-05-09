@@ -14,10 +14,6 @@ use Doctrine\Persistence\Event\LifecycleEventArgs;
 
 class GxbNew
 {
-    public function __construct()
-    {
-    }
-
     public function prePersist(Gxb $gxb, LifecycleEventArgs $event): void
     {
         $user = $gxb->getUser();
@@ -25,4 +21,3 @@ class GxbNew
         $user->setGxb($user->getGxb() + $amount);
     }
 }
-

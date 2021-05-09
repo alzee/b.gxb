@@ -14,17 +14,23 @@ use App\Entity\Apply;
 use App\Entity\Config;
 use App\Entity\Finance;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 
-class ApplyUpdate extends AbstractController
+class ApplyUpdate
 {
-    public function __construct()
+    public function preUpdate(Apply $apply, PreUpdateEventArgs $event): void
     {
+        $applyStatusId = $apply->getStatus()->getId();
+        if ($event->hasChangedField('status') && $event->getNewValue('status')->getId() == 12) {
+            $em = $event->getEntityManager();
+            $apply->setSubmitAt(new \DateTime());
+        }
     }
 
     public function postUpdate(Apply $apply, LifecycleEventArgs $event): void
     {
         $applyStatusId = $apply->getStatus()->getId();
-        
+
         if ($applyStatusId == 13) {
             if (1) {
                 // unfreeze?
@@ -32,7 +38,7 @@ class ApplyUpdate extends AbstractController
         }
 
         if ($applyStatusId == 14) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $event->getEntityManager();
             $price = $apply->getTask()->getPrice();
             $applicant = $apply->getApplicant();
             $owner = $apply->getTask()->getOwner();
