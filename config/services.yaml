@@ -70,6 +70,13 @@ services:
                 event: 'postUpdate'
                 entity: 'App\Entity\Apply'
 
+    App\EventListener\TaskUpdate:
+        tags:
+            -
+                name: 'doctrine.orm.entity_listener'
+                event: 'postUpdate'
+                entity: 'App\Entity\Task'
+
     App\EventListener\EquityNew:
         tags:
             -
