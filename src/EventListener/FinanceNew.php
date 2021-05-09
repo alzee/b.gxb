@@ -172,6 +172,7 @@ class FinanceNew extends AbstractController
                 $landOwner = $land->getOwner();
                 if (!is_null($landOwner)) {
                     $landOwner->setTopup($landOwner->getTopup()  + $amount / 2);
+                    $landOwner->setCellProfit($landOwner->getCellProfit()  + $amount / 2);
                     // new finance for $landOwner
                     $f = new Finance();
                     $f->setUser($landOwner);
@@ -206,6 +207,7 @@ class FinanceNew extends AbstractController
                 }
                 if (!is_null($originalOwner)) {
                     $originalOwner->setTopup($originalOwner->getTopup()  + $total);
+                    $originalOwner->setLandProfit($originalOwner->getLandProfit()  + $total);
                     // new finance for $originalOwner
                     $f = new Finance();
                     $f->setUser($originalOwner);

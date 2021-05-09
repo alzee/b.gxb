@@ -342,11 +342,13 @@ class User implements UserInterface
     private $vipUntil;
 
     /**
+     * @Groups({"user:read"})
      * @ORM\Column(type="integer", nullable=true)
      */
     private $cellProfit = 0;
 
     /**
+     * @Groups({"user:read"})
      * @ORM\Column(type="integer", nullable=true)
      */
     private $landProfit = 0;
