@@ -338,6 +338,7 @@ class ApiController extends AbstractController
      */
     public function ranking(Request $request, LoggerInterface $logger): Response
     {
+        /*
         $conn = $this->getDoctrine()->getManager()->getConnection();
 
         $sql = '
@@ -351,7 +352,12 @@ class ApiController extends AbstractController
 
         // returns an array of arrays (i.e. a raw data set)
         $r = $stmt->fetchAllAssociative();
-        return $this->json($r);
+         */
+
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+        $ranking = $userRepo->ranking();
+
+        return $this->json($ranking);
     }
 
     /**
