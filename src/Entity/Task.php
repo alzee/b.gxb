@@ -146,11 +146,13 @@ class Task
     private $remain;
 
     /**
+     * @Groups({"task:read"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $link;
 
     /**
+     * @Groups({"task:read"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $note;
