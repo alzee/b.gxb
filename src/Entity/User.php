@@ -36,6 +36,8 @@ class User implements UserInterface
      * @Groups({"gxb:read"})
      * @Groups({"report:read"})
      * @Groups({"equity:read"})
+     * @Groups({"landpost:read"})
+     * @Groups({"read:read"})
      */
     private $id;
 
@@ -50,6 +52,7 @@ class User implements UserInterface
      * @Groups({"node:read"})
      * @Groups({"report:read"})
      * @Groups({"equity:read"})
+     * @Groups({"read:read"})
      */
     private $username;
 
@@ -82,6 +85,7 @@ class User implements UserInterface
      * @Groups({"node:read"})
      * @Groups({"bid:read"})
      * @Groups({"report:read"})
+     * @Groups({"read:read"})
      */
     private $avatar = '/media/avatar.png';
 
