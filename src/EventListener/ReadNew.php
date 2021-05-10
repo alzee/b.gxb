@@ -9,15 +9,14 @@
 namespace App\EventListener;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Entity\Coin;
+use App\Entity\Read;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 
-class CoinNew
+class ReadNew
 {
-    public function prePersist(Coin $coin, LifecycleEventArgs $event): void
+    public function prePersist(Read $read, LifecycleEventArgs $event): void
     {
-        $user = $coin->getUser();
-        $amount = $coin->getAmount();
-        $user->setCoin($user->getCoin() + $amount);
+        $user = $read->getUser();
+        $user->setCoin($user->getCoin() + 1);
     }
 }

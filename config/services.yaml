@@ -49,12 +49,12 @@ services:
                 event: 'prePersist'
                 entity: 'App\Entity\Gxb'
 
-    App\EventListener\CoinNew:
+    App\EventListener\ReadNew:
         tags:
             -
                 name: 'doctrine.orm.entity_listener'
                 event: 'prePersist'
-                entity: 'App\Entity\Coin'
+                entity: 'App\Entity\Read'
 
     App\EventListener\UserNew:
         tags:

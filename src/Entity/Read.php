@@ -30,14 +30,14 @@ class Read
     private $id;
 
     /**
-     * @Groups({"read:read"})
+     * @Groups({"read:read", "read:write"})
      * @Groups({"landpost:read"})
      * @ORM\ManyToOne(targetEntity=User::class)
      */
     private $user;
 
     /**
-     * @Groups({"read:read"})
+     * @Groups({"read:read", "read:write"})
      * @ORM\ManyToOne(targetEntity=LandPost::class)
      */
     private $post;
