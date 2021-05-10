@@ -7,9 +7,13 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ * normalizationContext={"groups"={"vote:read"}},
+ * denormalizationContext={"groups"={"vote:write"}}
+ * )
  * @ApiFilter(SearchFilter::class, properties={"user": "exact", "node": "exact"})
  * @ORM\Entity(repositoryClass=VoteRepository::class)
  */
@@ -19,25 +23,34 @@ class Vote
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"vote:read"})
+     * @Groups({"node:read"})
      */
     private $id;
 
     /**
+     * @Groups({"vote:read", "vote:write"})
+     * @Groups({"node:read"})
      * @ORM\ManyToOne(targetEntity=User::class)
      */
     private $user;
 
     /**
+     * @Groups({"vote:read", "vote:write"})
      * @ORM\ManyToOne(targetEntity=Node::class)
      */
     private $node;
 
     /**
+     * @Groups({"vote:read", "vote:write"})
+     * @Groups({"node:read"})
      * @ORM\Column(type="boolean")
      */
     private $isUp;
 
     /**
+     * @Groups({"vote:read", "vote:write"})
+     * @Groups({"node:read"})
      * @ORM\Column(type="datetime")
      */
     private $date;

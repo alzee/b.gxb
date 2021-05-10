@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\NodeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -59,10 +61,24 @@ class Node
      */
     private $body;
 
+    /**
+     * @Groups({"node:read", "node:write"})
+     * @ORM\OneToMany(targetEntity=Vote::class, mappedBy="node")
+     */
+    private $votes;
+
+    /**
+     * @return Collection|Vote[]
+     */
+    public function getVotes(): Collection
+    {
+        return $this->votes;
+    }
+
     public function __construct()
     {
         $this->date = new \DateTimeImmutable();
-        //$this->date = $this->date->setTimezone(new \DateTimeZone('Asia/Shanghai'));
+        $this->votes = new ArrayCollection();
     }
 
     public function getId(): ?int
