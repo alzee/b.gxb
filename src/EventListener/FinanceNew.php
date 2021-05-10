@@ -81,6 +81,10 @@ class FinanceNew extends AbstractController
         case 57:
             $note = '格子收益';
             break;
+        case 58:
+            // $note = '购买会员返利 $user';
+            $note = $finance->getNote();
+            break;
         default:
             $note = 'unkown';
         }
@@ -230,6 +234,14 @@ class FinanceNew extends AbstractController
                 $rebate = $level->getPrice() * 100 * $level->getTopupRatio();
                 if ($referrer = $user->getReferrer()) {
                     $referrer->setTopup($referrer->getTopup() + $rebate);
+                    // new finance for $referrer
+                    $f = new Finance();
+                    $f->setUser($referrer);
+                    $f->setAmount($rebate);
+                    $f->setType(58);
+                    $f->setNote('购买会员返利 ' . $user->getUsername());
+                    $f->setStatus(5);
+                    $em->persist($f);
                 }
                 break;
             case 19: // withdraw
