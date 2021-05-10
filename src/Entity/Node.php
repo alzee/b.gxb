@@ -43,18 +43,6 @@ class Node
 
     /**
      * @Groups({"node:read", "node:write"})
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $up = 0;
-
-    /**
-     * @Groups({"node:read", "node:write"})
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $down = 0;
-
-    /**
-     * @Groups({"node:read", "node:write"})
      * @ORM\ManyToOne(targetEntity=User::class)
      */
     private $author;
@@ -102,30 +90,6 @@ class Node
     public function setDate(\DateTimeImmutable $date): self
     {
         $this->date = $date;
-
-        return $this;
-    }
-
-    public function getUp(): ?int
-    {
-        return $this->up;
-    }
-
-    public function setUp(?int $up): self
-    {
-        $this->up = $up;
-
-        return $this;
-    }
-
-    public function getDown(): ?int
-    {
-        return $this->down;
-    }
-
-    public function setDown(?int $down): self
-    {
-        $this->down = $down;
 
         return $this;
     }
