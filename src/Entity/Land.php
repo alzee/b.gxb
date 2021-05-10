@@ -66,6 +66,7 @@ class Land
     private $prePrice = 9900;
 
     /**
+     * @Groups({"land:read", "land:write"})
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updateAt;
