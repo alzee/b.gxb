@@ -361,11 +361,15 @@ class ApiController extends AbstractController
     }
 
     /**
-     * @Route("/equity_trades/count", name="_count_equity_trades")
+     * @Route("/equity_trades/total", name="_total_equity_trades")
      */
-    public function countEquityTrades(Request $request, LoggerInterface $logger): Response
+    public function totalEquityTrades(Request $request, LoggerInterface $logger): Response
     {
-        $c = $this->getDoctrine()->getRepository(EquityTrade::class)->count(['status' => 1]);
-        return $this->json($c);
+        $trades = $this->getDoctrine()->getRepository(EquityTrade::class)->findBy(['status' => 1]);
+        $total = 0;
+        foreach ($trades as $t) {
+            $total += $t->getRmb();
+        }
+        return $this->json($total);
     }
 }
