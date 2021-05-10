@@ -11,6 +11,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use Doctrine\Common\Collections\Criteria;
 
 /**
  * @ApiResource(
@@ -68,11 +69,53 @@ class Node
     private $votes;
 
     /**
+     * @Groups({"node:read"})
+     */
+    private $countUpVotes;
+
+    /**
+     * @Groups({"node:read"})
+     */
+    private $countDownVotes;
+
+    /**
      * @return Collection|Vote[]
      */
     public function getVotes(): Collection
     {
         return $this->votes;
+    }
+
+    /**
+     * @return Collection|Vote[]
+     */
+    public function getUpVotes(): Collection
+    {
+        $criteria = Criteria::create()
+            ->andWhere(Criteria::expr()->eq('isUp', true))
+        ;
+        return $this->votes->matching($criteria);
+    }
+
+    /**
+     * @return Collection|Vote[]
+     */
+    public function getDownVotes(): Collection
+    {
+        $criteria = Criteria::create()
+            ->andWhere(Criteria::expr()->eq('isUp', false))
+        ;
+        return $this->votes->matching($criteria);
+    }
+
+    public function getCountUpVotes(): ?int
+    {
+        return $this->countUpVotes = sizeof($this->getUpVotes());
+    }
+
+    public function getCountDownVotes(): ?int
+    {
+        return $this->countDownVotes = sizeof($this->getDownVotes());
     }
 
     public function __construct()
