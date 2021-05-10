@@ -5,9 +5,12 @@ namespace App\Entity;
 use App\Repository\ReadRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ApiResource()
+ * @ApiFilter(SearchFilter::class, properties={"user": "exact", "post": "exact"})
  * @ORM\Entity(repositoryClass=ReadRepository::class)
  * @ORM\Table(name="`read`")
  */
