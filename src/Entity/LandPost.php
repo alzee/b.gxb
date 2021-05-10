@@ -9,7 +9,10 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 use App\Repository\LandPostRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Criteria;
 
 /**
  * @ApiResource(
@@ -89,6 +92,46 @@ class LandPost
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $showUntil;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Read::class, mappedBy="post")
+     */
+    private $reads;
+
+    /**
+     * @Groups({"landpost:read"})
+     */
+    private $someReads;
+
+    /**
+     * @Groups({"landpost:read"})
+     */
+    private $countReads;
+
+    /**
+     * @return Collection|Vote[]
+     */
+    public function getReads(): Collection
+    {
+        return $this->reads;
+    }
+
+    /**
+     * @return Collection|Vote[]
+     */
+    public function getSomeReads(): Collection
+    {
+        $criteria = Criteria::create()
+            ->orderBy(['id' => 'DESC'])
+            ->setMaxResults(4)
+        ;
+        return $this->reads->matching($criteria);
+    }
+
+    public function getCountReads(): ?int
+    {
+        return $this->countReads = sizeof($this->getReads());
+    }
 
     public function __construct()
     {

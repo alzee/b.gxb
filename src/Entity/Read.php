@@ -25,11 +25,13 @@ class Read
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @Groups({"read:read"})
+     * @Groups({"landpost:read"})
      */
     private $id;
 
     /**
      * @Groups({"read:read"})
+     * @Groups({"landpost:read"})
      * @ORM\ManyToOne(targetEntity=User::class)
      */
     private $user;
