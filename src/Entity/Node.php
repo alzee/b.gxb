@@ -79,6 +79,11 @@ class Node
     private $countDownVotes;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $approved = true;
+
+    /**
      * @return Collection|Vote[]
      */
     public function getVotes(): Collection
@@ -185,6 +190,18 @@ class Node
     public function setBody(?string $body): self
     {
         $this->body = $body;
+
+        return $this;
+    }
+
+    public function getApproved(): ?bool
+    {
+        return $this->approved;
+    }
+
+    public function setApproved(bool $approved): self
+    {
+        $this->approved = $approved;
 
         return $this;
     }
