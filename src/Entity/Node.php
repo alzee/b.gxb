@@ -11,6 +11,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use Doctrine\Common\Collections\Criteria;
 
 /**
@@ -20,6 +21,7 @@ use Doctrine\Common\Collections\Criteria;
  * )
  * @ApiFilter(OrderFilter::class, properties={"id"})
  * @ApiFilter(SearchFilter::class, properties={"type.id": "exact"})
+ * @ApiFilter(BooleanFilter::class, properties={"approved"})
  * @ORM\Entity(repositoryClass=NodeRepository::class)
  */
 class Node
