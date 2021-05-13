@@ -199,17 +199,17 @@ class FinanceNew extends AbstractController
                 break;
             case 7: // landLord
                 $land = $this->getDoctrine()->getRepository(Land::class)->find($data['entityId']);
+                $buyer = $this->getDoctrine()->getRepository(User::class)->find($postData['ownerId']);
                 $originalOwner = $land->getOwner();
-                $owner = $this->getDoctrine()->getRepository(User::class)->find($postData['ownerId']);
-                $ratio = $originalOwner->getLevel()->getLandTradeRatio();
-                $profit = ($land->getPrice() - $land->getPrePrice()) * $ratio;
-                if ($profit > 0) {
-                    $total = $land->getPrePrice() + $profit;
-                }
-                else {
-                    $total = $land->getPrice();
-                }
                 if (!is_null($originalOwner)) {
+                    $ratio = $originalOwner->getLevel()->getLandTradeRatio();
+                    $profit = ($land->getPrice() - $land->getPrePrice()) * $ratio;
+                    if ($profit > 0) {
+                        $total = $land->getPrePrice() + $profit;
+                    }
+                    else {
+                        $total = $land->getPrice();
+                    }
                     $originalOwner->setTopup($originalOwner->getTopup()  + $total);
                     $originalOwner->setLandProfit($originalOwner->getLandProfit()  + $total);
                     // new finance for $originalOwner
@@ -222,7 +222,7 @@ class FinanceNew extends AbstractController
                 }
                 $land->setPrePrice($postData['price']);
                 $land->setPrice($postData['price'] * 1.1);
-                $land->setOwner($owner);
+                $land->setOwner($buyer);
                 $land->setUpdateAt(new \DateTime());
                 // $land->setForSale(false);
                 break;
