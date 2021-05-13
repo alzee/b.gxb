@@ -8,6 +8,7 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
 /**
  * @ApiResource(
@@ -15,6 +16,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * denormalizationContext={"groups"={"report:write"}}
  * )
  * @ApiFilter(SearchFilter::class, properties={"apply": "exact", "apply.applicant": "exact", "apply.task.owner": "exact"})
+ * @ApiFilter(OrderFilter::class, properties={"id"})
  * @ORM\Entity(repositoryClass=ReportRepository::class)
  */
 class Report
