@@ -223,6 +223,7 @@ class FinanceNew extends AbstractController
                 $land->setPrePrice($postData['price']);
                 $land->setPrice($postData['price'] * 1.1);
                 $land->setOwner($owner);
+                $land->setUpdateAt(new \DateTime());
                 // $land->setForSale(false);
                 break;
             case 8: // buyVip
