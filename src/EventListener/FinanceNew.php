@@ -220,10 +220,10 @@ class FinanceNew extends AbstractController
                     $f->setStatus(5);
                     $em->persist($f);
                 }
-                $land->setPrePrice($postData['prePrice']);
+                $land->setPrePrice($postData['price']);
+                $land->setPrice($postData['price'] * 1.1);
                 $land->setOwner($owner);
-                $land->setForSale(false);
-                // $land->setUpdateAt(new \DateTime());
+                // $land->setForSale(false);
                 break;
             case 8: // buyVip
                 $level = $this->getDoctrine()->getRepository(Level::class)->find($postData['levelId']);
