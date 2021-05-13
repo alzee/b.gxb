@@ -199,10 +199,10 @@ class FinanceNew extends AbstractController
                 break;
             case 7: // landLord
                 $land = $this->getDoctrine()->getRepository(Land::class)->find($data['entityId']);
-                $buyer = $this->getDoctrine()->getRepository(User::class)->find($postData['ownerId']);
-                $originalOwner = $land->getOwner();
-                if (!is_null($originalOwner)) {
-                    $ratio = $originalOwner->getLevel()->getLandTradeRatio();
+                $buyer = $this->getDoctrine()->getRepository(User::class)->find($postData['buyer']);
+                $seller = $land->getOwner();
+                if (!is_null($seller)) {
+                    $ratio = $seller->getLevel()->getLandTradeRatio();
                     $profit = ($land->getPrice() - $land->getPrePrice()) * $ratio;
                     if ($profit > 0) {
                         $total = $land->getPrePrice() + $profit;
@@ -210,11 +210,11 @@ class FinanceNew extends AbstractController
                     else {
                         $total = $land->getPrice();
                     }
-                    $originalOwner->setTopup($originalOwner->getTopup()  + $total);
-                    $originalOwner->setLandProfit($originalOwner->getLandProfit()  + $total);
-                    // new finance for $originalOwner
+                    $seller->setTopup($seller->getTopup()  + $total);
+                    $seller->setLandProfit($seller->getLandProfit()  + $total);
+                    // new finance for $seller
                     $f = new Finance();
-                    $f->setUser($originalOwner);
+                    $f->setUser($seller);
                     $f->setAmount($total);
                     $f->setType(55);
                     $f->setStatus(5);
