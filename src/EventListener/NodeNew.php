@@ -22,5 +22,9 @@ class NodeNew
             $author = $em->getRepository(User::class)->find(4);
             $node->setAuthor($author);
         }
+
+        if ($node->getType()->getId() == 2) {
+            $node->setApproved(false);
+        }
     }
 }
