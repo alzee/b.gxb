@@ -90,4 +90,19 @@ L1: 一级人数
 L2: 二级人数
 Is Star: 星级
 Rate: 费率
-
+conf: 设置
+Conf: 设置
+equityTotal: 股权总量
+referReward: 推广一级奖励
+referReward2: 推广二级奖励
+referGXB: 推广GXB奖励
+mainlandMinPrice: 主城起步价
+landMinPrice: 分城起步价
+mainlandMinDays: 主城最低天数
+landMinDays: 分城最低天数
+maxPerDay: 股权每日最大兑换数量
+equityGXBRate: 股权GXB兑例比率
+equityPrice: 股权价格
+equityPriceMax: 股权最高价
+equityPriceMin: 股权最低价
+dividendFund: 分红基金

@@ -25,6 +25,7 @@ class ConfCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
+            ->setSearchFields(null)
             // ->setPaginatorPageSize(50)
         ;
     }
@@ -32,20 +33,20 @@ class ConfCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IntegerField::new('equity', 'equity'),
+            IntegerField::new('equity', 'equityTotal'),
             NumberField::new('referReward', 'referReward'),
             NumberField::new('referReward2', 'referReward2'),
             IntegerField::new('referGXB', 'referGXB'),
             NumberField::new('mainlandMinPrice', 'mainlandMinPrice'),
             NumberField::new('landMinPrice', 'landMinPrice'),
             IntegerField::new('mainlandMinDays', 'mainlandMinDays'),
-            IntegerField::new('landMinDays', 'landMinDays'),
-            IntegerField::new('maxPerDay', 'maxPerDay'),
-            NumberField::new('equityGXBRate', 'equityGXBRate'),
-            NumberField::new('equityPrice', 'equityPrice'),
-            NumberField::new('equityPriceMax', 'equityPriceMax'),
-            NumberField::new('equityPriceMin', 'equityPriceMin'),
-            NumberField::new('dividendFund', 'dividendFund'),
+            IntegerField::new('landMinDays', 'landMinDays')->hideOnIndex(),
+            IntegerField::new('maxPerDay', 'maxPerDay')->hideOnIndex(),
+            NumberField::new('equityGXBRate', 'equityGXBRate')->hideOnIndex(),
+            NumberField::new('equityPrice', 'equityPrice')->hideOnIndex(),
+            NumberField::new('equityPriceMax', 'equityPriceMax')->hideOnIndex(),
+            NumberField::new('equityPriceMin', 'equityPriceMin')->hideOnIndex(),
+            NumberField::new('dividendFund', 'dividendFund')->hideOnIndex(),
         ];
     }
 }
