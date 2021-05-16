@@ -89,6 +89,11 @@ class Conf
      */
     private $dividendFund;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $forceUpdate;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -258,6 +263,18 @@ class Conf
     public function setDividendFund(float $dividendFund): self
     {
         $this->dividendFund = $dividendFund;
+
+        return $this;
+    }
+
+    public function getForceUpdate(): ?bool
+    {
+        return $this->forceUpdate;
+    }
+
+    public function setForceUpdate(bool $forceUpdate): self
+    {
+        $this->forceUpdate = $forceUpdate;
 
         return $this;
     }

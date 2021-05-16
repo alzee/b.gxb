@@ -106,3 +106,4 @@ equityPrice: 股权价格
 equityPriceMax: 股权最高价
 equityPriceMin: 股权最低价
 dividendFund: 分红基金
+forceUpdate: 强制更新

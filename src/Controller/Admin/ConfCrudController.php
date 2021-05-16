@@ -49,6 +49,7 @@ class ConfCrudController extends AbstractCrudController
             NumberField::new('equityPriceMax', 'equityPriceMax'),
             NumberField::new('equityPriceMin', 'equityPriceMin'),
             NumberField::new('dividendFund', 'dividendFund'),
+            NumberField::new('forceUpdate', 'forceUpdate'),
         ];
     }
 }
