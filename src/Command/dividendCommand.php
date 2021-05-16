@@ -10,20 +10,17 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use App\Entity\User;
 use App\Entity\Conf;
-use App\Repository\UserRepository;
+use App\Entity\Finance;
 use Doctrine\ORM\EntityManagerInterface;
 
 class dividendCommand extends Command
 {
     protected static $defaultName = 'dividend';
 
-    private $userRepo;
-
     private $em;
 
-    public function __construct(UserRepository $userRepo, EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em)
     {
-        $this->userRepo = $userRepo;
         $this->em = $em;
         parent::__construct();
     }
@@ -42,18 +39,29 @@ class dividendCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $arg1 = $input->getArgument('arg1');
 
-        // get fund * 50%
         $conf = $this->em->getRepository(Conf::class)->find(1);
         $fund = $conf->getDividendFund() * 0.5;
 
-        // get users with 10 or more coins
-        $users = $this->em->getRepository(User::class)->findByCoin(10);
+        $userRepo = $this->em->getRepository(User::class);
+        $users = $userRepo->findByCoin(10);
+        $sumCoin = $userRepo->sumCoin(10);
 
         foreach ($users as $u) {
-            $io->success($u->getCoin());
+            $dividend = (int)(($fund * $u->getCoin() / $sumCoin) * 100);
+
+            $io->success($u->getUsername() . " " . $u->getCoin() . " " .  $dividend);
+            $u->setTopup($u->getTopup() + $dividend);
+            
+            $f = new Finance();
+            $f->setUser($u);
+            $f->setAmount($dividend);
+            $f->setType(59);
+            $f->setStatus(5);
+            $this->em->persist($f);
         }
         
-        // reset fund
+        // $conf->setDividendFund(0);
+        $this->em->flush();
 
         return Command::SUCCESS;
     }

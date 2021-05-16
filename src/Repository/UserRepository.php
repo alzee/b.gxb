@@ -90,6 +90,17 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ;
     }
 
+    public function sumCoin($value)
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.coin >= :val')
+            ->setParameter('val', $value)
+            ->select('SUM(u.coin)')
+            ->getQuery()
+            ->getSingleScalarResult();
+        ;
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

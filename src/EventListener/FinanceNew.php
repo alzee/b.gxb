@@ -86,6 +86,9 @@ class FinanceNew extends AbstractController
             // $note = '购买会员返利 $user';
             $note = $finance->getNote();
             break;
+        case 59:
+            $note = '全民分红';
+            break;
         default:
             $note = 'unkown';
         }
