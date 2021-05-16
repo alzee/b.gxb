@@ -60,7 +60,7 @@ class dividendCommand extends Command
             $this->em->persist($f);
         }
         
-        // $conf->setDividendFund(0);
+        $conf->setDividendFund(0);
         $this->em->flush();
 
         return Command::SUCCESS;
