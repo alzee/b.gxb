@@ -65,7 +65,7 @@ class Conf
     /**
      * @ORM\Column(type="float")
      */
-    private $EquityGXBRate;
+    private $equityGXBRate;
 
     /**
      * @ORM\Column(type="float")
@@ -202,12 +202,12 @@ class Conf
 
     public function getEquityGXBRate(): ?float
     {
-        return $this->EquityGXBRate;
+        return $this->equityGXBRate;
     }
 
-    public function setEquityGXBRate(float $EquityGXBRate): self
+    public function setEquityGXBRate(float $equityGXBRate): self
     {
-        $this->EquityGXBRate = $EquityGXBRate;
+        $this->equityGXBRate = $equityGXBRate;
 
         return $this;
     }

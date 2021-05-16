@@ -19,6 +19,7 @@ use App\Entity\Tag;
 use App\Entity\Task;
 use App\Entity\User;
 use App\Entity\Vip;
+use App\Entity\Conf;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -57,5 +58,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('finance', 'fas fa-dollar-sign', Finance::class);
         yield MenuItem::linkToCrud('report', 'fas fa-flag', Report::class);
         yield MenuItem::linkToCrud('config', 'fas fa-cog', Config::class);
+        yield MenuItem::linkToCrud('conf', 'fas fa-cog', Conf::class);
     }
 }
