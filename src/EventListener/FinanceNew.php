@@ -21,6 +21,7 @@ use App\Entity\Land;
 use App\Entity\LandPost;
 use App\Entity\EquityTrade;
 use App\Entity\EquityFee;
+use App\Entity\Conf;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 
 class FinanceNew extends AbstractController
@@ -98,6 +99,7 @@ class FinanceNew extends AbstractController
     public function postUpdate(Finance $finance, LifecycleEventArgs $event): void
     {
         $em = $event->getEntityManager();
+        $conf = $em->getRepository(Conf::class)->find(1);
         $uid = $finance->getUser();
         $user = $this->getDoctrine()->getRepository(User::class)->find($uid);
         $type = $finance->getType();
@@ -119,6 +121,7 @@ class FinanceNew extends AbstractController
             switch ($type) {
             case 50: // topup
                 $user->setTopup($user->getTopup()  + $amount);
+                $conf->setDividendFund($conf->getDividendFund() + $amount);
                 break;
             case 1: // post task
                 $user->setFrozen($user->getFrozen() + $amount - $fee);
@@ -141,6 +144,7 @@ class FinanceNew extends AbstractController
                 $tStatus = $this->getDoctrine()->getRepository(Status::class)->find(2);
                 $t->setStatus($tStatus);
                 $em->persist($t);
+                $conf->setDividendFund($conf->getDividendFund() + $fee);
                 break;
             case 2: // stick
                 $t = $this->getDoctrine()->getRepository(Task::class)->find($data['entityId']);
