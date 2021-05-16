@@ -19,7 +19,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * )
  * @ORM\Entity(repositoryClass=ApplyRepository::class)
  * @ApiFilter(SearchFilter::class, properties={"applicant.id": "exact", "status.id": "exact", "task.id": "exact"})
- * @ApiFilter(OrderFilter::class, properties={"date"})
+ * @ApiFilter(OrderFilter::class, properties={"id"})
  */
 class Apply
 {
