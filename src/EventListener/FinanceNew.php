@@ -162,7 +162,7 @@ class FinanceNew extends AbstractController
                 $user->setEquity($user->getEquity() + $e->getEquity());
                 $seller = $e->getSeller();
 
-                $userRepo = $em->getRepository(User:class);
+                $userRepo = $em->getRepository(User::class);
                 $count1 = $userRepo->count(['referrer' => $seller]);
                 $count2 = $userRepo->count(['ror' => $seller]);
                 $feeRate1 = 0.95;
