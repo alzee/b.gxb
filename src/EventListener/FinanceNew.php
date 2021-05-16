@@ -20,6 +20,7 @@ use App\Entity\Bid;
 use App\Entity\Land;
 use App\Entity\LandPost;
 use App\Entity\EquityTrade;
+use App\Entity\EquityFee;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 
 class FinanceNew extends AbstractController
@@ -165,6 +166,7 @@ class FinanceNew extends AbstractController
                 $userRepo = $em->getRepository(User::class);
                 $count1 = $userRepo->count(['referrer' => $seller]);
                 $count2 = $userRepo->count(['ror' => $seller]);
+                $feeRates = $em->getRepository(EquityFee::class)->findAll();
                 $feeRate1 = 0.95;
                 $feeRate2 = 0.95;
                 $feeRate = max($feeRate1, $feeRate2);
