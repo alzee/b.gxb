@@ -153,6 +153,7 @@ class Task
 
     /**
      * @Groups({"task:read"})
+     * @Groups({"apply:read"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $note;
