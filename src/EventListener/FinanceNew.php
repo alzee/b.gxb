@@ -166,10 +166,13 @@ class FinanceNew extends AbstractController
                 $userRepo = $em->getRepository(User::class);
                 $count1 = $userRepo->count(['referrer' => $seller]);
                 $count2 = $userRepo->count(['ror' => $seller]);
-                $feeRates = $em->getRepository(EquityFee::class)->findAll();
-                $feeRate1 = 0.95;
-                $feeRate2 = 0.95;
-                $feeRate = max($feeRate1, $feeRate2);
+                $feeRates = $em->getRepository(EquityFee::class)->findBy([], ['rate' => 'ASC']);
+                foreach ($feeRates as $f) {
+                    if ($count1 >= $f->getL1() || $count2 >= $f->getL2()) {
+                        $feeRate = $f->getRate();
+                        break;
+                    }
+                }
                 $seller->setTopup($seller->getTopup()  + $amount * (1 - $feeRate));
                 // new finance for $seller
                 $f = new Finance();
