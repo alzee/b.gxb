@@ -5,7 +5,6 @@
 #
 # To enable this hook, rename this file to "post-update".
 
-# test hooks
 echo $PWD
 pushd ..
 echo Migrating...
