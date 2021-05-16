@@ -121,7 +121,6 @@ class FinanceNew extends AbstractController
             switch ($type) {
             case 50: // topup
                 $user->setTopup($user->getTopup()  + $amount);
-                $conf->setDividendFund($conf->getDividendFund() + $amount);
                 break;
             case 1: // post task
                 $user->setFrozen($user->getFrozen() + $amount - $fee);
@@ -144,7 +143,7 @@ class FinanceNew extends AbstractController
                 $tStatus = $this->getDoctrine()->getRepository(Status::class)->find(2);
                 $t->setStatus($tStatus);
                 $em->persist($t);
-                $conf->setDividendFund($conf->getDividendFund() + $fee);
+                $conf->setDividendFund($conf->getDividendFund() + $fee / 100);
                 break;
             case 2: // stick
                 $t = $this->getDoctrine()->getRepository(Task::class)->find($data['entityId']);
@@ -251,8 +250,8 @@ class FinanceNew extends AbstractController
                 $vipUntil = new \DateTime();
                 $vipUntil = $vipUntil->add(new \DateInterval('P' . $level->getDays(). 'D'));
                 $user->setVipUntil($vipUntil);
-                $rebate = $level->getPrice() * 100 * $level->getTopupRatio();
                 if ($referrer = $user->getReferrer()) {
+                    $rebate = $level->getPrice() * 100 * $level->getTopupRatio();
                     $referrer->setTopup($referrer->getTopup() + $rebate);
                     // new finance for $referrer
                     $f = new Finance();
@@ -263,6 +262,7 @@ class FinanceNew extends AbstractController
                     $f->setStatus(5);
                     $em->persist($f);
                 }
+                $conf->setDividendFund($conf->getDividendFund() + $amount / 100);
                 break;
             case 19: // withdraw
                 break;
