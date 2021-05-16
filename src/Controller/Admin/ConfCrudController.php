@@ -19,7 +19,8 @@ class ConfCrudController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
         return $actions
-            ->disable('new');
+            ->disable('new', 'delete')
+        ;
     }
 
     public function configureCrud(Crud $crud): Crud
