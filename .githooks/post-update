@@ -10,4 +10,4 @@ echo $PWD
 pushd ..
 echo Migrating...
 bin/console doc:mig:mig
-bin/console c:c
+sudo -u www bin/console c:c
