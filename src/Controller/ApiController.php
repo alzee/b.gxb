@@ -380,11 +380,11 @@ class ApiController extends AbstractController
     {
         $userRepo = $this->getDoctrine()->getRepository(User::class);
         $user = $userRepo->find($uid);
-        $countReferrer = $userRepo->count(['referrer' => $user]);
-        $countRor = $userRepo->count(['ror' => $user]);
+        $count1 = $userRepo->count(['referrer' => $user]);
+        $count2 = $userRepo->count(['ror' => $user]);
         $resp = [
-            $countReferrer,
-            $countRor
+            $count1,
+            $count2
         ];
         return $this->json($resp);
     }

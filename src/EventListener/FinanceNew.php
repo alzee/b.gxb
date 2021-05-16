@@ -161,11 +161,18 @@ class FinanceNew extends AbstractController
                 $e->setStatus(1);
                 $user->setEquity($user->getEquity() + $e->getEquity());
                 $seller = $e->getSeller();
-                $seller->setTopup($seller->getTopup()  + $amount);
+
+                $userRepo = $em->getRepository(User:class);
+                $count1 = $userRepo->count(['referrer' => $seller]);
+                $count2 = $userRepo->count(['ror' => $seller]);
+                $feeRate1 = 0.95;
+                $feeRate2 = 0.95;
+                $feeRate = max($feeRate1, $feeRate2);
+                $seller->setTopup($seller->getTopup()  + $amount * (1 - $feeRate));
                 // new finance for $seller
                 $f = new Finance();
                 $f->setUser($seller);
-                $f->setAmount($amount);
+                $f->setAmount($amount * (1 - $feeRate));
                 $f->setType(54);
                 $f->setStatus(5);
                 $em->persist($f);
