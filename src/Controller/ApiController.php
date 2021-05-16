@@ -336,7 +336,7 @@ class ApiController extends AbstractController
     /**
      * @Route("/ranking", name="_ranking")
      */
-    public function ranking(Request $request, LoggerInterface $logger): Response
+    public function ranking(Request $request): Response
     {
         /*
         $conn = $this->getDoctrine()->getManager()->getConnection();
@@ -363,7 +363,7 @@ class ApiController extends AbstractController
     /**
      * @Route("/equity_trades/total", name="_total_equity_trades")
      */
-    public function totalEquityTrades(Request $request, LoggerInterface $logger): Response
+    public function totalEquityTrades(Request $request): Response
     {
         $trades = $this->getDoctrine()->getRepository(EquityTrade::class)->findBy(['status' => 1]);
         $total = 0;
@@ -371,5 +371,21 @@ class ApiController extends AbstractController
             $total += $t->getRmb();
         }
         return $this->json($total);
+    }
+
+    /**
+     * @Route("/refcount/{uid}", name="refer_count")
+     */
+    public function refcount(int $uid): Response
+    {
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+        $user = $userRepo->find($uid);
+        $countReferrer = $userRepo->count(['referrer' => $user]);
+        $countRor = $userRepo->count(['ror' => $user]);
+        $resp = [
+            $countReferrer,
+            $countRor
+        ];
+        return $this->json($resp);
     }
 }
