@@ -4,8 +4,10 @@ namespace App\Entity;
 
 use App\Repository\ConfRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=ConfRepository::class)
  */
 class Conf
