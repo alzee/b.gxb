@@ -20,6 +20,7 @@ class ConfCrudController extends AbstractCrudController
     {
         return $actions
             ->disable('new', 'delete')
+            ->remove('detail', 'index')
         ;
     }
 
@@ -41,13 +42,13 @@ class ConfCrudController extends AbstractCrudController
             NumberField::new('mainlandMinPrice', 'mainlandMinPrice'),
             NumberField::new('landMinPrice', 'landMinPrice'),
             IntegerField::new('mainlandMinDays', 'mainlandMinDays'),
-            IntegerField::new('landMinDays', 'landMinDays')->hideOnIndex(),
-            IntegerField::new('maxPerDay', 'maxPerDay')->hideOnIndex(),
-            NumberField::new('equityGXBRate', 'equityGXBRate')->hideOnIndex(),
-            NumberField::new('equityPrice', 'equityPrice')->hideOnIndex(),
-            NumberField::new('equityPriceMax', 'equityPriceMax')->hideOnIndex(),
-            NumberField::new('equityPriceMin', 'equityPriceMin')->hideOnIndex(),
-            NumberField::new('dividendFund', 'dividendFund')->hideOnIndex(),
+            IntegerField::new('landMinDays', 'landMinDays'),
+            IntegerField::new('maxPerDay', 'maxPerDay'),
+            NumberField::new('equityGXBRate', 'equityGXBRate'),
+            NumberField::new('equityPrice', 'equityPrice'),
+            NumberField::new('equityPriceMax', 'equityPriceMax'),
+            NumberField::new('equityPriceMin', 'equityPriceMin'),
+            NumberField::new('dividendFund', 'dividendFund'),
         ];
     }
 }
