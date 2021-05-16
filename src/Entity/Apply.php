@@ -87,6 +87,8 @@ class Apply
     private $submitAt;
 
     /**
+     * @Groups({"apply:read", "apply:write"})
+     * @Groups({"task:read"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $note;
