@@ -57,7 +57,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('level', 'far fa-gem', Level::class);
         yield MenuItem::linkToCrud('finance', 'fas fa-dollar-sign', Finance::class);
         yield MenuItem::linkToCrud('report', 'fas fa-flag', Report::class);
-        yield MenuItem::linkToCrud('config', 'fas fa-cog', Config::class);
         yield MenuItem::linkToCrud('conf', 'fas fa-cog', Conf::class);
     }
 }
