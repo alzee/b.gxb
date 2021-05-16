@@ -80,6 +80,8 @@ class Apply
     private $pic = [];
 
     /**
+     * @Groups({"apply:read", "apply:write"})
+     * @Groups({"task:read"})
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $submitAt;
