@@ -14,6 +14,7 @@ use App\Entity\User;
 use App\Entity\Coupon;
 use App\Entity\Level;
 use App\Entity\Gxb;
+use App\Entity\Conf;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 
 class UserNew extends AbstractController
@@ -23,11 +24,12 @@ class UserNew extends AbstractController
         $em = $event->getEntityManager();
         $coupons = $em->getRepository(Coupon::class)->findAll();
         $level = $em->getRepository(Level::class)->find(9);
+        $conf = $em->getRepository(Conf::class)->find(1);
         $referer = $user->getReferrer();
         if (!is_null($referer)) {
             $gxb = new Gxb();
             $gxb->setUser($referer);
-            $gxb->setAmount(100);
+            $gxb->setAmount($conf->getReferGXB());
             $gxb->setType(2);
             $em->persist($gxb);
 

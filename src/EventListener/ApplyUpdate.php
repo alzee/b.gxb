@@ -11,7 +11,7 @@ namespace App\EventListener;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\User;
 use App\Entity\Apply;
-use App\Entity\Config;
+use App\Entity\Conf;
 use App\Entity\Finance;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
@@ -55,8 +55,8 @@ class ApplyUpdate
             $applicant->setCoin($applicant->getCoin() + intval($price / 100));
             $referer = $applicant->getReferrer();
             if (!is_null($referer)) {
-                $configRepo = $em->getRepository(Config::class);
-                $rewardRate = $configRepo->findOneBy(['label' => 'referReward'])->getValue();
+                $conf = $em->getRepository(Conf::class)->find(1);
+                $rewardRate = $conf->getReferReward();
                 $referer->setTopup($referer->getTopup() + ($price * $rewardRate));
                 // new finance for $referer
                 $f1 = new Finance();
@@ -69,7 +69,7 @@ class ApplyUpdate
 
                 $rOfReferer = $referer->getReferrer();
                 if (!is_null($rOfReferer)) {
-                    $rewardRate2 = $configRepo->findOneBy(['label' => 'referReward2'])->getValue();
+                    $rewardRate2 = $conf->getReferReward2();
                     $rOfReferer->setTopup($rOfReferer->getTopup() + ($price * $rewardRate2));
                     // new finance for $rOfReferer
                     $f2 = new Finance();
