@@ -6,6 +6,7 @@
 # To enable this hook, rename this file to "post-update".
 
 
+echo $PWD
 cd ..
 echo Migrating...
-bin/console doc:mig:mig -q
+bin/console doc:mig:mig
