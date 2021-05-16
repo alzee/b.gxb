@@ -86,6 +86,11 @@ class Apply
      */
     private $submitAt;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $note;
+
     public function __construct()
     {
         $this->date = new \DateTime();
@@ -201,6 +206,18 @@ class Apply
     public function setSubmitAt(?\DateTimeInterface $submitAt): self
     {
         $this->submitAt = $submitAt;
+
+        return $this;
+    }
+
+    public function getNote(): ?string
+    {
+        return $this->note;
+    }
+
+    public function setNote(?string $note): self
+    {
+        $this->note = $note;
 
         return $this;
     }
