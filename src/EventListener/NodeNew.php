@@ -19,7 +19,7 @@ class NodeNew
     {
         if (is_null($node->getAuthor())) {
             $em = $event->getEntityManager();
-            $author = $em->getRepository(User::class)->find(4);
+            $author = $em->getRepository(User::class)->find(2);
             $node->setAuthor($author);
         }
 
