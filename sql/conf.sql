@@ -19,27 +19,8 @@
 -- Table structure for table `conf`
 --
 
-DROP TABLE IF EXISTS `conf`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `conf` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `equity` int(11) NOT NULL,
-  `refer_reward` double NOT NULL,
-  `refer_reward2` double NOT NULL,
-  `refer_gxb` smallint(6) NOT NULL,
-  `mainland_min_price` double NOT NULL,
-  `land_min_price` double NOT NULL,
-  `mainland_min_days` smallint(6) NOT NULL,
-  `land_min_days` smallint(6) NOT NULL,
-  `max_per_day` int(11) NOT NULL,
-  `equity_gxbrate` double NOT NULL,
-  `equity_price` double NOT NULL,
-  `equity_price_max` double NOT NULL,
-  `equity_price_min` double NOT NULL,
-  `dividend_fund` double NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -48,7 +29,7 @@ CREATE TABLE `conf` (
 
 LOCK TABLES `conf` WRITE;
 /*!40000 ALTER TABLE `conf` DISABLE KEYS */;
-INSERT INTO `conf` VALUES (1,99999,0.08,0.02,100,1,0.05,1,20,10000,0.001,18.88,1,0.01,100);
+INSERT INTO `conf` VALUES (1,99999,0.08,0.02,100,1,0.05,1,20,10000,0.001,18.88,1,0.01,100,0);
 /*!40000 ALTER TABLE `conf` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
