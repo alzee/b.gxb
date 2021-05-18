@@ -143,7 +143,7 @@ class FinanceNew extends AbstractController
                 $t->setReviews($postData['reviews']);
                 $t->setTitle($postData['title']);
                 $t->setWorkHours($postData['workHours']);
-                $tStatus = $this->getDoctrine()->getRepository(Status::class)->find(2);
+                $tStatus = $this->getDoctrine()->getRepository(Status::class)->find(1);
                 $t->setStatus($tStatus);
                 $em->persist($t);
                 $conf->setDividendFund($conf->getDividendFund() + $fee / 100);
