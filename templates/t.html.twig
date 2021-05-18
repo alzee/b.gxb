@@ -2,9 +2,9 @@
 {# @var field \EasyCorp\Bundle\EasyAdminBundle\Dto\FieldDto #}
 {# @var entity \EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto #}
 {% if ea.crud.currentAction == 'detail' %}
-    <ul>
+    <ul class="list-group w-50">
         {% for item in field.value %}
-            <li><img src="{{ item}}"></img></li>
+            <li class="list-group-item"><img class="w-100" src="{{ item}}"></img></li>
         {% endfor %}
     </ul>
 {% else %}
