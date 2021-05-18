@@ -69,7 +69,7 @@ class TaskCrudController extends AbstractCrudController
         $status = AssociationField::new('status')->setFormTypeOptions(["choices" => $statuses]);
 
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $title, $price, $owner, $category, $quantity, $applies, $description, $date, $status];
+            return [$id, $name, $title, $price, $owner, $category, $description, $date, $status];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $name, $title, $price, $description, $quantity, $date, $link, $note, $guides, $reviews, $workHours, $reviewHours, $owner, $category, $tag, $applies, $status];
         } elseif (Crud::PAGE_NEW === $pageName) {

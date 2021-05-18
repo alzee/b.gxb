@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 
 class BidCrudController extends AbstractCrudController
 {
@@ -37,7 +38,7 @@ class BidCrudController extends AbstractCrudController
         $price = IntegerField::new('price');
         $position = IntegerField::new('position');
         $date = DateTimeField::new('date');
-        $isBuyNow = Field::new('isBuyNow');
+        $isBuyNow = BooleanField::new('isBuyNow')->renderAsSwitch(false);
         $task = AssociationField::new('task');
         $id = IntegerField::new('id', 'ID');
 
