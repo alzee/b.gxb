@@ -19,6 +19,24 @@ class BidRepository extends ServiceEntityRepository
         parent::__construct($registry, Bid::class);
     }
 
+    public function getBids($position): ?Bid
+    {
+        $today = (new \DateTime('today'))->format('c');
+        $yesterday = (new \DateTime('yesterday'))->format('c');
+        return $this->createQueryBuilder('b')
+            ->setParameter('today', $today)
+            ->setParameter('yesterday', $yesterday)
+            ->setParameter('position', $position)
+            ->andWhere('b.position = :position')
+            ->andWhere('b.date < :today')
+            ->andWhere('b.date > :yesterday')
+            ->orderBy('b.date', 'DESC')
+            ->getQuery()
+            ->setMaxResults(1)
+            ->getOneOrNullResult()
+        ;
+    }
+
     // /**
     //  * @return Bid[] Returns an array of Bid objects
     //  */
