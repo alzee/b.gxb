@@ -23,8 +23,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
  * )
  * @ORM\Entity(repositoryClass=TaskRepository::class)
  * @ApiFilter(SearchFilter::class, properties={"id": "exact", "title": "partial", "name": "partial", "category.id": "exact", "owner.id": "exact", "owner.username": "exact", "status": "exact"})
- * @ApiFilter(OrderFilter::class, properties={"bidPosition", "date", "price", "stickyUntil", "recommendUntil"})
- * @ApiFilter(RangeFilter::class, properties={"bidPosition"})
+ * @ApiFilter(OrderFilter::class, properties={"date", "price", "stickyUntil", "recommendUntil"})
  * @ApiFilter(PropertyFilter::class)
  * @ApiFilter(DateFilter::class, properties={"stickyUntil", "recommendUntil", "showUntil"})
  */
@@ -122,12 +121,6 @@ class Task
      * @Groups({"report:read"})
      */
     private $date;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"task:read"})
-     */
-    private $bidPosition;
 
     /**
      * @ORM\OneToMany(targetEntity=Apply::class, mappedBy="task")
@@ -364,18 +357,6 @@ class Task
     public function getDate(): ?\DateTimeImmutable
     {
         return $this->date;
-    }
-
-    public function getBidPosition(): ?int
-    {
-        return $this->bidPosition;
-    }
-
-    public function setBidPosition(?int $bidPosition): self
-    {
-        $this->bidPosition = $bidPosition;
-
-        return $this;
     }
 
     /**
