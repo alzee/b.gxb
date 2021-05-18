@@ -93,6 +93,9 @@ class FinanceNew extends AbstractController
         default:
             $note = 'unkown';
         }
+        if ($t > 50) {
+            $finance->setStatus(5);
+        } 
         $finance->setNote($note);
     }
 
@@ -185,7 +188,6 @@ class FinanceNew extends AbstractController
                 $f->setUser($seller);
                 $f->setAmount($amount * (1 - $feeRate));
                 $f->setType(54);
-                $f->setStatus(5);
                 $em->persist($f);
                 break;
             case 6: // occupy
@@ -200,7 +202,6 @@ class FinanceNew extends AbstractController
                     $f->setUser($landOwner);
                     $f->setAmount($amount / 2);
                     $f->setType(57);
-                    $f->setStatus(5);
                     $em->persist($f);
                 }
 
@@ -235,7 +236,6 @@ class FinanceNew extends AbstractController
                     $f->setUser($seller);
                     $f->setAmount($total);
                     $f->setType(55);
-                    $f->setStatus(5);
                     $em->persist($f);
                 }
                 $land->setPrePrice($postData['price']);
@@ -259,7 +259,6 @@ class FinanceNew extends AbstractController
                     $f->setAmount($rebate);
                     $f->setType(58);
                     $f->setNote('购买会员返利 ' . $user->getUsername());
-                    $f->setStatus(5);
                     $em->persist($f);
                 }
                 $conf->setDividendFund($conf->getDividendFund() + $amount / 100);

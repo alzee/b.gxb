@@ -56,7 +56,6 @@ class dividendCommand extends Command
             $f->setUser($u);
             $f->setAmount($dividend);
             $f->setType(59);
-            $f->setStatus(5);
             $this->em->persist($f);
         }
         

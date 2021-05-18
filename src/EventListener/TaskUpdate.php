@@ -33,7 +33,6 @@ class TaskUpdate
             $f->setUser($owner);
             $f->setAmount($amount);
             $f->setType(56);
-            $f->setStatus(5);
             $em->persist($f);
 
             $em->flush();
