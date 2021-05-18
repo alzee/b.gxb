@@ -19,6 +19,17 @@ class StatusRepository extends ServiceEntityRepository
         parent::__construct($registry, Status::class);
     }
 
+    public function getTaskStatuses()
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.id <= 2')
+            ->orderBy('s.id', 'ASC')
+            ->setMaxResults(2)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Status[] Returns an array of Status objects
     //  */
