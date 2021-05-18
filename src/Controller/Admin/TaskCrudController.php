@@ -17,6 +17,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use App\Entity\Status;
 
 class TaskCrudController extends AbstractCrudController
 {
@@ -45,6 +46,7 @@ class TaskCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
+        $statuses = $this->getDoctrine()->getRepository(Status::class)->getTaskStatuses();
         $name = TextField::new('name');
         $title = TextField::new('title');
         $price = IntegerField::new('price');
@@ -66,7 +68,8 @@ class TaskCrudController extends AbstractCrudController
         $showUntil = DateTimeField::new('showUntil');
         $workHours = IntegerField::new('workHours');
         $reviewHours = IntegerField::new('reviewHours');
-        $status = AssociationField::new('status');
+        $status = AssociationField::new('status')->setFormTypeOptions(["choices" => $statuses]);
+        dump($status);
 
         if (Crud::PAGE_INDEX === $pageName) {
             return [$id, $title, $price, $owner, $platform, $category, $tag, $quantity, $applies, $date, $status];
