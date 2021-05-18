@@ -14,6 +14,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -29,7 +30,7 @@ class TaskCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setSearchFields(['id', 'name', 'title', 'price', 'description', 'quantity', 'link', 'note', 'guides', 'reviews', 'workHours', 'reviewHours'])
+            ->setSearchFields(['id', 'name', 'title', 'price', 'description', 'quantity', 'link', 'note', 'workHours', 'reviewHours'])
             ->setPaginatorPageSize(50)
             ->setDefaultSort(['id' => 'DESC'])
         ;
@@ -38,7 +39,6 @@ class TaskCrudController extends AbstractCrudController
     public function configureFilters(Filters $filters): Filters
     {
         return $filters
-            ->add(EntityFilter::new('platform'))
             ->add(EntityFilter::new('category'))
             ->add(EntityFilter::new('tag'))
             ->add('quantity');
@@ -50,9 +50,8 @@ class TaskCrudController extends AbstractCrudController
         $name = TextField::new('name');
         $title = TextField::new('title');
         $price = IntegerField::new('price');
-        $description = TextareaField::new('description');
+        $description = TextEditorField::new('description');
         $owner = AssociationField::new('owner');
-        $platform = AssociationField::new('platform');
         $category = AssociationField::new('category');
         $tag = AssociationField::new('tag');
         $quantity = IntegerField::new('quantity');
@@ -72,13 +71,13 @@ class TaskCrudController extends AbstractCrudController
         dump($status);
 
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $title, $price, $owner, $platform, $category, $tag, $quantity, $applies, $date, $status];
+            return [$id, $title, $price, $owner, $category, $quantity, $applies, $description, $date, $status];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$id, $name, $title, $price, $description, $quantity, $date, $link, $note, $guides, $reviews, $stickyUntil, $recommendUntil, $showUntil, $workHours, $reviewHours, $owner, $platform, $category, $tag, $applies, $status];
+            return [$id, $name, $title, $price, $description, $quantity, $date, $link, $note, $guides, $reviews, $stickyUntil, $recommendUntil, $showUntil, $workHours, $reviewHours, $owner, $category, $tag, $applies, $status];
         } elseif (Crud::PAGE_NEW === $pageName) {
-            return [$name, $title, $price, $description, $owner, $platform, $category, $tag, $quantity, $applies];
+            return [$name, $title, $price, $description, $owner, $category, $tag, $quantity, $applies];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$name, $title, $price, $description, $owner, $platform, $category, $tag, $quantity, $applies, $status];
+            return [$name, $title, $price, $description, $owner, $category, $tag, $quantity, $applies, $status];
         }
     }
 
@@ -86,6 +85,7 @@ class TaskCrudController extends AbstractCrudController
     {
         return $actions
             ->add('index', Action::DETAIL)
+            ->disable('new')
         ;
     }
 }
