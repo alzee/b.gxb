@@ -46,16 +46,20 @@ class LandTrade
     private $buyer;
 
     /**
-     * @Groups({"landtrade:read", "landtrade:write"})
-     * @ORM\Column(type="string", length=255)
-     */
-    private $price;
-
-    /**
      * @Groups({"landtrade:read"})
      * @ORM\Column(type="datetime_immutable")
      */
     private $date;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $prePrice;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $price;
 
     public function __construct()
     {
@@ -104,18 +108,6 @@ class LandTrade
         return $this;
     }
 
-    public function getPrice(): ?string
-    {
-        return $this->price;
-    }
-
-    public function setPrice(string $price): self
-    {
-        $this->price = $price;
-
-        return $this;
-    }
-
     public function getDate(): ?\DateTimeImmutable
     {
         return $this->date;
@@ -124,6 +116,30 @@ class LandTrade
     public function setDate(\DateTimeImmutable $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getPrePrice(): ?int
+    {
+        return $this->prePrice;
+    }
+
+    public function setPrePrice(?int $prePrice): self
+    {
+        $this->prePrice = $prePrice;
+
+        return $this;
+    }
+
+    public function getPrice(): ?int
+    {
+        return $this->price;
+    }
+
+    public function setPrice(?int $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }
