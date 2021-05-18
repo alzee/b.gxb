@@ -64,7 +64,6 @@ class TaskCrudController extends AbstractCrudController
         $reviews = ArrayField::new('reviews')->setTemplatePath('tt.html.twig');
         $stickyUntil = DateTimeField::new('stickyUntil');
         $recommendUntil = DateTimeField::new('recommendUntil');
-        $showUntil = DateTimeField::new('showUntil');
         $workHours = IntegerField::new('workHours');
         $reviewHours = IntegerField::new('reviewHours');
         $status = AssociationField::new('status')->setFormTypeOptions(["choices" => $statuses]);
@@ -72,7 +71,7 @@ class TaskCrudController extends AbstractCrudController
         if (Crud::PAGE_INDEX === $pageName) {
             return [$id, $title, $price, $owner, $category, $quantity, $applies, $description, $date, $status];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$id, $name, $title, $price, $description, $quantity, $date, $link, $note, $guides, $reviews, $stickyUntil, $recommendUntil, $showUntil, $workHours, $reviewHours, $owner, $category, $tag, $applies, $status];
+            return [$id, $name, $title, $price, $description, $quantity, $date, $link, $note, $guides, $reviews, $workHours, $reviewHours, $owner, $category, $tag, $applies, $status];
         } elseif (Crud::PAGE_NEW === $pageName) {
             return [$name, $title, $price, $description, $owner, $category, $tag, $quantity, $applies];
         } elseif (Crud::PAGE_EDIT === $pageName) {
