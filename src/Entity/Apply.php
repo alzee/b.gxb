@@ -143,7 +143,7 @@ class Apply
 
     public function __toString(): string
     {
-        return $this->applicant;
+        return $this->task;
     }
 
     public function getDate(): ?\DateTimeInterface

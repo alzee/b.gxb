@@ -11,6 +11,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 
 class ReportCrudController extends AbstractCrudController
 {
@@ -30,17 +32,18 @@ class ReportCrudController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
         return $actions
+            ->add('index', 'detail')
             ->disable('new');
     }
 
     public function configureFields(string $pageName): iterable
     {
-        $descA = TextField::new('descA');
+        $descA = TextEditorField::new('descA');
         $picsA = ArrayField::new('picsA');
-        $descB = TextField::new('descB');
+        $descB = TextEditorField::new('descB');
         $picsB = ArrayField::new('picsB');
         $date = DateTimeField::new('date');
-        $status = IntegerField::new('status');
+        $status = ChoiceField::new('status')->setChoices(['评审中' => 0, '维权无效' => 1, '维权成功' => 2]);
         $apply = AssociationField::new('apply');
         $id = IntegerField::new('id', 'ID');
 
@@ -51,7 +54,7 @@ class ReportCrudController extends AbstractCrudController
         } elseif (Crud::PAGE_NEW === $pageName) {
             return [$descA, $picsA, $descB, $picsB, $date, $status, $apply];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$descA, $picsA, $descB, $picsB, $date, $status, $apply];
+            return [$status];
         }
     }
 }

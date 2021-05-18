@@ -24,7 +24,9 @@ class NodeCrudController extends AbstractCrudController
     {
         return $crud
             ->setSearchFields(['id', 'title', 'body'])
-            ->setPaginatorPageSize(50);
+            ->setPaginatorPageSize(50)
+            ->setDefaultSort(['id' => 'DESC'])
+        ;
     }
 
     public function configureFields(string $pageName): iterable

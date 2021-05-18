@@ -4,4 +4,4 @@ filter.title: 过滤
 paginator.results: '%count%个记录'
 label.true: 是
 label.false: 否
-label.null: 
+label.null: 空
