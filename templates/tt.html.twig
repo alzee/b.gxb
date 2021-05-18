@@ -4,7 +4,7 @@
 {% if ea.crud.currentAction == 'detail' %}
     <ul class="list-group w-50">
         {% for item in field.value %}
-            <li class="list-group-item"><img class="w-100" src="{{ item }}"></img></li>
+            <li class="list-group-item">{{ item.desc }}<img class="w-100" src="{{ item.img }}"></img></li>
         {% endfor %}
     </ul>
 {% else %}

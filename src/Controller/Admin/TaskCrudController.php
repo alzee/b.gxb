@@ -60,8 +60,8 @@ class TaskCrudController extends AbstractCrudController
         $date = DateTimeField::new('date');
         $link = TextField::new('link');
         $note = TextField::new('note');
-        $guides = ArrayField::new('guides');
-        $reviews = ArrayField::new('reviews');
+        $guides = ArrayField::new('guides')->setTemplatePath('tt.html.twig');
+        $reviews = ArrayField::new('reviews')->setTemplatePath('tt.html.twig');
         $stickyUntil = DateTimeField::new('stickyUntil');
         $recommendUntil = DateTimeField::new('recommendUntil');
         $showUntil = DateTimeField::new('showUntil');
