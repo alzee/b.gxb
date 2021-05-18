@@ -7,7 +7,7 @@ Is Buy Now: 一口价
 Author: 作者
 Node: 文章
 Status: 状态
-landtrade: 领地交易
+landTrade: 领地交易
 landpost: 领地广告
 Land: 领地
 Seller: 卖家
@@ -16,7 +16,8 @@ Days: 天数
 Cover: 封面
 task: 任务
 node: 文章
-nodetype: 文章类别
+nodeType: 文章类别
+equityTrade: 股权交易
 user: 用户
 tag: 标签
 category: 类别
