@@ -12,6 +12,7 @@ use Darabonba\OpenApi\Models\Config;
 use AlibabaCloud\SDK\Dysmsapi\V20170525\Models\SendSmsRequest;
 use App\Entity\Finance;
 use App\Entity\User;
+use App\Entity\Bid;
 use App\Entity\EquityTrade;
 use Psr\Log\LoggerInterface;
 
@@ -387,5 +388,19 @@ class ApiController extends AbstractController
             $count2
         ];
         return $this->json($resp);
+    }
+
+    /**
+     * @Route("/getbids", name="get_bids")
+     */
+    public function getBids(): Response
+    {
+        $bidRepo = $this->getDoctrine()->getRepository(Bid::class);
+
+        for ($i = 0; $i < 4; $i++) {
+            $bids[$i] = $bidRepo->getBids($i);
+        }
+
+        return $this->json($bids);
     }
 }
