@@ -15,6 +15,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 
 class TaskCrudController extends AbstractCrudController
 {
@@ -27,7 +29,9 @@ class TaskCrudController extends AbstractCrudController
     {
         return $crud
             ->setSearchFields(['id', 'name', 'title', 'price', 'description', 'quantity', 'link', 'note', 'guides', 'reviews', 'workHours', 'reviewHours'])
-            ->setPaginatorPageSize(50);
+            ->setPaginatorPageSize(50)
+            ->setDefaultSort(['id' => 'DESC'])
+        ;
     }
 
     public function configureFilters(Filters $filters): Filters
@@ -65,13 +69,20 @@ class TaskCrudController extends AbstractCrudController
         $status = AssociationField::new('status');
 
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $title, $price, $owner, $platform, $category, $tag, $quantity, $applies, $date];
+            return [$id, $title, $price, $owner, $platform, $category, $tag, $quantity, $applies, $date, $status];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $name, $title, $price, $description, $quantity, $date, $link, $note, $guides, $reviews, $stickyUntil, $recommendUntil, $showUntil, $workHours, $reviewHours, $owner, $platform, $category, $tag, $applies, $status];
         } elseif (Crud::PAGE_NEW === $pageName) {
             return [$name, $title, $price, $description, $owner, $platform, $category, $tag, $quantity, $applies];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$name, $title, $price, $description, $owner, $platform, $category, $tag, $quantity, $applies];
+            return [$name, $title, $price, $description, $owner, $platform, $category, $tag, $quantity, $applies, $status];
         }
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+            ->add('index', Action::DETAIL)
+        ;
     }
 }
