@@ -39,7 +39,7 @@ class ReportCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         $descA = TextEditorField::new('descA');
-        $picsA = ArrayField::new('picsA');
+        $picsA = ArrayField::new('picsA')->setTemplatePath('t.html.twig');
         $descB = TextEditorField::new('descB');
         $picsB = ArrayField::new('picsB');
         $date = DateTimeField::new('date');
