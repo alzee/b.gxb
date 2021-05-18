@@ -41,7 +41,7 @@ class ReportCrudController extends AbstractCrudController
         $descA = TextEditorField::new('descA');
         $picsA = ArrayField::new('picsA')->setTemplatePath('t.html.twig');
         $descB = TextEditorField::new('descB');
-        $picsB = ArrayField::new('picsB');
+        $picsB = ArrayField::new('picsB')->setTemplatePath('t.html.twig');
         $date = DateTimeField::new('date');
         $status = ChoiceField::new('status')->setChoices(['评审中' => 0, '维权无效' => 1, '维权成功' => 2]);
         $apply = AssociationField::new('apply');
