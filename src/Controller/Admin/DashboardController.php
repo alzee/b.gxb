@@ -22,6 +22,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -56,5 +59,18 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('finance', 'fas fa-dollar-sign', Finance::class);
         yield MenuItem::linkToCrud('report', 'fas fa-flag', Report::class);
         yield MenuItem::linkToCrud('conf', 'fas fa-cog', Conf::class)->setAction('detail')->setEntityId(1);
+    }
+
+    /**
+     * @Route("/admin", name="admin")
+     */
+    public function index(): Response
+    {
+        // return parent::index();
+
+        // redirect to some CRUD controller
+        $routeBuilder = $this->get(AdminUrlGenerator::class);
+
+        return $this->redirect($routeBuilder->setController(TaskCrudController::class)->generateUrl());
     }
 }
