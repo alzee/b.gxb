@@ -28,6 +28,7 @@ class UserCrudController extends AbstractCrudController
     {
         return $crud
             ->setSearchFields(['id', 'username', 'roles', 'avatar', 'phone', 'topup', 'earnings', 'gxb', 'equity', 'frozen', 'refcode', 'coin'])
+            ->setDefaultSort(['id' => 'DESC'])
             ->setPaginatorPageSize(50);
     }
 
@@ -35,7 +36,7 @@ class UserCrudController extends AbstractCrudController
     {
         return $actions
             ->add('index', 'detail')
-            ->disable('show');
+            ->disable('show', 'new');
     }
 
     public function configureFilters(Filters $filters): Filters

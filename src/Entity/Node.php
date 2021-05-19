@@ -20,7 +20,7 @@ use Doctrine\Common\Collections\Criteria;
  * denormalizationContext={"groups"={"node:write"}}
  * )
  * @ApiFilter(OrderFilter::class, properties={"id"})
- * @ApiFilter(SearchFilter::class, properties={"type.id": "exact"})
+ * @ApiFilter(SearchFilter::class, properties={"type": "exact"})
  * @ApiFilter(BooleanFilter::class, properties={"approved"})
  * @ORM\Entity(repositoryClass=NodeRepository::class)
  */

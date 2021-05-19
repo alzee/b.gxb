@@ -15,6 +15,8 @@ use App\Entity\Coupon;
 use App\Entity\Level;
 use App\Entity\Gxb;
 use App\Entity\Conf;
+use App\Entity\Node;
+use App\Entity\NodeType;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 
 class UserNew extends AbstractController
@@ -87,6 +89,26 @@ class UserNew extends AbstractController
 
             imagejpeg($jpg_image, __DIR__ .  '/../../public/img/poster/' . $user->getUsername() . '_' . $v, 100);
             imagedestroy($jpg_image);
+        }
+    }
+
+    public function postPersist(User $user, LifecycleEventArgs $event): void
+    {
+        if ($user->getId() > 100) {
+            $em = $event->getEntityManager();
+            $conf = $em->getRepository(Conf::class)->find(1);
+            $typeNews = $em->getRepository(NodeType::class)->find(3);
+            $admin = $em->getRepository(User::class)->find(2);
+            $body = $conf->getWelcome();
+            $body = preg_replace('/{{\s*username\s*}}/i', $user->getUsername(), $body);
+            $body = preg_replace('/{{\s*id\s*}}/i', $user->getId(), $body);
+            $node = new Node();
+            $node->setTitle('恭喜第' . $user->getId() . '位股东加入共享宝');
+            $node->setBody($body);
+            $node->setAuthor($admin);
+            $node->setType($typeNews);
+            $em->persist($node);
+            $em->flush();
         }
     }
 }
