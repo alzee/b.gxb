@@ -94,6 +94,16 @@ class Conf
      */
     private $forceUpdate;
 
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $coinsPerYuan;
+
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $coinThreshold;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -275,6 +285,30 @@ class Conf
     public function setForceUpdate(bool $forceUpdate): self
     {
         $this->forceUpdate = $forceUpdate;
+
+        return $this;
+    }
+
+    public function getCoinsPerYuan(): ?int
+    {
+        return $this->coinsPerYuan;
+    }
+
+    public function setCoinsPerYuan(?int $coinsPerYuan): self
+    {
+        $this->coinsPerYuan = $coinsPerYuan;
+
+        return $this;
+    }
+
+    public function getCoinThreshold(): ?int
+    {
+        return $this->coinThreshold;
+    }
+
+    public function setCoinThreshold(?int $coinThreshold): self
+    {
+        $this->coinThreshold = $coinThreshold;
 
         return $this;
     }

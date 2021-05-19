@@ -41,10 +41,11 @@ class dividendCommand extends Command
 
         $conf = $this->em->getRepository(Conf::class)->find(1);
         $fund = $conf->getDividendFund() * 0.5;
+        $coinThreshold = $conf->getCoinThreshold();
 
         $userRepo = $this->em->getRepository(User::class);
-        $users = $userRepo->findByCoin(10);
-        $sumCoin = $userRepo->sumCoin(10);
+        $users = $userRepo->findByCoin($coinThreshold);
+        $sumCoin = $userRepo->sumCoin($coinThreshold);
 
         foreach ($users as $u) {
             $dividend = (int)(($fund * $u->getCoin() / $sumCoin) * 100);

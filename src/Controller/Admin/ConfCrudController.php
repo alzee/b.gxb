@@ -52,6 +52,8 @@ class ConfCrudController extends AbstractCrudController
             MoneyField::new('equityPriceMax', 'equityPriceMax')->setCurrency('CNY')->setStoredAsCents(false),
             MoneyField::new('equityPriceMin', 'equityPriceMin')->setCurrency('CNY')->setStoredAsCents(false),
             MoneyField::new('dividendFund', 'dividendFund')->setCurrency('CNY')->setStoredAsCents(false),
+            IntegerField::new('coinsPerYuan', 'coinsPerYuan'),
+            IntegerField::new('coinThreshold', 'coinThreshold'),
             BooleanField::new('forceUpdate', 'forceUpdate'),
         ];
     }

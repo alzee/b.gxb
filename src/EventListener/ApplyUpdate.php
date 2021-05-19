@@ -51,10 +51,12 @@ class ApplyUpdate
             $f0->setType(53);
             $em->persist($f0);
 
-            $applicant->setCoin($applicant->getCoin() + intval($price / 100));
+            $conf = $em->getRepository(Conf::class)->find(1);
+
+            $coinsPerYuan = $conf->getCoinsPerYuan();
+            $applicant->setCoin($applicant->getCoin() + intval(($price / 100) * $coinsPerYuan));
             $referer = $applicant->getReferrer();
             if (!is_null($referer)) {
-                $conf = $em->getRepository(Conf::class)->find(1);
                 $rewardRate = $conf->getReferReward();
                 $referer->setTopup($referer->getTopup() + ($price * $rewardRate));
                 // new finance for $referer
