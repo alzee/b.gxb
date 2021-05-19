@@ -1,4 +1,4 @@
-coinsPerYuan: 每元奖励金币数
+coinsPerYuan: 奖励金币数 / 元
 coinThreshold: 分红金币门槛
 LandPost: 领地广告
 Coupon Id: 优惠券ID
@@ -145,7 +145,7 @@ landMinPrice: 分城起步价
 mainlandMinDays: 主城最低天数
 landMinDays: 分城最低天数
 maxPerDay: 股权每日最大兑换数量
-equityGXBRate: 股权GXB兑例比率
+equityGXBRate: 兑例GXB / 股权
 equityPrice: 股权价格
 equityPriceMax: 股权最高价
 equityPriceMin: 股权最低价
