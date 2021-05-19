@@ -104,6 +104,11 @@ class Conf
      */
     private $coinThreshold;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $welcome;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -309,6 +314,18 @@ class Conf
     public function setCoinThreshold(?int $coinThreshold): self
     {
         $this->coinThreshold = $coinThreshold;
+
+        return $this;
+    }
+
+    public function getWelcome(): ?string
+    {
+        return $this->welcome;
+    }
+
+    public function setWelcome(?string $welcome): self
+    {
+        $this->welcome = $welcome;
 
         return $this;
     }

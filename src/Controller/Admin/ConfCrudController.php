@@ -11,6 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\PercentField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 
 class ConfCrudController extends AbstractCrudController
 {
@@ -54,6 +55,7 @@ class ConfCrudController extends AbstractCrudController
             MoneyField::new('dividendFund', 'dividendFund')->setCurrency('CNY')->setStoredAsCents(false),
             IntegerField::new('coinsPerYuan', 'coinsPerYuan'),
             IntegerField::new('coinThreshold', 'coinThreshold'),
+            TextEditorField::new('welcome', 'welcome'),
             BooleanField::new('forceUpdate', 'forceUpdate'),
         ];
     }
