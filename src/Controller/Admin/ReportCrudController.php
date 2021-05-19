@@ -26,6 +26,7 @@ class ReportCrudController extends AbstractCrudController
         return $crud
             ->setPageTitle(Crud::PAGE_INDEX, '举报记录')
             ->setSearchFields(['id', 'descA', 'picsA', 'descB', 'picsB', 'status'])
+            ->setDefaultSort(['id' => 'DESC'])
             ->setPaginatorPageSize(50);
     }
 
@@ -33,7 +34,7 @@ class ReportCrudController extends AbstractCrudController
     {
         return $actions
             ->add('index', 'detail')
-            ->disable('new');
+            ->disable('new', 'delete');
     }
 
     public function configureFields(string $pageName): iterable

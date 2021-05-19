@@ -11,6 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 
 class BidCrudController extends AbstractCrudController
 {
@@ -24,7 +25,9 @@ class BidCrudController extends AbstractCrudController
         return $crud
             ->setPageTitle(Crud::PAGE_INDEX, '竞价记录')
             ->setSearchFields(['id', 'price', 'position'])
-            ->setPaginatorPageSize(50);
+            ->setPaginatorPageSize(50)
+            ->setDefaultSort(['id' => 'DESC'])
+        ;
     }
 
     public function configureActions(Actions $actions): Actions
@@ -35,7 +38,7 @@ class BidCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        $price = IntegerField::new('price');
+        $price = MoneyField::new('price')->setCurrency('CNY');
         $position = IntegerField::new('position');
         $date = DateTimeField::new('date');
         $isBuyNow = BooleanField::new('isBuyNow')->renderAsSwitch(false);

@@ -11,6 +11,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 
 class LandPostCrudController extends AbstractCrudController
 {
@@ -24,36 +27,38 @@ class LandPostCrudController extends AbstractCrudController
         return $crud
             ->setPageTitle(Crud::PAGE_INDEX, '领地广告')
             ->setSearchFields(['id', 'price', 'days', 'title', 'body', 'cover', 'pics'])
+            ->setDefaultSort(['id' => 'DESC'])
             ->setPaginatorPageSize(50);
     }
 
     public function configureActions(Actions $actions): Actions
     {
         return $actions
+            ->add('index', 'detail')
             ->disable('new');
     }
 
     public function configureFields(string $pageName): iterable
     {
-        $price = IntegerField::new('price');
+        $price = MoneyField::new('price')->setCurrency('CNY');
         $days = IntegerField::new('days');
         $title = TextField::new('title');
-        $body = TextField::new('body');
-        $cover = TextField::new('cover');
-        $pics = ArrayField::new('pics');
+        $body = TextEditorField::new('body');
+        $cover = ImageField::new('cover');
+        $pics = ArrayField::new('pics')->setTemplatePath('t.html.twig');
         $date = DateTimeField::new('date');
         $land = AssociationField::new('land');
         $owner = AssociationField::new('owner');
         $id = IntegerField::new('id', 'ID');
 
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $price, $days, $title, $body, $cover, $date];
+            return [$id, $price, $days, $title, $land,  $body, $date];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $price, $days, $title, $body, $cover, $pics, $date, $land, $owner];
         } elseif (Crud::PAGE_NEW === $pageName) {
             return [$price, $days, $title, $body, $cover, $pics, $date, $land, $owner];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$price, $days, $title, $body, $cover, $pics, $date, $land, $owner];
+            return [$price, $days, $title, $body];
         }
     }
 }

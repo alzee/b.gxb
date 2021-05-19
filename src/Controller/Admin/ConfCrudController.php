@@ -9,6 +9,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\PercentField;
 
 class ConfCrudController extends AbstractCrudController
 {
@@ -37,19 +39,19 @@ class ConfCrudController extends AbstractCrudController
     {
         return [
             IntegerField::new('equity', 'equityTotal'),
-            NumberField::new('referReward', 'referReward'),
-            NumberField::new('referReward2', 'referReward2'),
+            PercentField::new('referReward', 'referReward'),
+            PercentField::new('referReward2', 'referReward2'),
             IntegerField::new('referGXB', 'referGXB'),
-            NumberField::new('mainlandMinPrice', 'mainlandMinPrice'),
-            NumberField::new('landMinPrice', 'landMinPrice'),
+            MoneyField::new('mainlandMinPrice', 'mainlandMinPrice')->setCurrency('CNY')->setStoredAsCents(false),
+            MoneyField::new('landMinPrice', 'landMinPrice')->setCurrency('CNY')->setStoredAsCents(false),
             IntegerField::new('mainlandMinDays', 'mainlandMinDays'),
             IntegerField::new('landMinDays', 'landMinDays'),
             IntegerField::new('maxPerDay', 'maxPerDay'),
             NumberField::new('equityGXBRate', 'equityGXBRate'),
-            NumberField::new('equityPrice', 'equityPrice'),
-            NumberField::new('equityPriceMax', 'equityPriceMax'),
-            NumberField::new('equityPriceMin', 'equityPriceMin'),
-            NumberField::new('dividendFund', 'dividendFund'),
+            MoneyField::new('equityPrice', 'equityPrice')->setCurrency('CNY')->setStoredAsCents(false),
+            MoneyField::new('equityPriceMax', 'equityPriceMax')->setCurrency('CNY')->setStoredAsCents(false),
+            MoneyField::new('equityPriceMin', 'equityPriceMin')->setCurrency('CNY')->setStoredAsCents(false),
+            MoneyField::new('dividendFund', 'dividendFund')->setCurrency('CNY')->setStoredAsCents(false),
             BooleanField::new('forceUpdate', 'forceUpdate'),
         ];
     }

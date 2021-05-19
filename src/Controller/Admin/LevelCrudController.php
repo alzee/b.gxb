@@ -8,6 +8,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\PercentField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class LevelCrudController extends AbstractCrudController
@@ -28,15 +30,15 @@ class LevelCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         $name = TextField::new('name');
-        $price = IntegerField::new('price');
+        $price = MoneyField::new('price')->setCurrency('CNY')->setStoredAsCents(false);
         $days = IntegerField::new('days');
         $taskLimit = IntegerField::new('taskLimit');
-        $postFee = NumberField::new('postFee');
-        $withdrawFee = NumberField::new('withdrawFee');
-        $stickyPrice = IntegerField::new('stickyPrice');
-        $recommendPrice = IntegerField::new('recommendPrice');
-        $landTradeRatio = NumberField::new('landTradeRatio');
-        $topupRatio = NumberField::new('topupRatio');
+        $postFee = PercentField::new('postFee');
+        $withdrawFee = PercentField::new('withdrawFee');
+        $stickyPrice = MoneyField::new('stickyPrice')->setCurrency('CNY')->setStoredAsCents(false);
+        $recommendPrice = MoneyField::new('recommendPrice')->setCurrency('CNY')->setStoredAsCents(false);
+        $landTradeRatio = PercentField::new('landTradeRatio');
+        $topupRatio = PercentField::new('topupRatio');
         $taskLeast = IntegerField::new('taskLeast');
         $id = IntegerField::new('id', 'ID');
         $level = IntegerField::new('level');

@@ -4,6 +4,8 @@ namespace App\Controller\Admin;
 
 use App\Entity\Node;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
@@ -26,6 +28,13 @@ class NodeCrudController extends AbstractCrudController
             ->setSearchFields(['id', 'title', 'body'])
             ->setPaginatorPageSize(50)
             ->setDefaultSort(['id' => 'DESC'])
+        ;
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+            ->add('index', Action::DETAIL)
         ;
     }
 

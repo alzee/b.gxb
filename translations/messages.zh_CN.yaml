@@ -1,3 +1,16 @@
+LandPost: 领地广告
+Coupon Id: 优惠券ID
+Fee: 手续费
+Method: 支付方式
+Task Limit: 发布任务数量
+Post Fee: 分布任务手续费
+Withdraw Fee: 提现手续费
+Sticky Price: 置顶任务
+Recommend Price: 推荐任务
+Land Trade Ratio: 领地交易收益
+Topup Ratio: 会员充值返利
+Task Least: 任务最低悬赏数
+amount: 金额
 Ror: 推荐人上级
 Referrer: 推荐人
 Coin: 金币
@@ -32,7 +45,10 @@ Cover: 封面
 task: 任务
 node: 文章
 nodeType: 文章类别
+NodeType: 文章类别
 equityTrade: 股权交易
+EquityTrade: 股权交易
+Rmb: 金额
 user: 用户
 tag: 标签
 category: 类别
@@ -41,6 +57,7 @@ land: 领地
 bid: 竞价
 report: 举报
 finance: 财务
+Finance: 财务
 equity: 股权
 dividend: 分红
 level: 等级

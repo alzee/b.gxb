@@ -14,6 +14,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
 
 class UserCrudController extends AbstractCrudController
@@ -55,11 +56,11 @@ class UserCrudController extends AbstractCrudController
         $id = IntegerField::new('id', 'ID');
         $roles = TextField::new('roles');
         $avatar = ImageField::new('avatar')->setBasePath('/media');
-        $topup = IntegerField::new('topup');
-        $earnings = IntegerField::new('earnings');
+        $topup = MoneyField::new('topup')->setCurrency('CNY');
+        $earnings = MoneyField::new('earnings')->setCurrency('CNY');
+        $frozen = MoneyField::new('frozen')->setCurrency('CNY');
         $updatedAt = DateTimeField::new('updatedAt');
         $equity = IntegerField::new('equity');
-        $frozen = IntegerField::new('frozen');
         $refcode = TextField::new('refcode');
         $coin = IntegerField::new('coin');
         $date = DateTimeField::new('date');

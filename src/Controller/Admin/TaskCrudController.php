@@ -15,6 +15,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -49,7 +50,7 @@ class TaskCrudController extends AbstractCrudController
         $statuses = $this->getDoctrine()->getRepository(Status::class)->getTaskStatuses();
         $name = TextField::new('name');
         $title = TextField::new('title');
-        $price = IntegerField::new('price');
+        $price = MoneyField::new('price')->setCurrency('CNY');
         $description = TextEditorField::new('description');
         $owner = AssociationField::new('owner');
         $category = AssociationField::new('category');
