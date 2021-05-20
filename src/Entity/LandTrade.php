@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * normalizationContext={"groups"={"landtrade:read"}},
  * denormalizationContext={"groups"={"landtrade:write"}}
  * )
- * @ApiFilter(OrderFilter::class, properties={"date"})
+ * @ApiFilter(OrderFilter::class, properties={"date", "id"})
  * @ORM\Entity(repositoryClass=LandTradeRepository::class)
  */
 class LandTrade
