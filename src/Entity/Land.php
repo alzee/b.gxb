@@ -67,10 +67,14 @@ class Land
     private $prePrice;
 
     /**
-     * @Groups({"land:read", "land:write"})
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime_immutable")
      */
-    private $updateAt;
+    private $date;
+
+    public function __construct()
+    {
+        $this->date = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
@@ -149,20 +153,20 @@ class Land
         return $this;
     }
 
-    public function getUpdateAt(): ?\DateTimeInterface
-    {
-        return $this->updateAt;
-    }
-
-    public function setUpdateAt(?\DateTimeInterface $updateAt): self
-    {
-        $this->updateAt = $updateAt;
-
-        return $this;
-    }
-
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    public function getDate(): ?\DateTimeImmutable
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeImmutable $date): self
+    {
+        $this->date = $date;
+
+        return $this;
     }
 }
