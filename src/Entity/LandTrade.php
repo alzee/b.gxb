@@ -46,17 +46,19 @@ class LandTrade
     private $buyer;
 
     /**
-     * @Groups({"landtrade:read"})
+     * @Groups({"landtrade:read", "landtrade:write"})
      * @ORM\Column(type="datetime_immutable")
      */
     private $date;
 
     /**
+     * @Groups({"landtrade:read"})
      * @ORM\Column(type="integer", nullable=true)
      */
     private $prePrice;
 
     /**
+     * @Groups({"landtrade:read", "landtrade:write"})
      * @ORM\Column(type="integer", nullable=true)
      */
     private $price;
@@ -64,7 +66,6 @@ class LandTrade
     public function __construct()
     {
         $this->date = new \DateTimeImmutable();
-        //$this->date = $this->date->setTimezone(new \DateTimeZone('Asia/Shanghai'));
     }
 
     public function getId(): ?int
