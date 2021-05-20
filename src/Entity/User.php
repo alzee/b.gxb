@@ -53,6 +53,7 @@ class User implements UserInterface
      * @Groups({"report:read"})
      * @Groups({"equity:read"})
      * @Groups({"read:read"})
+     * @Groups({"landtrade:read"})
      */
     private $username;
 
@@ -86,6 +87,7 @@ class User implements UserInterface
      * @Groups({"bid:read"})
      * @Groups({"report:read"})
      * @Groups({"read:read"})
+     * @Groups({"landtrade:read"})
      */
     private $avatar = '/media/avatar.png';
 
