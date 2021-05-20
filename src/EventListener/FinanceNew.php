@@ -18,6 +18,7 @@ use App\Entity\Category;
 use App\Entity\Status;
 use App\Entity\Bid;
 use App\Entity\Land;
+use App\Entity\LandTrade;
 use App\Entity\LandPost;
 use App\Entity\EquityTrade;
 use App\Entity\EquityFee;
@@ -223,6 +224,9 @@ class FinanceNew extends AbstractController
                 $land = $this->getDoctrine()->getRepository(Land::class)->find($data['entityId']);
                 $buyer = $this->getDoctrine()->getRepository(User::class)->find($postData['buyer']);
                 $seller = $land->getOwner();
+
+                $landTrade =  new LandTrade();
+
                 if (!is_null($seller)) {
                     $ratio = $seller->getLevel()->getLandTradeRatio();
                     $profit = ($land->getPrice() - $land->getPrePrice()) * $ratio;
@@ -240,12 +244,28 @@ class FinanceNew extends AbstractController
                     $f->setAmount($total);
                     $f->setType(55);
                     $em->persist($f);
+
+                    $landTrade->setSeller($seller);
                 }
+
+                $landTrade->setLand($land);
+                $landTrade->setPrePrice($land->getPrePrice());
+                $landTrade->setPrice($postData['price']);
+                $landTrade->setBuyer($buyer);
+                $em->persist($landTrade);
+
+                // sell again immediately
+                $landTrade1 =  new LandTrade();
+                $landTrade1->setLand($land);
+                $landTrade1->setPrePrice($postData['price']);
+                $landTrade1->setPrice($postData['price'] * 1.1);
+                $landTrade1->setSeller($buyer);
+                $em->persist($landTrade1);
+
                 $land->setPrePrice($postData['price']);
                 $land->setPrice($postData['price'] * 1.1);
                 $land->setOwner($buyer);
                 $land->setUpdateAt(new \DateTime());
-                $land->setForSale(true);
                 break;
             case 8: // buyVip
                 $level = $this->getDoctrine()->getRepository(Level::class)->find($postData['levelId']);
