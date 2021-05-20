@@ -43,6 +43,7 @@ class Land
 
     /**
      * @Groups({"land:read", "land:write"})
+     * @Groups({"landtrade:read"})
      * @ORM\ManyToOne(targetEntity=User::class)
      */
     private $owner;
@@ -57,7 +58,7 @@ class Land
      * @Groups({"land:read", "land:write"})
      * @ORM\Column(type="boolean")
      */
-    private $forSale = false;
+    private $forSale = true;
 
     /**
      * @Groups({"land:read", "land:write"})

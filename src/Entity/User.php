@@ -38,6 +38,7 @@ class User implements UserInterface
      * @Groups({"equity:read"})
      * @Groups({"landpost:read"})
      * @Groups({"read:read"})
+     * @Groups({"landtrade:read"})
      */
     private $id;
 

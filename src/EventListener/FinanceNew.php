@@ -221,11 +221,26 @@ class FinanceNew extends AbstractController
                 $em->persist($landPost);
                 break;
             case 7: // landLord
-                $land = $this->getDoctrine()->getRepository(Land::class)->find($data['entityId']);
+                if (isset($data['landId'])) {
+                    $land = $this->getDoctrine()->getRepository(Land::class)->find($data['landId']);
+                    $landTrade = $this->getDoctrine()->getRepository(LandTrade::class)->findOneBy(['land' => $land, 'buyer' => NULL], ['id' => 'DESC']);
+                    if (is_null($landTrade)) {
+                        $landTrade =  new LandTrade();
+                        $landTrade->setLand($land);
+                        $landTrade->setPrePrice($postData['price']);
+                        $landTrade->setPrice($postData['price']);
+                        $em->persist($landTrade);
+                    }
+                }
+
+                if (isset($data['id'])) {
+                    $landTrade = $this->getDoctrine()->getRepository(LandTrade::class)->find($data['id']);
+                    $land = $landTrade->getLand();
+                }
+
                 $buyer = $this->getDoctrine()->getRepository(User::class)->find($postData['buyer']);
                 $seller = $land->getOwner();
 
-                $landTrade =  new LandTrade();
 
                 if (!is_null($seller)) {
                     $ratio = $seller->getLevel()->getLandTradeRatio();
@@ -248,11 +263,7 @@ class FinanceNew extends AbstractController
                     $landTrade->setSeller($seller);
                 }
 
-                $landTrade->setLand($land);
-                $landTrade->setPrePrice($land->getPrePrice());
-                $landTrade->setPrice($postData['price']);
                 $landTrade->setBuyer($buyer);
-                $em->persist($landTrade);
 
                 // sell again immediately
                 $landTrade1 =  new LandTrade();
@@ -265,7 +276,6 @@ class FinanceNew extends AbstractController
                 $land->setPrePrice($postData['price']);
                 $land->setPrice($postData['price'] * 1.1);
                 $land->setOwner($buyer);
-                $land->setUpdateAt(new \DateTime());
                 break;
             case 8: // buyVip
                 $level = $this->getDoctrine()->getRepository(Level::class)->find($postData['levelId']);
