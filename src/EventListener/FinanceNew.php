@@ -264,6 +264,7 @@ class FinanceNew extends AbstractController
                 }
 
                 $landTrade->setBuyer($buyer);
+                $landTrade->setDate(new \DateTimeImmutable());
 
                 // sell again immediately
                 $landTrade1 =  new LandTrade();
@@ -271,6 +272,7 @@ class FinanceNew extends AbstractController
                 $landTrade1->setPrePrice($postData['price']);
                 $landTrade1->setPrice($postData['price'] * 1.1);
                 $landTrade1->setSeller($buyer);
+                $landTrade1->setDate(new \DateTimeImmutable());
                 $em->persist($landTrade1);
 
                 $land->setPrePrice($postData['price']);
