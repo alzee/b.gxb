@@ -42,22 +42,22 @@ class Conf
     /**
      * @ORM\Column(type="float")
      */
-    private $mainlandMinPrice;
+    private $mainCellMinPrice;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $landMinPrice;
+    private $cellMinPrice;
 
     /**
      * @ORM\Column(type="smallint")
      */
-    private $mainlandMinDays;
+    private $mainCellMinDays;
 
     /**
      * @ORM\Column(type="smallint")
      */
-    private $landMinDays;
+    private $cellMinDays;
 
     /**
      * @ORM\Column(type="integer")
@@ -167,50 +167,50 @@ class Conf
         return $this;
     }
 
-    public function getMainlandMinPrice(): ?float
+    public function getMainCellMinPrice(): ?float
     {
-        return $this->mainlandMinPrice;
+        return $this->mainCellMinPrice;
     }
 
-    public function setMainlandMinPrice(float $mainlandMinPrice): self
+    public function setMainCellMinPrice(float $mainCellMinPrice): self
     {
-        $this->mainlandMinPrice = $mainlandMinPrice;
+        $this->mainCellMinPrice = $mainCellMinPrice;
 
         return $this;
     }
 
-    public function getLandMinPrice(): ?float
+    public function getCellMinPrice(): ?float
     {
-        return $this->landMinPrice;
+        return $this->cellMinPrice;
     }
 
-    public function setLandMinPrice(float $landMinPrice): self
+    public function setCellMinPrice(float $cellMinPrice): self
     {
-        $this->landMinPrice = $landMinPrice;
+        $this->cellMinPrice = $cellMinPrice;
 
         return $this;
     }
 
-    public function getMainlandMinDays(): ?int
+    public function getMainCellMinDays(): ?int
     {
-        return $this->mainlandMinDays;
+        return $this->mainCellMinDays;
     }
 
-    public function setMainlandMinDays(int $mainlandMinDays): self
+    public function setMainCellMinDays(int $mainCellMinDays): self
     {
-        $this->mainlandMinDays = $mainlandMinDays;
+        $this->mainCellMinDays = $mainCellMinDays;
 
         return $this;
     }
 
-    public function getLandMinDays(): ?int
+    public function getCellMinDays(): ?int
     {
-        return $this->landMinDays;
+        return $this->cellMinDays;
     }
 
-    public function setLandMinDays(int $landMinDays): self
+    public function setCellMinDays(int $cellMinDays): self
     {
-        $this->landMinDays = $landMinDays;
+        $this->cellMinDays = $cellMinDays;
 
         return $this;
     }
