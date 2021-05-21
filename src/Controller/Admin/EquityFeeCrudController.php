@@ -47,9 +47,9 @@ class EquityFeeCrudController extends AbstractCrudController
         } elseif (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $l1, $l2, $rate, $isStar];
         } elseif (Crud::PAGE_NEW === $pageName) {
-            return [$id, $l1, $l2, $rate, $isStar];
+            return [$l1, $l2, $rate, $isStar];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$id, $l1, $l2, $rate, $isStar];
+            return [$l1, $l2, $rate, $isStar];
         }
     }
 }
