@@ -109,6 +109,11 @@ class Conf
      */
     private $welcome;
 
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $landPrice;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -326,6 +331,18 @@ class Conf
     public function setWelcome(?string $welcome): self
     {
         $this->welcome = $welcome;
+
+        return $this;
+    }
+
+    public function getLandPrice(): ?int
+    {
+        return $this->landPrice;
+    }
+
+    public function setLandPrice(?int $landPrice): self
+    {
+        $this->landPrice = $landPrice;
 
         return $this;
     }

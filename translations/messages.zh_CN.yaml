@@ -1,3 +1,4 @@
+landPrice: 领地初始价
 Pre Price: 原价
 welcome: 新股东通告模板
 coinsPerYuan: 奖励金币数 / 元
@@ -142,10 +143,10 @@ equityTotal: 股权总量
 referReward: 推广一级奖励
 referReward2: 推广二级奖励
 referGXB: 推广GXB奖励
-mainlandMinPrice: 主城起步价
-landMinPrice: 分城起步价
-mainlandMinDays: 主城最低天数
-landMinDays: 分城最低天数
+mainCellMinPrice: 主城格子起步价
+cellMinPrice: 分城格子起步价
+mainCellMinDays: 主城格子最低天数
+cellMinDays: 分城格子最低天数
 maxPerDay: 股权每日最大兑换数量
 equityGXBRate: 兑例GXB / 股权
 equityPrice: 股权价格

@@ -43,6 +43,7 @@ class ConfCrudController extends AbstractCrudController
             PercentField::new('referReward', 'referReward'),
             PercentField::new('referReward2', 'referReward2'),
             IntegerField::new('referGXB', 'referGXB'),
+            MoneyField::new('landPrice', 'landPrice')->setCurrency('CNY'),
             MoneyField::new('mainlandMinPrice', 'mainlandMinPrice')->setCurrency('CNY')->setStoredAsCents(false),
             MoneyField::new('landMinPrice', 'landMinPrice')->setCurrency('CNY')->setStoredAsCents(false),
             IntegerField::new('mainlandMinDays', 'mainlandMinDays'),
