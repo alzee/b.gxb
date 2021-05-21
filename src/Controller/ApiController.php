@@ -429,7 +429,7 @@ class ApiController extends AbstractController
         $content = $resp->toArray();
         $em = $this->getDoctrine()->getManager();
         $path = '/media/avatar/' . $user->getId() . '.jpg';
-        file_put_contents('../../public' . $path, file_get_contents($content['headimgurl']));
+        file_put_contents('.' . $path, file_get_contents($content['headimgurl']));
         $user->setAvatar($path);
         $em->flush();
 
