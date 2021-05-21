@@ -105,3 +105,10 @@ services:
                 name: 'doctrine.orm.entity_listener'
                 event: 'prePersist'
                 entity: 'App\Entity\EquityTrade'
+
+    App\EventListener\LandNew:
+        tags:
+            -
+                name: 'doctrine.orm.entity_listener'
+                event: 'prePersist'
+                entity: 'App\Entity\Land'
