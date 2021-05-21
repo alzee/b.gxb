@@ -163,7 +163,6 @@ class ApiController extends AbstractController
         $header[] = $sig;
         $resp = $this->httpclient->request($method, $url ,['headers' => $header]);
         $content = $resp->getContent(false);
-        dump($content);
         // return $this->json($resp);
     }
 
@@ -224,7 +223,7 @@ class ApiController extends AbstractController
             $header[] = 'Accept:application/json';
             $header[] = $sig;
             $resp = $this->httpclient->request($httpMethod, $url ,['headers' => $header, 'json' => $data0]);
-            $content = json_decode($resp->getContent(), true);
+            $content = $resp->toArray();
             $prepayid = $content['prepay_id'];
 
             $order->setPrepayid($prepayid);
@@ -402,5 +401,36 @@ class ApiController extends AbstractController
         }
 
         return $this->json($bids);
+    }
+
+    /**
+     * @Route("/wxauth", name="wxauth")
+     */
+    public function wxauth(Request $request): Response
+    {
+        $params  = $request->toArray();
+        $code = $params['code'];
+        $uid = $params['uid'];
+        $user = $this->getDoctrine()->getRepository(User::class)->find($uid);
+        $appid = $this->appid;
+        $secret = $this->appsecret;
+        $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=${appid}&secret=${secret}&code=${code}&grant_type=authorization_code";
+        $header[] = 'Content-Type: application/json';
+        $header[] = 'Accept:application/json';
+        $resp = $this->httpclient->request('GET', $url ,['headers' => $header]);
+        $content = $resp->toArray();
+        $token = $content["access_token"];
+        $refresh_token = $content["access_token"];
+        $openid = $content['openid'];
+        $unionid = $content['unionid'];
+
+        $url = "https://api.weixin.qq.com/sns/userinfo?access_token=${token}&openid=${openid}";
+        $resp = $this->httpclient->request('GET', $url ,['headers' => $header]);
+        $content = $resp->toArray();
+        $em = $this->getDoctrine()->getManager();
+        $user->setAvatar($content['headimgurl']);
+        $em->flush();
+
+        return $this->json($content);
     }
 }
