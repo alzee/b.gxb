@@ -8,6 +8,7 @@
 /public/uploads/
 /public/update/
 /public/media/*
+/public/media/avatar/*
 /public/download/*.apk
 /var/
 /vendor/
