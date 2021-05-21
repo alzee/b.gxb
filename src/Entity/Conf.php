@@ -114,6 +114,21 @@ class Conf
      */
     private $landPrice;
 
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $bidStart;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $bidIncrement;
+
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    private $buyNow;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -343,6 +358,42 @@ class Conf
     public function setLandPrice(?int $landPrice): self
     {
         $this->landPrice = $landPrice;
+
+        return $this;
+    }
+
+    public function getBidStart(): ?int
+    {
+        return $this->bidStart;
+    }
+
+    public function setBidStart(int $bidStart): self
+    {
+        $this->bidStart = $bidStart;
+
+        return $this;
+    }
+
+    public function getBidIncrement(): ?int
+    {
+        return $this->bidIncrement;
+    }
+
+    public function setBidIncrement(int $bidIncrement): self
+    {
+        $this->bidIncrement = $bidIncrement;
+
+        return $this;
+    }
+
+    public function getBuyNow(): ?int
+    {
+        return $this->buyNow;
+    }
+
+    public function setBuyNow(int $buyNow): self
+    {
+        $this->buyNow = $buyNow;
 
         return $this;
     }
