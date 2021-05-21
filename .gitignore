@@ -7,7 +7,7 @@
 /public/bundles/
 /public/uploads/
 /public/update/
-/public/media/
+/public/media/*
 /public/download/*.apk
 /var/
 /vendor/
