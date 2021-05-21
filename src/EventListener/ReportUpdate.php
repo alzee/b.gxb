@@ -29,6 +29,7 @@ class ReportUpdate
             
             // rm apply
             $apply = $report->getApply();
+            $em->remove($report);
             $em->remove($apply);
             
         }
