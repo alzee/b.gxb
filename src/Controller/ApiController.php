@@ -428,7 +428,9 @@ class ApiController extends AbstractController
         $resp = $this->httpclient->request('GET', $url ,['headers' => $header]);
         $content = $resp->toArray();
         $em = $this->getDoctrine()->getManager();
-        $user->setAvatar($content['headimgurl']);
+        $path = '/media/avatar/' . $user->getId() . '.jpg';
+        file_put_contents('../../public' . $path, file_get_contents($content['headimgurl']));
+        $user->setAvatar($path);
         $em->flush();
 
         return $this->json($content);
