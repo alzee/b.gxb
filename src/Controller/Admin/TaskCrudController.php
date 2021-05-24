@@ -41,8 +41,8 @@ class TaskCrudController extends AbstractCrudController
     {
         return $filters
             ->add(EntityFilter::new('category'))
-            ->add(EntityFilter::new('tag'))
-            ->add('quantity');
+            ->add(EntityFilter::new('status'))
+        ;
     }
 
     public function configureFields(string $pageName): iterable
