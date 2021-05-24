@@ -15,6 +15,8 @@ use App\Entity\User;
 use App\Entity\Bid;
 use App\Entity\EquityTrade;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 /**
  * @Route("/api", name="api")
@@ -434,5 +436,36 @@ class ApiController extends AbstractController
         $em->flush();
 
         return $this->json($content);
+    }
+
+    /**
+     * @Route("/chkpass", name="chkpass")
+     */
+    public function chkpass(Request $request, EncoderFactoryInterface $factory): Response
+    {
+        $params = $request->toArray();
+        $type = $params['type'];
+        $pass = $params['pass'];
+        $uid = $params['uid'];
+        $user = $this->getDoctrine()->getRepository(User::class)->find($uid);
+        $encoder = $factory->getEncoder(new User());
+        
+        switch ($type) {
+        case 0:
+            $pass0 = $user->getPassword();
+            break;
+        case 1:
+            $pass0 = $user->getPayPasswd();
+            break;
+        }
+
+        if ($encoder->isPasswordValid($pass0, $pass, null)) {
+            $code = 0;
+        }
+        else {
+            $code = 1;
+        }
+
+        return $this->json(['code' => $code]);
     }
 }
