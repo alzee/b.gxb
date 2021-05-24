@@ -40,6 +40,7 @@ class ConfCrudController extends AbstractCrudController
     {
         return [
             IntegerField::new('equity', 'equityTotal'),
+            IntegerField::new('exchanged', 'exchanged'),
             PercentField::new('referReward', 'referReward'),
             PercentField::new('referReward2', 'referReward2'),
             IntegerField::new('referGXB', 'referGXB'),

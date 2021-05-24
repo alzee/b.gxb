@@ -119,6 +119,11 @@ class Conf
      */
     private $buyNow;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $exchanged;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -360,6 +365,18 @@ class Conf
     public function setBuyNow(int $buyNow): self
     {
         $this->buyNow = $buyNow;
+
+        return $this;
+    }
+
+    public function getExchanged(): ?int
+    {
+        return $this->exchanged;
+    }
+
+    public function setExchanged(?int $exchanged): self
+    {
+        $this->exchanged = $exchanged;
 
         return $this;
     }
