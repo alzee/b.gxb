@@ -46,15 +46,12 @@ class FundCrudController extends AbstractCrudController
             ->disable('new', 'edit', 'delete');
     }
 
-    /*
     public function configureFilters(Filters $filters): Filters
     {
         return $filters
-            ->add(ChoiceFilter::new('type')->setChoices(['任务发布' => 1, '购买会员' => 2]))
-            // ->add(NumericFilter::new('type'))
+            ->add(ChoiceFilter::new('type')->setChoices(['任务发布' => 1, '购买会员' => 8]))
         ;
     }
-     */
 
     public function configureFields(string $pageName): iterable
     {
@@ -88,7 +85,7 @@ class FundCrudController extends AbstractCrudController
     public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): QueryBuilder
     {
         $response = $this->get(EntityRepository::class)->createQueryBuilder($searchDto, $entityDto, $fields, $filters);
-        $response->where('entity.type = 1 Or entity.type = 8');
+        $response->andWhere('entity.type = 1 Or entity.type = 8');
         return $response;
     }
 }
