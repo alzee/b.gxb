@@ -468,4 +468,20 @@ class ApiController extends AbstractController
 
         return $this->json(['code' => $code]);
     }
+
+    /**
+     * @Route("/paypassnull/{uid}", name="paypass_null")
+     */
+    public function paypassNull($uid): Response
+    {
+        $user = $this->getDoctrine()->getRepository(User::class)->find($uid);
+        if ($user->getPayPasswd() == null) {
+            $code = 0;
+        }
+        else {
+            $code = 1;
+        }
+        
+        return $this->json(['code' => $code]);
+    }
 }
