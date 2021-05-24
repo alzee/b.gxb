@@ -17,6 +17,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\NumericFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\BooleanFilter;
 
 class UserCrudController extends AbstractCrudController
 {
@@ -43,7 +46,10 @@ class UserCrudController extends AbstractCrudController
     public function configureFilters(Filters $filters): Filters
     {
         return $filters
-            ->add(TextFilter::new('roles'));
+            ->add(EntityFilter::new('level'))
+            ->add(NumericFilter::new('coin'))
+            ->add(BooleanFilter::new('active'))
+        ;
     }
 
     public function configureFields(string $pageName): iterable
@@ -73,7 +79,7 @@ class UserCrudController extends AbstractCrudController
         $active = BooleanField::new('active')->renderAsSwitch(false);
 
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $username, $phone, $topup, $earnings, $frozen, $equity, $coin, $gxb, $active];
+            return [$id, $username, $phone, $topup, $earnings, $frozen, $equity, $coin, $gxb, $level, $active];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $username, $avatar, $phone, $topup, $earnings, $gxb, $equity, $frozen, $refcode, $coin, $date, $level, $referrer, $ror];
         } elseif (Crud::PAGE_NEW === $pageName) {

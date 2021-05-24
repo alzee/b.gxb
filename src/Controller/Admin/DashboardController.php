@@ -48,6 +48,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('category', 'fas fa-th-large', Category::class);
         yield MenuItem::linkToCrud('bid', 'fas fa-hand-paper', Bid::class);
         yield MenuItem::linkToCrud('dividend', 'fas fa-gift', Dividend::class);
+        yield MenuItem::linkToCrud('fund', 'fas fa-gift', Finance::class)->setController(FundCrudController::class);
         yield MenuItem::linkToCrud('landTrade', 'fas fa-square', LandTrade::class);
         yield MenuItem::linkToCrud('landpost', 'fas fa-square', LandPost::class);
         yield MenuItem::linkToCrud('equityTrade', 'fas fa-university', EquityTrade::class);
@@ -56,9 +57,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('node', 'fas fa-file-alt', Node::class);
         yield MenuItem::linkToCrud('nodeType', 'fas fa-file-alt', NodeType::class);
         yield MenuItem::linkToCrud('user', 'fas fa-user', User::class);
-        yield MenuItem::linkToCrud('vip', 'fas fa-user-circle', User::class);
         yield MenuItem::linkToCrud('level', 'far fa-gem', Level::class);
-        yield MenuItem::linkToCrud('finance', 'fas fa-dollar-sign', Finance::class);
+        yield MenuItem::linkToCrud('finance', 'fas fa-dollar-sign', Finance::class)->setController(FinanceCrudController::class);
         yield MenuItem::linkToCrud('report', 'fas fa-flag', Report::class);
         yield MenuItem::linkToCrud('conf', 'fas fa-cog', Conf::class)->setAction('detail')->setEntityId(1);
     }
