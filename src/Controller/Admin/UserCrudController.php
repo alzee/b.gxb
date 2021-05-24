@@ -15,6 +15,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
 
 class UserCrudController extends AbstractCrudController
@@ -69,15 +70,16 @@ class UserCrudController extends AbstractCrudController
         $coupon = AssociationField::new('coupon');
         $referrer = AssociationField::new('referrer');
         $ror = AssociationField::new('ror');
+        $active = BooleanField::new('active')->renderAsSwitch(false);
 
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $username, $phone, $topup, $earnings, $frozen, $equity, $coin, $gxb];
+            return [$id, $username, $phone, $topup, $earnings, $frozen, $equity, $coin, $gxb, $active];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $username, $avatar, $phone, $topup, $earnings, $gxb, $equity, $frozen, $refcode, $coin, $date, $level, $referrer, $ror];
         } elseif (Crud::PAGE_NEW === $pageName) {
             return [$username, $plainPassword, $phone];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$username, $plainPassword, $phone, $level];
+            return [$username, $plainPassword, $phone, $level, $active];
         }
     }
 }

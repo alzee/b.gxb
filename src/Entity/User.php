@@ -362,6 +362,12 @@ class User implements UserInterface
      */
     private $landProfit = 0;
 
+    /**
+     * @Groups({"user:read"})
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $active = true;
+
     public function __construct()
     {
         $this->applies = new ArrayCollection();
@@ -623,6 +629,18 @@ class User implements UserInterface
     public function setLandProfit(?int $landProfit): self
     {
         $this->landProfit = $landProfit;
+
+        return $this;
+    }
+
+    public function getActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(?bool $active): self
+    {
+        $this->active = $active;
 
         return $this;
     }
