@@ -18,6 +18,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Orm\EntityRepository;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\NumericFilter;
 
 class FundCrudController extends AbstractCrudController
 {
@@ -30,7 +33,7 @@ class FundCrudController extends AbstractCrudController
     {
         return $crud
             ->setPageTitle(Crud::PAGE_INDEX, '分红基金明细')
-            ->setSearchFields(['id', 'note', 'amount', 'prepayid', 'orderid', 'wx_orderid', 'type', 'status', 'couponId', 'fee', 'method', 'data', 'wxpayData'])
+            ->setSearchFields(null)
             ->setPaginatorPageSize(50)
             ->setDefaultSort(['id' => 'DESC'])
         ;
@@ -42,6 +45,16 @@ class FundCrudController extends AbstractCrudController
             ->add('index', 'detail')
             ->disable('new', 'edit', 'delete');
     }
+
+    /*
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+            ->add(ChoiceFilter::new('type')->setChoices(['任务发布' => 1, '购买会员' => 2]))
+            // ->add(NumericFilter::new('type'))
+        ;
+    }
+     */
 
     public function configureFields(string $pageName): iterable
     {
