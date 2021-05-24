@@ -16,6 +16,13 @@ use Doctrine\ORM\Event\PreUpdateEventArgs;
 
 class LandUpdate
 {
+    public function preUpdate(Land $land, PreUpdateEventArgs $event): void
+    {
+        if ($event->hasChangedField('price')) {
+            $land->setUpdatedAt(new \DateTime());
+        }
+    }
+
     public function postUpdate(Land $land, LifecycleEventArgs $event): void
     {
         $em = $event->getEntityManager();
@@ -25,5 +32,6 @@ class LandUpdate
             $landTrade->setDate(new \DateTimeImmutable());
             $em->flush();
         }
+
     }
 }

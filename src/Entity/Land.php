@@ -9,6 +9,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 use App\Repository\LandRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
 /**
  * @ApiResource(
@@ -17,6 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
  * )
  * @ApiFilter(SearchFilter::class, properties={"name": "exact", "owner.id": "exact"})
  * @ApiFilter(BooleanFilter::class, properties={"forSale"})
+ * @ApiFilter(OrderFilter::class, properties={"updatedAt"})
  * @ORM\Entity(repositoryClass=LandRepository::class)
  */
 class Land
@@ -70,6 +72,11 @@ class Land
      * @ORM\Column(type="datetime_immutable")
      */
     private $date;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updatedAt;
 
     public function __construct()
     {
@@ -166,6 +173,18 @@ class Land
     public function setDate(\DateTimeImmutable $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
