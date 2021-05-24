@@ -7,6 +7,7 @@ use App\Entity\Category;
 use App\Entity\Dividend;
 use App\Entity\EquityTrade;
 use App\Entity\EquityFee;
+use App\Entity\Exchange;
 use App\Entity\Finance;
 use App\Entity\LandPost;
 use App\Entity\LandTrade;
@@ -51,6 +52,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('landpost', 'fas fa-square', LandPost::class);
         yield MenuItem::linkToCrud('equityTrade', 'fas fa-university', EquityTrade::class);
         yield MenuItem::linkToCrud('equityFee', 'fas fa-university', EquityFee::class);
+        yield MenuItem::linkToCrud('exchange', 'fas fa-university', Exchange::class);
         yield MenuItem::linkToCrud('node', 'fas fa-file-alt', Node::class);
         yield MenuItem::linkToCrud('nodeType', 'fas fa-file-alt', NodeType::class);
         yield MenuItem::linkToCrud('user', 'fas fa-user', User::class);
