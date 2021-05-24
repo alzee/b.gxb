@@ -73,7 +73,7 @@ class TaskCrudController extends AbstractCrudController
         if (Crud::PAGE_INDEX === $pageName) {
             return [$id, $name, $title, $price, $owner, $category, $description, $date, $status];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$id, $name, $title, $price, $description, $quantity, $date, $link, $note, $guides, $reviews, $workHours, $reviewHours, $owner, $category, $tag, $applies, $status];
+            return [$id, $name, $title, $price, $description, $quantity, $date, $link, $note, $guides, $reviews, $workHours, $reviewHours, $owner, $category, $tag, $applies, $status, $opinion];
         } elseif (Crud::PAGE_NEW === $pageName) {
             return [$name, $title, $price, $description, $owner, $category, $tag, $quantity, $applies];
         } elseif (Crud::PAGE_EDIT === $pageName) {
