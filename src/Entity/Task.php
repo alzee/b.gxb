@@ -205,6 +205,12 @@ class Task
      */
     private $status;
 
+    /**
+     * @Groups({"task:read"})
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $opinion;
+
     public function __construct()
     {
         $this->tag = new ArrayCollection();
@@ -505,6 +511,18 @@ class Task
     public function setStatus(?Status $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getOpinion(): ?string
+    {
+        return $this->opinion;
+    }
+
+    public function setOpinion(?string $opinion): self
+    {
+        $this->opinion = $opinion;
 
         return $this;
     }
