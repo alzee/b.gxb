@@ -368,6 +368,11 @@ class User implements UserInterface
      */
     private $active = true;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $payPasswd;
+
     public function __construct()
     {
         $this->applies = new ArrayCollection();
@@ -641,6 +646,18 @@ class User implements UserInterface
     public function setActive(?bool $active): self
     {
         $this->active = $active;
+
+        return $this;
+    }
+
+    public function getPayPasswd(): ?string
+    {
+        return $this->payPasswd;
+    }
+
+    public function setPayPasswd(?string $payPasswd): self
+    {
+        $this->payPasswd = $payPasswd;
 
         return $this;
     }
