@@ -22,9 +22,9 @@ class StatusRepository extends ServiceEntityRepository
     public function getTaskStatuses()
     {
         return $this->createQueryBuilder('s')
-            ->andWhere('s.id <= 2')
+            ->where('s.id <= 2 Or s.id = 5')
             ->orderBy('s.id', 'ASC')
-            ->setMaxResults(2)
+            // ->setMaxResults(3)
             ->getQuery()
             ->getResult()
         ;

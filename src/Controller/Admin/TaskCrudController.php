@@ -68,6 +68,7 @@ class TaskCrudController extends AbstractCrudController
         $workHours = IntegerField::new('workHours');
         $reviewHours = IntegerField::new('reviewHours');
         $status = AssociationField::new('status')->setFormTypeOptions(["choices" => $statuses]);
+        $opinion = TextField::new('opinion');
 
         if (Crud::PAGE_INDEX === $pageName) {
             return [$id, $name, $title, $price, $owner, $category, $description, $date, $status];
@@ -76,7 +77,7 @@ class TaskCrudController extends AbstractCrudController
         } elseif (Crud::PAGE_NEW === $pageName) {
             return [$name, $title, $price, $description, $owner, $category, $tag, $quantity, $applies];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$name, $title, $description, $category, $tag, $status];
+            return [$name, $title, $description, $category, $tag, $status, $opinion];
         }
     }
 
