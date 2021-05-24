@@ -274,6 +274,9 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @Groups({"user:read", "user:write"})
+     */
     private ?string $plainPassword = null;
 
     /**
