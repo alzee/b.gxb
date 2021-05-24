@@ -39,6 +39,7 @@ class User implements UserInterface
      * @Groups({"landpost:read"})
      * @Groups({"read:read"})
      * @Groups({"landtrade:read"})
+     * @Groups({"exchange:read"})
      */
     private $id;
 
@@ -55,6 +56,7 @@ class User implements UserInterface
      * @Groups({"equity:read"})
      * @Groups({"read:read"})
      * @Groups({"landtrade:read"})
+     * @Groups({"exchange:read"})
      */
     private $username;
 

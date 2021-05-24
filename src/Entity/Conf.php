@@ -77,16 +77,6 @@ class Conf
     /**
      * @ORM\Column(type="float")
      */
-    private $equityPriceMax;
-
-    /**
-     * @ORM\Column(type="float")
-     */
-    private $equityPriceMin;
-
-    /**
-     * @ORM\Column(type="float")
-     */
     private $dividendFund;
 
     /**
@@ -262,30 +252,6 @@ class Conf
     public function setEquityPrice(float $equityPrice): self
     {
         $this->equityPrice = $equityPrice;
-
-        return $this;
-    }
-
-    public function getEquityPriceMax(): ?float
-    {
-        return $this->equityPriceMax;
-    }
-
-    public function setEquityPriceMax(float $equityPriceMax): self
-    {
-        $this->equityPriceMax = $equityPriceMax;
-
-        return $this;
-    }
-
-    public function getEquityPriceMin(): ?float
-    {
-        return $this->equityPriceMin;
-    }
-
-    public function setEquityPriceMin(float $equityPriceMin): self
-    {
-        $this->equityPriceMin = $equityPriceMin;
 
         return $this;
     }
