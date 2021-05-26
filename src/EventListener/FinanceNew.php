@@ -92,7 +92,10 @@ class FinanceNew extends AbstractController
             $note = '全民分红';
             break;
         case 60:
-            $note = '首页竞价退款';
+            $note = '退款-首页竞价';
+            break;
+        case 61:
+            $note = '退款-任务审核拒绝';
             break;
         default:
             $note = 'unkown';
