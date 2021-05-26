@@ -152,6 +152,7 @@ class FinanceNew extends AbstractController
                 $t->setWorkHours($postData['workHours']);
                 $tStatus = $this->getDoctrine()->getRepository(Status::class)->find(1);
                 $t->setStatus($tStatus);
+                $t->setFinance($finance);
                 $em->persist($t);
                 $conf->setDividendFund($conf->getDividendFund() + $fee / 100);
                 break;
