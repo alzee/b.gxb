@@ -79,7 +79,7 @@ class FinanceNew extends AbstractController
             $note = '出售领地';
             break;
         case 56:
-            $note = '资金解冻';
+            $note = '解冻-任务下架';
             break;
         case 57:
             $note = '格子收益';
@@ -95,7 +95,7 @@ class FinanceNew extends AbstractController
             $note = '退款-首页竞价';
             break;
         case 61:
-            $note = '退款-任务审核拒绝';
+            $note = '解冻-任务审核拒绝';
             break;
         default:
             $note = 'unkown';

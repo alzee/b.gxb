@@ -17,10 +17,11 @@ class TaskUpdate
 {
     public function postUpdate(Task $task, LifecycleEventArgs $event): void
     {
+        $em = $event->getEntityManager();
+        $owner = $task->getOwner();
+        $f = new Finance();
+
         if ($task->getStatus()->getId() == 4) {
-            // unfreeze
-            $em = $event->getEntityManager();
-            $owner = $task->getOwner();
             $remain = $task->getRemain();
             $price = $task->getPrice();
             $amount = $remain * $price;
@@ -28,14 +29,24 @@ class TaskUpdate
             $owner->setFrozen($owner->getFrozen() - $amount);
             $owner->setTopup($owner->getTopup() + $amount);
 
-            // new finance for $referer
-            $f = new Finance();
-            $f->setUser($owner);
-            $f->setAmount($amount);
-            $f->setType(56);
-            $em->persist($f);
-
-            $em->flush();
+            $type = 56;
         }
+
+        if ($task->getStatus()->getId() == 5) {
+            $finance = $task->getFinance();
+            $amount = $finance->getAmount();
+            $fee = $finance->getFee();
+
+            $owner->setFrozen($owner->getFrozen() - $amount + $fee);
+            $owner->setTopup($owner->getTopup() + $amount);
+
+            $type = 61;
+        }
+
+        $f->setUser($owner);
+        $f->setAmount($amount);
+        $f->setType($type);
+        $em->persist($f);
+        $em->flush();
     }
 }
