@@ -211,6 +211,11 @@ class Task
      */
     private $opinion;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Finance::class)
+     */
+    private $finance;
+
     public function __construct()
     {
         $this->tag = new ArrayCollection();
@@ -523,6 +528,18 @@ class Task
     public function setOpinion(?string $opinion): self
     {
         $this->opinion = $opinion;
+
+        return $this;
+    }
+
+    public function getFinance(): ?Finance
+    {
+        return $this->finance;
+    }
+
+    public function setFinance(?Finance $finance): self
+    {
+        $this->finance = $finance;
 
         return $this;
     }
