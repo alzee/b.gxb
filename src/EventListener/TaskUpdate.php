@@ -30,6 +30,12 @@ class TaskUpdate
             $owner->setTopup($owner->getTopup() + $amount);
 
             $type = 56;
+
+            $f->setUser($owner);
+            $f->setAmount($amount);
+            $f->setType($type);
+            $em->persist($f);
+            $em->flush();
         }
 
         if ($task->getStatus()->getId() == 5) {
@@ -41,12 +47,13 @@ class TaskUpdate
             $owner->setTopup($owner->getTopup() + $amount);
 
             $type = 61;
+
+            $f->setUser($owner);
+            $f->setAmount($amount);
+            $f->setType($type);
+            $em->persist($f);
+            $em->flush();
         }
 
-        $f->setUser($owner);
-        $f->setAmount($amount);
-        $f->setType($type);
-        $em->persist($f);
-        $em->flush();
     }
 }
