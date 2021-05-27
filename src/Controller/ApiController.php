@@ -501,12 +501,14 @@ class ApiController extends AbstractController
         if (is_null($user)) {
             $code = 1;
             $uid = 0;
+            $phone = 0;
         }
         else {
             $code = 0;
             $uid = $user->getId();
+            $phone = $user->getPhone();
         }
 
-        return $this->json(['code' => $code, 'uid' => $uid]);
+        return $this->json(['code' => $code, 'uid' => $uid, 'phone' => $phone]);
     }
 }
