@@ -10,6 +10,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 
 class DividendCrudController extends AbstractCrudController
 {
@@ -22,31 +24,37 @@ class DividendCrudController extends AbstractCrudController
     {
         return $crud
             ->setPageTitle(Crud::PAGE_INDEX, '分红记录')
-            ->setSearchFields(['id', 'total', 'share'])
+            ->setSearchFields(['id'])
+            ->setDefaultSort(['id' => 'DESC'])
             ->setPaginatorPageSize(50);
     }
 
     public function configureActions(Actions $actions): Actions
     {
         return $actions
-            ->disable('new');
+            ->add('index', 'detail')
+            ->disable('new', 'edit', 'delete', 'detail');
     }
 
     public function configureFields(string $pageName): iterable
     {
         $date = DateTimeField::new('date');
-        $total = NumberField::new('total');
-        $share = TextField::new('share');
+        $user = AssociationField::new('user');
         $id = IntegerField::new('id', 'ID');
+        $amount = MoneyField::new('amount')->setCurrency('CNY');
+        $coin = IntegerField::new('coin', 'coinUser');
+        $coinTotal = IntegerField::new('coinTotal');
+        $fund = MoneyField::new('fund')->setCurrency('CNY');
+        $coinThreshold = IntegerField::new('coinThreshold');
 
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $date, $total, $share];
+            return [$id, $date, $amount, $coin, $coinTotal, $fund, $coinThreshold];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$id, $date, $total, $share];
+            return [$id, $date];
         } elseif (Crud::PAGE_NEW === $pageName) {
-            return [$date, $total, $share];
+            return [$date];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$date, $total, $share];
+            return [$date];
         }
     }
 }
