@@ -484,4 +484,29 @@ class ApiController extends AbstractController
         
         return $this->json(['code' => $code]);
     }
+
+    /**
+     * @Route("/chkcred", name="chkcred")
+     */
+    public function chkcred(Request $request): Response
+    {
+        $params = $request->toArray();
+        $cred = $params['cred'];
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+        $user = $userRepo->findOneBy(['username' => $cred]);
+        if (is_null($user)) {
+            $user = $userRepo->findOneBy(['phone' => $cred]);
+        }
+
+        if (is_null($user)) {
+            $code = 1;
+            $uid = 0;
+        }
+        else {
+            $code = 0;
+            $uid = $user->getId();
+        }
+
+        return $this->json(['code' => $code, 'uid' => $uid]);
+    }
 }
