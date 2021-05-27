@@ -75,7 +75,7 @@ class Conf
     private $equityPrice;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="integer")
      */
     private $dividendFund;
 
@@ -261,12 +261,12 @@ class Conf
         return $this;
     }
 
-    public function getDividendFund(): ?float
+    public function getDividendFund(): ?int
     {
         return $this->dividendFund;
     }
 
-    public function setDividendFund(float $dividendFund): self
+    public function setDividendFund(int $dividendFund): self
     {
         $this->dividendFund = $dividendFund;
 

@@ -11,6 +11,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use App\Entity\User;
 use App\Entity\Conf;
 use App\Entity\Finance;
+use App\Entity\Dividend;
 use Doctrine\ORM\EntityManagerInterface;
 
 class dividendCommand extends Command
@@ -48,7 +49,7 @@ class dividendCommand extends Command
         $sumCoin = $userRepo->sumCoin($coinThreshold);
 
         foreach ($users as $u) {
-            $dividend = (int)(($fund * $u->getCoin() / $sumCoin) * 100);
+            $dividend = (int)($fund * $u->getCoin() / $sumCoin);
 
             $io->success($u->getUsername() . " " . $u->getCoin() . " " .  $dividend);
             $u->setTopup($u->getTopup() + $dividend);
@@ -57,7 +58,17 @@ class dividendCommand extends Command
             $f->setUser($u);
             $f->setAmount($dividend);
             $f->setType(59);
+
+            $d = new Dividend();
+            $d->setUser($u);
+            $d->setAmount($dividend);
+            $d->setCoin($u->getCoin());
+            $d->setCoinTotal($sumCoin);
+            $d->setFund($fund);
+            $d->setCoinThreshold($coinThreshold);
+
             $this->em->persist($f);
+            $this->em->persist($d);
         }
         
         $conf->setDividendFund(0);

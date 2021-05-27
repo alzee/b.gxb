@@ -26,14 +26,39 @@ class Dividend
     private $date;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\ManyToOne(targetEntity=User::class)
      */
-    private $total;
+    private $user;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="integer")
      */
-    private $share;
+    private $amount;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $coin;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $coinTotal;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $fund;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $coinThreshold;
+
+    public function __construct()
+    {
+        $this->date = new \DateTime();
+    }
 
     public function getId(): ?int
     {
@@ -52,26 +77,74 @@ class Dividend
         return $this;
     }
 
-    public function getTotal(): ?float
+    public function getUser(): ?User
     {
-        return $this->total;
+        return $this->user;
     }
 
-    public function setTotal(float $total): self
+    public function setUser(?User $user): self
     {
-        $this->total = $total;
+        $this->user = $user;
 
         return $this;
     }
 
-    public function getShare(): ?string
+    public function getAmount(): ?int
     {
-        return $this->share;
+        return $this->amount;
     }
 
-    public function setShare(string $share): self
+    public function setAmount(int $amount): self
     {
-        $this->share = $share;
+        $this->amount = $amount;
+
+        return $this;
+    }
+
+    public function getCoin(): ?int
+    {
+        return $this->coin;
+    }
+
+    public function setCoin(int $coin): self
+    {
+        $this->coin = $coin;
+
+        return $this;
+    }
+
+    public function getCoinTotal(): ?int
+    {
+        return $this->coinTotal;
+    }
+
+    public function setCoinTotal(int $coinTotal): self
+    {
+        $this->coinTotal = $coinTotal;
+
+        return $this;
+    }
+
+    public function getFund(): ?int
+    {
+        return $this->fund;
+    }
+
+    public function setFund(int $fund): self
+    {
+        $this->fund = $fund;
+
+        return $this;
+    }
+
+    public function getCoinThreshold(): ?int
+    {
+        return $this->coinThreshold;
+    }
+
+    public function setCoinThreshold(int $coinThreshold): self
+    {
+        $this->coinThreshold = $coinThreshold;
 
         return $this;
     }

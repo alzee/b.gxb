@@ -55,7 +55,7 @@ class ConfCrudController extends AbstractCrudController
             IntegerField::new('maxPerDay', 'maxPerDay'),
             NumberField::new('equityGXBRate', 'equityGXBRate'),
             MoneyField::new('equityPrice', 'equityPrice')->setCurrency('CNY')->setStoredAsCents(false),
-            MoneyField::new('dividendFund', 'dividendFund')->setCurrency('CNY')->setStoredAsCents(false),
+            MoneyField::new('dividendFund', 'dividendFund')->setCurrency('CNY'),
             IntegerField::new('coinsPerYuan', 'coinsPerYuan'),
             IntegerField::new('coinThreshold', 'coinThreshold'),
             TextEditorField::new('welcome', 'welcome'),
