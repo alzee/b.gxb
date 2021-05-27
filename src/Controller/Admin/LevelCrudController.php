@@ -24,6 +24,7 @@ class LevelCrudController extends AbstractCrudController
         return $crud
             ->setPageTitle(Crud::PAGE_INDEX, '会员等级')
             ->setSearchFields(['id', 'name', 'price', 'taskLeast', 'postFee', 'withdrawFee', 'days', 'taskLimit', 'stickyPrice', 'recommendPrice', 'landTradeRatio', 'topupRatio', 'level'])
+            ->setDefaultSort(['level' => 'ASC'])
             ->setPaginatorPageSize(50);
     }
 
@@ -45,13 +46,13 @@ class LevelCrudController extends AbstractCrudController
         $users = AssociationField::new('users');
 
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $name, $price, $days, $taskLimit, $postFee, $withdrawFee, $stickyPrice, $recommendPrice, $landTradeRatio, $topupRatio, $taskLeast];
+            return [$level, $name, $price, $days, $taskLimit, $postFee, $withdrawFee, $stickyPrice, $recommendPrice, $landTradeRatio, $topupRatio, $taskLeast];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$id, $name, $price, $taskLeast, $postFee, $withdrawFee, $days, $taskLimit, $stickyPrice, $recommendPrice, $landTradeRatio, $topupRatio, $level, $users];
+            return [$name, $price, $taskLeast, $postFee, $withdrawFee, $days, $taskLimit, $stickyPrice, $recommendPrice, $landTradeRatio, $topupRatio, $level, $users];
         } elseif (Crud::PAGE_NEW === $pageName) {
-            return [$name, $price, $days, $taskLimit, $postFee, $withdrawFee, $stickyPrice, $recommendPrice, $landTradeRatio, $topupRatio, $taskLeast];
+            return [$level, $name, $price, $days, $taskLimit, $postFee, $withdrawFee, $stickyPrice, $recommendPrice, $landTradeRatio, $topupRatio, $taskLeast];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$name, $price, $days, $taskLimit, $postFee, $withdrawFee, $stickyPrice, $recommendPrice, $landTradeRatio, $topupRatio, $taskLeast];
+            return [$level, $name, $price, $days, $taskLimit, $postFee, $withdrawFee, $stickyPrice, $recommendPrice, $landTradeRatio, $topupRatio, $taskLeast];
         }
     }
 }
