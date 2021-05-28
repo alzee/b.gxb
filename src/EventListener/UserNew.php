@@ -94,7 +94,7 @@ class UserNew extends AbstractController
 
     public function postPersist(User $user, LifecycleEventArgs $event): void
     {
-        if ($user->getId() > 100) {
+        if ($user->getId() >= 100) {
             $em = $event->getEntityManager();
             $conf = $em->getRepository(Conf::class)->find(1);
             $typeNews = $em->getRepository(NodeType::class)->find(3);
