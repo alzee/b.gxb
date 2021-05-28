@@ -31,5 +31,11 @@ class UserUpdate
         if ($event->hasChangedField('payPasswd')) {
             $user->setPayPasswd($this->encoder->encodePassword($user, $user->getPayPasswd()));
         }
+        if ($event->hasChangedField('level')) {
+            $level = $event->getNewValue('level');
+            $vipUntil = new \DateTime();
+            $vipUntil = $vipUntil->add(new \DateInterval('P' . $level->getDays(). 'D'));
+            $user->setVipUntil($vipUntil);
+        }
     }
 }

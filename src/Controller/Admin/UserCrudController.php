@@ -78,6 +78,7 @@ class UserCrudController extends AbstractCrudController
         $refcode = TextField::new('refcode');
         $coin = IntegerField::new('coin');
         $date = DateTimeField::new('date');
+        $vipUntil = DateTimeField::new('vipUntil');
         $applies = AssociationField::new('applies');
         $coupon = AssociationField::new('coupon');
         $referrer = AssociationField::new('referrer');
@@ -87,11 +88,11 @@ class UserCrudController extends AbstractCrudController
         if (Crud::PAGE_INDEX === $pageName) {
             return [$id, $username, $phone, $topup, $earnings, $frozen, $equity, $coin, $gxb, $level, $active];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
-            return [$id, $username, $avatar, $phone, $topup, $earnings, $gxb, $equity, $frozen, $refcode, $coin, $date, $level, $referrer, $ror];
+            return [$id, $username, $avatar, $phone, $topup, $earnings, $gxb, $equity, $frozen, $refcode, $coin, $date, $level, $vipUntil, $referrer, $ror];
         } elseif (Crud::PAGE_NEW === $pageName) {
             return [$username, $plainPassword, $phone];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$gxb, $active];
+            return [$level, $gxb, $active];
         }
     }
 
