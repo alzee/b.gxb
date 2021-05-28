@@ -203,14 +203,19 @@ class FinanceNew extends AbstractController
                 $land = $this->getDoctrine()->getRepository(Land::class)->find($postData['landId']);
                 $landOwner = $land->getOwner();
                 if (!is_null($landOwner)) {
-                    $landOwner->setTopup($landOwner->getTopup()  + $amount / 2);
-                    $landOwner->setCellProfit($landOwner->getCellProfit()  + $amount / 2);
-                    // new finance for $landOwner
-                    $f = new Finance();
-                    $f->setUser($landOwner);
-                    $f->setAmount($amount / 2);
-                    $f->setType(57);
-                    $em->persist($f);
+                    $landTrade = $em->getRepository(LandTrade::class)->findOneBy(['buyer' => $landOwner, 'land' => $land], ['date' => 'DESC']);
+                    $landBoughtAt = $landTrade->getDate();
+                    $now = new \DateTime('now');
+                    if ($now->diff($landBoughtAt)->d >= 1) {
+                        $landOwner->setTopup($landOwner->getTopup()  + $amount / 2);
+                        $landOwner->setCellProfit($landOwner->getCellProfit()  + $amount / 2);
+                        // new finance for $landOwner
+                        $f = new Finance();
+                        $f->setUser($landOwner);
+                        $f->setAmount($amount / 2);
+                        $f->setType(57);
+                        $em->persist($f);
+                    }
                 }
 
                 $landPost = new LandPost();
