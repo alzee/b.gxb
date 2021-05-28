@@ -40,7 +40,7 @@ class ConfCrudController extends AbstractCrudController
     {
         return [
             IntegerField::new('equity', 'equityTotal'),
-            IntegerField::new('exchanged', 'exchanged'),
+            IntegerField::new('exchanged', 'exchanged')->hideOnForm(),
             PercentField::new('referReward', 'referReward'),
             PercentField::new('referReward2', 'referReward2'),
             IntegerField::new('referGXB', 'referGXB'),
@@ -55,7 +55,7 @@ class ConfCrudController extends AbstractCrudController
             IntegerField::new('maxPerDay', 'maxPerDay'),
             NumberField::new('equityGXBRate', 'equityGXBRate'),
             MoneyField::new('equityPrice', 'equityPrice')->setCurrency('CNY')->setStoredAsCents(false),
-            MoneyField::new('dividendFund', 'dividendFund')->setCurrency('CNY'),
+            MoneyField::new('dividendFund', 'dividendFund')->setCurrency('CNY')->hideOnForm(),
             IntegerField::new('coinsPerYuan', 'coinsPerYuan'),
             IntegerField::new('coinThreshold', 'coinThreshold'),
             TextEditorField::new('welcome', 'welcome'),
