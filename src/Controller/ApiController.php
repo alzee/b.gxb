@@ -524,6 +524,6 @@ class ApiController extends AbstractController
         $cellProfit = $financeRepo->sumTypeByUser(57, $user);
 
 
-        return $this->json(['landProfit' => $$landProfit, 'cellProfit' => $cellProfit]);
+        return $this->json(['landProfit' => $landProfit, 'cellProfit' => $cellProfit]);
     }
 }
