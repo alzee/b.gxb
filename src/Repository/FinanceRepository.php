@@ -22,8 +22,8 @@ class FinanceRepository extends ServiceEntityRepository
     public function sumTypeByUser($type, $user)
     {
         return $this->createQueryBuilder('f')
-            ->andWhere('f.user >= :user')
-            ->andWhere('f.type >= :type')
+            ->andWhere('f.user = :user')
+            ->andWhere('f.type = :type')
             ->setParameter('user', $user)
             ->setParameter('type', $type)
             ->select('SUM(f.amount)')
