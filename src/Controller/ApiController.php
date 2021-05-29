@@ -523,6 +523,12 @@ class ApiController extends AbstractController
         $landProfit = $financeRepo->sumTypeByUser(55, $user);
         $cellProfit = $financeRepo->sumTypeByUser(57, $user);
 
+        if (is_null($landProfit)) {
+            $landProfit = 0;
+        }
+        if (is_null($cellProfit)) {
+            $cellProfit = 0;
+        }
 
         return $this->json(['landProfit' => $landProfit, 'cellProfit' => $cellProfit]);
     }
