@@ -19,6 +19,19 @@ class FinanceRepository extends ServiceEntityRepository
         parent::__construct($registry, Finance::class);
     }
 
+    public function sumTypeByUser($type, $user)
+    {
+        return $this->createQueryBuilder('f')
+            ->andWhere('f.user >= :user')
+            ->andWhere('f.type >= :type')
+            ->setParameter('user', $user)
+            ->setParameter('type', $type)
+            ->select('SUM(f.amount)')
+            ->getQuery()
+            ->getSingleScalarResult();
+        ;
+    }
+
     // /**
     //  * @return Finance[] Returns an array of Finance objects
     //  */

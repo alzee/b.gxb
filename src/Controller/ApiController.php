@@ -511,4 +511,19 @@ class ApiController extends AbstractController
 
         return $this->json(['code' => $code, 'uid' => $uid, 'phone' => $phone]);
     }
+
+    /**
+     * @Route("/landprofit/{uid}", name="landprofit")
+     */
+    public function landprofit($uid): Response
+    {
+        $user = $this->getDoctrine()->getRepository(User::class)->find($uid);
+        $financeRepo = $this->getDoctrine()->getRepository(Finance::class);
+
+        $landProfit = $financeRepo->sumTypeByUser(55, $user);
+        $cellProfit = $financeRepo->sumTypeByUser(57, $user);
+
+
+        return $this->json(['landProfit' => $$landProfit, 'cellProfit' => $cellProfit]);
+    }
 }
