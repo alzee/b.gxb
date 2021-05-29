@@ -44,14 +44,13 @@ class SumTypeByUserCommand extends Command
 
         if ($arg1) {
             $io->note(sprintf('You passed an argument: %s', $arg1));
-            $uid = $arg1;
         }
 
         if ($input->getOption('option1')) {
             // ...
         }
 
-        $user = $this->userRepo->find($uid);
+        $user = $this->userRepo->find($arg2);
         $a = $this->financeRepo->sumTypeByUser($arg1, $user);
 
         // $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
