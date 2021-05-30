@@ -365,6 +365,18 @@ class User implements UserInterface
      */
     private $payPasswd;
 
+    /**
+     * @Groups({"user:read", "user:write"})
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    private $alipay;
+
+    /**
+     * @Groups({"user:read", "user:write"})
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    private $wechat;
+
     public function __construct()
     {
         $this->applies = new ArrayCollection();
@@ -626,6 +638,30 @@ class User implements UserInterface
     public function setPayPasswd(?string $payPasswd): self
     {
         $this->payPasswd = $payPasswd;
+
+        return $this;
+    }
+
+    public function getAlipay(): ?string
+    {
+        return $this->alipay;
+    }
+
+    public function setAlipay(?string $alipay): self
+    {
+        $this->alipay = $alipay;
+
+        return $this;
+    }
+
+    public function getWechat(): ?string
+    {
+        return $this->wechat;
+    }
+
+    public function setWechat(?string $wechat): self
+    {
+        $this->wechat = $wechat;
 
         return $this;
     }

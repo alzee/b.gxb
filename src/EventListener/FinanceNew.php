@@ -30,6 +30,7 @@ class FinanceNew extends AbstractController
     public function prePersist(Finance $finance, LifecycleEventArgs $event): void
     {
         $t = $finance->getType();
+        $amount = $finance->getAmount();
         switch ($t) {
         case 1:
             $note = '任务发布';
@@ -56,14 +57,15 @@ class FinanceNew extends AbstractController
             $note = '购买会员';
             break;
         case 19:
-            $note = '提现';
+            // $note = '提现';
+            $user = $finance->getUser();
+            $user->setTopup($user->getTopup() - $amount);
             break;
         case 50:
             $note = '充值';
             break;
         case 51:
             // $note = '任务分销奖励1级 $applicant';
-            $note = $finance->getNote();
             break;
         case 52:
             // $note = '任务分销奖励2级 $applicant';
@@ -103,7 +105,9 @@ class FinanceNew extends AbstractController
         if ($t > 50) {
             $finance->setStatus(5);
         } 
-        $finance->setNote($note);
+        if (isset($note)) {
+            $finance->setNote($note);
+        }
     }
 
     public function postUpdate(Finance $finance, LifecycleEventArgs $event): void
