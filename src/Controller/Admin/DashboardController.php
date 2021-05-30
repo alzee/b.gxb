@@ -59,6 +59,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('user', 'fas fa-user', User::class);
         yield MenuItem::linkToCrud('level', 'far fa-gem', Level::class);
         yield MenuItem::linkToCrud('finance', 'fas fa-dollar-sign', Finance::class)->setController(FinanceCrudController::class);
+        yield MenuItem::linkToCrud('withdraw', 'fas fa-dollar-sign', Finance::class)->setController(WithdrawCrudController::class);
         yield MenuItem::linkToCrud('report', 'fas fa-flag', Report::class);
         yield MenuItem::linkToCrud('conf', 'fas fa-cog', Conf::class)->setAction('detail')->setEntityId(1);
     }
