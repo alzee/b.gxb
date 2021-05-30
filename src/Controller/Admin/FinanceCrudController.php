@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Finance;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -12,6 +13,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\NumericFilter;
 
 class FinanceCrudController extends AbstractCrudController
 {
@@ -37,6 +40,14 @@ class FinanceCrudController extends AbstractCrudController
             ->disable('new', 'edit', 'delete');
     }
 
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+            ->add(EntityFilter::new('user'))
+            ->add(NumericFilter::new('type'))
+        ;
+    }
+
     public function configureFields(string $pageName): iterable
     {
         $note = TextField::new('note');
@@ -56,7 +67,7 @@ class FinanceCrudController extends AbstractCrudController
         $id = IntegerField::new('id', 'ID');
 
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $user, $note, $date, $amount, $fee, $couponId, $method, $type, $status];
+            return [$id, $user, $note, $date, $amount, $fee, $couponId, $method, $type];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $note, $date, $amount, $prepayid, $orderid, $wxOrderid, $type, $status, $couponId, $fee, $method, $user];
         } elseif (Crud::PAGE_NEW === $pageName) {
