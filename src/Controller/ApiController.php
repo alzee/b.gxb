@@ -215,8 +215,8 @@ class ApiController extends AbstractController
                 'out_trade_no' => $orderid,
                 'notify_url' => 'https://backend.drgxb.com/api/paid',
                 'amount' => [
-                    'total' => 1
-                    // 'total' => $amount
+                    // 'total' => 1 // pay 0.01 in testing
+                    'total' => $amount
                 ]
             ];
 
