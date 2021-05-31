@@ -48,7 +48,7 @@ class DividendCrudController extends AbstractCrudController
         $coinThreshold = IntegerField::new('coinThreshold');
 
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $date, $amount, $coin, $coinTotal, $fund, $coinThreshold];
+            return [$id, $user, $date, $amount, $coin, $coinTotal, $fund, $coinThreshold];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $date];
         } elseif (Crud::PAGE_NEW === $pageName) {
