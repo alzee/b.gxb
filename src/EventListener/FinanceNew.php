@@ -212,7 +212,6 @@ class FinanceNew extends AbstractController
                     $now = new \DateTime('now');
                     if ($now->diff($landBoughtAt)->d >= 1) {
                         $landOwner->setTopup($landOwner->getTopup()  + $amount / 2);
-                        $landOwner->setCellProfit($landOwner->getCellProfit()  + $amount / 2);
                         // new finance for $landOwner
                         $f = new Finance();
                         $f->setUser($landOwner);
@@ -265,7 +264,6 @@ class FinanceNew extends AbstractController
                         $total = $land->getPrice();
                     }
                     $seller->setTopup($seller->getTopup()  + $total);
-                    $seller->setLandProfit($seller->getLandProfit()  + $total);
                     // new finance for $seller
                     $f = new Finance();
                     $f->setUser($seller);
