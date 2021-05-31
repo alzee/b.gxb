@@ -12,6 +12,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
@@ -19,11 +20,14 @@ use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Orm\EntityRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\NumericFilter;
 
 class WithdrawCrudController extends AbstractCrudController
 {
+    private $statuses = ['处理中' => 0, '已完成' => 5];
+
     public static function getEntityFqcn(): string
     {
         return Finance::class;
@@ -42,13 +46,14 @@ class WithdrawCrudController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
         return $actions
-            ->add('index', 'detail')
-            ->disable('new', 'edit', 'delete');
+            ->disable('new', 'delete');
     }
 
     public function configureFilters(Filters $filters): Filters
     {
         return $filters
+            ->add(EntityFilter::new('user'))
+            ->add(ChoiceFilter::new('status')->setChoices($this->statuses))
         ;
     }
 
@@ -61,7 +66,7 @@ class WithdrawCrudController extends AbstractCrudController
         $orderid = TextField::new('orderid');
         $wxOrderid = TextField::new('wx_orderid');
         $type = IntegerField::new('type');
-        $status = IntegerField::new('status');
+        $status = ChoiceField::new('status')->setChoices($this->statuses);
         $couponId = IntegerField::new('couponId');
         $fee = MoneyField::new('fee')->setCurrency('CNY');
         $method = IntegerField::new('method');
@@ -71,13 +76,13 @@ class WithdrawCrudController extends AbstractCrudController
         $id = IntegerField::new('id', 'ID');
 
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $user, $note, $date, $amount, $fee, $type, $status];
+            return [$id, $user, $note, $date, $amount, $fee, $status];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $note, $date, $amount, $prepayid, $orderid, $wxOrderid, $type, $status, $couponId, $fee, $method, $user];
         } elseif (Crud::PAGE_NEW === $pageName) {
             return [$note, $date, $amount, $prepayid, $orderid, $wxOrderid, $type, $status, $couponId, $fee, $method,  $user];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$note, $date, $amount, $prepayid, $orderid, $wxOrderid, $type, $status, $couponId, $fee, $method,  $user];
+            return [$status];
         }
     }
 

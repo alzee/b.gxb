@@ -311,7 +311,7 @@ class FinanceNew extends AbstractController
             }
 
             // deduct balance
-            if ($type != 50 && $method == 0) {
+            if ($type < 19 && $method == 0) {
                 $topup = $user->getTopup();
                 if ($topup < $amount) {
                     $user->setEarnings($user->getEarnings() - ($amount - $topup));
