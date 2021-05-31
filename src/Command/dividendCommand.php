@@ -53,6 +53,7 @@ class dividendCommand extends Command
 
             $io->success($u->getUsername() . " " . $u->getCoin() . " " .  $dividend);
             $u->setTopup($u->getTopup() + $dividend);
+            $u->setCoin(0);
             
             $f = new Finance();
             $f->setUser($u);
