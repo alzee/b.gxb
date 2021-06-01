@@ -74,6 +74,7 @@ class Land
     private $date;
 
     /**
+     * @Groups({"land:read"})
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updatedAt;
