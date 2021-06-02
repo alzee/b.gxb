@@ -198,14 +198,14 @@ class ApiController extends AbstractController
         $order->setFee($fee);
         $order->setData($data);
 
-        if ($method == 0) {
+        if ($method == 0) {     // use balance
             $d = [
                 'code' => 0,
                 'msg' => 'success'
             ];
         }
-        else if ($method == 1) {
-            // 微信支付统一下单
+
+        if ($method == 1) {    // 微信支付统一下单
             $url = "https://api.mch.weixin.qq.com/v3/pay/transactions/app";
             $httpMethod = 'POST';
             $data0 = [
@@ -254,19 +254,38 @@ class ApiController extends AbstractController
             ];
         }
 
-        if ($type == 19) {
-            $openid = $params['openid'];
+        if ($type == 19) {  // withdraw
+            $check_name = 'NO_CHECK';
+            $desc = '提现';
             $mch_appid = $this->appid;
             $mchid = $this->mchid;
             $nonce_str = md5(uniqid());
-            $stringA;
-            $stringSignTemp;
-            $sign = strtoupper(md5($stringSignTemp));
+            $openid = $params['openid'];
             $partner_trade_no = $orderid;
-            $check_name = 'NO_CHECK';
-            $desc = '提现';
             $key = $this->apikey;
+
+            $string = "amount=${amount}&check_name=${check_name}&desc=${desc}&mch_appid=${mch_appid}&mchid=${mchid}&nonce_str=${nonce_str}&openid=${openid}&partner_trade_no=${partner_trade_no}&key=${key}";
+            $sign = strtoupper(md5($string));
+
+            $data = <<<EOT
+<xml>
+<amount>${amount}</amount>
+<check_name>${check_name}</check_name>
+<desc>${desc}</desc>
+<mch_appid>${mch_appid}</mch_appid>
+<mchid>${mchid}</mchid>
+<nonce_str>${nonce_str}</nonce_str>
+<openid>${openid}</openid>
+<partner_trade_no>${partner_trade_no}</partner_trade_no>
+<sign>${sign}</sign>
+</xml>
+EOT;
+            $url = 'https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers';
+            $header[] = 'Content-Type: text/xml';
             
+            $resp = $this->httpclient->request('POST', $url ,['headers' => $header, 'json' => $data0]);
+            $d = $resp->getContent();
+
         }
 
         $em->persist($order);
