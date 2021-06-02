@@ -144,7 +144,7 @@ class ApiController extends AbstractController
 
     public function getMchPrivatekey()
     {
-        $mch_private_key  = openssl_get_privatekey($this->mch_private_key_file);
+        $mch_private_key  = openssl_get_privatekey('file://' . $this->mch_private_key_file);
         return $mch_private_key;
     }
 
@@ -270,7 +270,7 @@ class ApiController extends AbstractController
             $string = "amount=${amount}&check_name=${check_name}&desc=${desc}&mch_appid=${mch_appid}&mchid=${mchid}&nonce_str=${nonce_str}&openid=${openid}&partner_trade_no=${partner_trade_no}&key=${key}";
             $sign = strtoupper(md5($string));
 
-            $data = <<<EOT
+            $xml = <<<EOT
 <xml>
 <amount>${amount}</amount>
 <check_name>${check_name}</check_name>
@@ -283,19 +283,44 @@ class ApiController extends AbstractController
 <sign>${sign}</sign>
 </xml>
 EOT;
+
             $url = 'https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers';
             $header[] = 'Content-Type: text/xml';
-            
-            $client = new CurlHttpClient();
-            // $resp = $client->request('POST', $url ,['headers' => $header, 'body' => $data, 'extra' => ['curl' => [CURLOPT_SSLCERT => $mch_cert_file]]]);
-            $resp = $client->request('POST', $url ,['headers' => $header, 'body' => $data, 'local_cert' => $mch_cert_file ]);
+            $resp = $this->httpclient->request('POST', $url, [
+                'headers' => $header,
+                'body' => $xml,
+                'local_cert' => $this->mch_cert_file,
+                'passphrase' => $mchid,
+                'local_pk' => $this->mch_private_key_file
+            ]);
+
+            /*
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+            curl_setopt($ch, CURLOPT_URL, 'https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers');
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+            curl_setopt($ch, CURLOPT_SSLCERTTYPE, 'PEM');
+            curl_setopt($ch, CURLOPT_SSLCERT, $this->mch_cert_file);
+            curl_setopt($ch, CURLOPT_SSLCERTPASSWD, $mchid);
+            curl_setopt($ch, CURLOPT_SSLKEYTYPE, 'PEM');
+            curl_setopt($ch, CURLOPT_SSLKEY, $this->mch_private_key_file);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
+            curl_exec($ch);
+            $d = curl_error($ch);
+             */
+
             $d = $resp->getContent();
+            $order->setStatus(5);
         }
 
         $em->persist($order);
         $em->flush();
 
-        if ($method == 0) {
+        if ($method == 0) { // update
             $order->setStatus(5);
             $em->flush();
         }
