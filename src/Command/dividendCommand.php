@@ -41,7 +41,7 @@ class dividendCommand extends Command
         $arg1 = $input->getArgument('arg1');
 
         $conf = $this->em->getRepository(Conf::class)->find(1);
-        $fund = $conf->getDividendFund() * 0.5;
+        $fund = $conf->getDividendFund();
         $coinThreshold = $conf->getCoinThreshold();
 
         $userRepo = $this->em->getRepository(User::class);
@@ -49,7 +49,7 @@ class dividendCommand extends Command
         $sumCoin = $userRepo->sumCoin($coinThreshold);
 
         foreach ($users as $u) {
-            $dividend = (int)($fund * $u->getCoin() / $sumCoin);
+            $dividend = (int)($fund * 0.5 * $u->getCoin() / $sumCoin);
 
             $io->success($u->getUsername() . " " . $u->getCoin() . " " .  $dividend);
             $u->setTopup($u->getTopup() + $dividend);
