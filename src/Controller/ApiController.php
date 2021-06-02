@@ -287,7 +287,8 @@ EOT;
             $header[] = 'Content-Type: text/xml';
             
             $client = new CurlHttpClient();
-            $resp = $client->request('POST', $url ,['headers' => $header, 'body' => $data, 'extra' => ['curl' => [CURLOPT_SSLCERT => '']]]);
+            // $resp = $client->request('POST', $url ,['headers' => $header, 'body' => $data, 'extra' => ['curl' => [CURLOPT_SSLCERT => $mch_cert_file]]]);
+            $resp = $client->request('POST', $url ,['headers' => $header, 'body' => $data, 'local_cert' => $mch_cert_file ]);
             $d = $resp->getContent();
         }
 
