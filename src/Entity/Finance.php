@@ -95,6 +95,11 @@ class Finance
      */
     private $wxpayData = [];
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $isFund = false;
+
     public function __construct()
     {
         $this->date = new \DateTimeImmutable();
@@ -269,6 +274,18 @@ class Finance
     public function setWxpayData(?array $wxpayData): self
     {
         $this->wxpayData = $wxpayData;
+
+        return $this;
+    }
+
+    public function getIsFund(): ?bool
+    {
+        return $this->isFund;
+    }
+
+    public function setIsFund(?bool $isFund): self
+    {
+        $this->isFund = $isFund;
 
         return $this;
     }
