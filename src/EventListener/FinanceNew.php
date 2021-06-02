@@ -31,6 +31,7 @@ class FinanceNew extends AbstractController
     {
         $t = $finance->getType();
         $amount = $finance->getAmount();
+        $fee = $finance->getFee();
         switch ($t) {
         case 1:
             $note = '任务发布';
