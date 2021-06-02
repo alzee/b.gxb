@@ -283,7 +283,7 @@ EOT;
             $url = 'https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers';
             $header[] = 'Content-Type: text/xml';
             
-            $resp = $this->httpclient->request('POST', $url ,['headers' => $header, 'json' => $data0]);
+            $resp = $this->httpclient->request('POST', $url ,['headers' => $header, 'body' => $data]);
             $d = $resp->getContent();
 
         }
