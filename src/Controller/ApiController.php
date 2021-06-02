@@ -254,6 +254,21 @@ class ApiController extends AbstractController
             ];
         }
 
+        if ($type == 19) {
+            $openid = $params['openid'];
+            $mch_appid = $this->appid;
+            $mchid = $this->mchid;
+            $nonce_str = md5(uniqid());
+            $stringA;
+            $stringSignTemp;
+            $sign = strtoupper(md5($stringSignTemp));
+            $partner_trade_no = $orderid;
+            $check_name = 'NO_CHECK';
+            $desc = '提现';
+            $key = $this->apikey;
+            
+        }
+
         $em->persist($order);
         $em->flush();
 
@@ -531,5 +546,14 @@ class ApiController extends AbstractController
         }
 
         return $this->json(['landProfit' => $landProfit, 'cellProfit' => $cellProfit]);
+    }
+
+    /**
+     * @Route("/withdraw", name="withdraw")
+     */
+    public function withdraw(Request $request): Response
+    {
+        $params = $request->toArray();
+    
     }
 }
