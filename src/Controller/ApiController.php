@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Component\HttpClient\CurlHttpClient;
 use AlibabaCloud\SDK\Dysmsapi\V20170525\Dysmsapi;
 use Darabonba\OpenApi\Models\Config;
 use AlibabaCloud\SDK\Dysmsapi\V20170525\Models\SendSmsRequest;
@@ -31,6 +32,7 @@ class ApiController extends AbstractController
     private $apikey;
     private $apikey_v3;
     private $mch_private_key_file;
+    private $mch_cert_file;
 
     public function __construct(HttpClientInterface $client)
     {
@@ -42,6 +44,7 @@ class ApiController extends AbstractController
         $this->apikey = $_ENV['apikey'];
         $this->apikey_v3 = $_ENV['apikey_v3'];
         $this->mch_private_key_file = $_ENV['mch_private_key_file'];
+        $this->mch_cert_file = $_ENV['mch_cert_file'];
     }
 
     /**
@@ -283,9 +286,9 @@ EOT;
             $url = 'https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers';
             $header[] = 'Content-Type: text/xml';
             
-            $resp = $this->httpclient->request('POST', $url ,['headers' => $header, 'body' => $data]);
+            $client = new CurlHttpClient();
+            $resp = $client->request('POST', $url ,['headers' => $header, 'body' => $data, 'extra' => ['curl' => [CURLOPT_SSLCERT => '']]]);
             $d = $resp->getContent();
-
         }
 
         $em->persist($order);
@@ -565,14 +568,5 @@ EOT;
         }
 
         return $this->json(['landProfit' => $landProfit, 'cellProfit' => $cellProfit]);
-    }
-
-    /**
-     * @Route("/withdraw", name="withdraw")
-     */
-    public function withdraw(Request $request): Response
-    {
-        $params = $request->toArray();
-    
     }
 }
