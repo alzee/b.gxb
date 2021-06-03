@@ -194,7 +194,7 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        $this->plainPassword = null;
     }
 
     public function __toString(): string
@@ -275,6 +275,7 @@ class User implements UserInterface
     }
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"user:read", "user:write"})
      */
     private ?string $plainPassword = null;

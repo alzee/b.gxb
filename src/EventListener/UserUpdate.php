@@ -28,6 +28,10 @@ class UserUpdate
         if ($event->hasChangedField('password')) {
             $user->setPassword($this->encoder->encodePassword($user, $user->getPassword()));
         }
+        if ($event->hasChangedField('plainPassword')) {
+            $user->setPassword($this->encoder->encodePassword($user, $user->getPlainPassword()));
+            $user->eraseCredentials();
+        }
         if ($event->hasChangedField('payPasswd')) {
             $user->setPayPasswd($this->encoder->encodePassword($user, $user->getPayPasswd()));
         }
