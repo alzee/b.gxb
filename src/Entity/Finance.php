@@ -100,6 +100,11 @@ class Finance
      */
     private $isFund = false;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $entityId;
+
     public function __construct()
     {
         $this->date = new \DateTimeImmutable();
@@ -286,6 +291,18 @@ class Finance
     public function setIsFund(?bool $isFund): self
     {
         $this->isFund = $isFund;
+
+        return $this;
+    }
+
+    public function getEntityId(): ?int
+    {
+        return $this->entityId;
+    }
+
+    public function setEntityId(?int $entityId): self
+    {
+        $this->entityId = $entityId;
 
         return $this;
     }
