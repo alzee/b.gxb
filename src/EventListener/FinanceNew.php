@@ -58,8 +58,15 @@ class FinanceNew extends AbstractController
         case 8:
             $note = '购买会员';
             break;
+        case 18:
+            // $note = '奖励提现';
+            if ($finance->getStatus() == 5) {
+                $user = $finance->getUser();
+                $user->setEarnings($user->getEarnings() - $amount - $fee);
+            }
+            break;
         case 19:
-            // $note = '提现';
+            // $note = '余额提现';
             if ($finance->getStatus() == 5) {
                 $user = $finance->getUser();
                 $user->setTopup($user->getTopup() - $amount - $fee);
@@ -317,8 +324,6 @@ class FinanceNew extends AbstractController
                     $em->persist($f);
                 }
                 $conf->setDividendFund($conf->getDividendFund() + $amount);
-                break;
-            case 19: // withdraw
                 break;
             }
 
