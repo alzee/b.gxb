@@ -313,8 +313,9 @@ EOT;
             $d = curl_error($ch);
              */
 
-            $dd = $resp->getContent();
-            $d = simplexml_load_string($dd);
+            // $d = $resp->getContent();
+            $d = $resp;
+            // $d = simplexml_load_string($dd, null, LIBXML_NOCDATA);
             $order->setStatus(5);
         }
 
