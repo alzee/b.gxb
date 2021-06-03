@@ -314,7 +314,7 @@ EOT;
              */
 
             $dd = $resp->getContent();
-            $d = simplexml_load_string($dd)
+            $d = simplexml_load_string($dd);
             $order->setStatus(5);
         }
 
