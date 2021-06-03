@@ -85,7 +85,9 @@ class FundCrudController extends AbstractCrudController
     public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): QueryBuilder
     {
         $response = $this->get(EntityRepository::class)->createQueryBuilder($searchDto, $entityDto, $fields, $filters);
-        $response->andWhere('entity.type = 1 Or entity.type = 8');
+        $response->andWhere('entity.status = 5')
+            ->andWhere('entity.isFund = true')
+        ;
         return $response;
     }
 }

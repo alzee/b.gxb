@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Task;
 use App\Entity\Finance;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
+use App\Entity\Conf;
 
 class TaskUpdate
 {
@@ -19,7 +20,14 @@ class TaskUpdate
     {
         $em = $event->getEntityManager();
         $owner = $task->getOwner();
-        $f = new Finance();
+        $conf = $em->getRepository(Conf::class)->find(1);
+
+        if ($task->getStatus()->getId() == 2) {
+            $conf->setDividendFund($conf->getDividendFund() + $fee);
+            $f = $task->getFinance();
+            $f->setIsFund(true);
+            $em->flush();
+        }
 
         if ($task->getStatus()->getId() == 4) {
             $remain = $task->getRemain();
@@ -31,6 +39,7 @@ class TaskUpdate
 
             $type = 56;
 
+            $f = new Finance();
             $f->setUser($owner);
             $f->setAmount($amount);
             $f->setType($type);
@@ -48,6 +57,7 @@ class TaskUpdate
 
             $type = 61;
 
+            $f = new Finance();
             $f->setUser($owner);
             $f->setAmount($amount);
             $f->setType($type);

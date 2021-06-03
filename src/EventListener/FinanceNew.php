@@ -159,7 +159,6 @@ class FinanceNew extends AbstractController
                 $t->setStatus($tStatus);
                 $t->setFinance($finance);
                 $em->persist($t);
-                $conf->setDividendFund($conf->getDividendFund() + $fee);
                 break;
             case 2: // stick
                 $t = $this->getDoctrine()->getRepository(Task::class)->find($data['entityId']);
@@ -306,6 +305,7 @@ class FinanceNew extends AbstractController
                     $em->persist($f);
                 }
                 $conf->setDividendFund($conf->getDividendFund() + $amount);
+                $finance->setIsFund(true);
                 break;
             case 19: // withdraw
                 break;
