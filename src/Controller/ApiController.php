@@ -583,8 +583,8 @@ EOT;
         $user = $this->getDoctrine()->getRepository(User::class)->find($uid);
         $financeRepo = $this->getDoctrine()->getRepository(Finance::class);
 
-        $landProfit = $financeRepo->sumTypeByUser(55, $user);
-        $cellProfit = $financeRepo->sumTypeByUser(57, $user);
+        $landProfit = (int)$financeRepo->sumTypeByUser(55, $user);
+        $cellProfit = (int)$financeRepo->sumTypeByUser(57, $user);
 
         if (is_null($landProfit)) {
             $landProfit = 0;
