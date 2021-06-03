@@ -314,7 +314,7 @@ EOT;
              */
 
             $dd = $resp->getContent();
-            $d = simplexml_load_string($dd, null, LIBXML_NOCDATA);
+            $d = simplexml_load_string($dd);
             $order->setStatus(5);
         }
 
