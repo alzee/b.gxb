@@ -18,6 +18,7 @@ use App\Entity\EquityTrade;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @Route("/api", name="api")
@@ -313,9 +314,25 @@ EOT;
             $d = curl_error($ch);
              */
 
-            $dd = $resp->getContent();
-            $d = simplexml_load_string($dd);
-            $order->setStatus(5);
+            $contentString = $resp->getContent();
+            // $contentString = str_replace('<![CDATA[', "", $contentString);
+            // $contentString = str_replace(']]>', "", $contentString);
+            // $content = simplexml_load_string($contentString);
+            $content = simplexml_load_string($contentString, 'SimpleXMLElement', LIBXML_NOCDATA);
+            if ($content->result_code == 'FAIL') {
+                $order->setStatus(4);
+                $code = 1;
+            }
+            else {
+                $order->setStatus(5);
+                $code = 0;
+            }
+
+            $d = ['code' => $code];
+            
+            //$response = new JsonResponse();
+            //$response->setData($content);
+            //return $response;
         }
 
         $em->persist($order);

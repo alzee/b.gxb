@@ -60,8 +60,10 @@ class FinanceNew extends AbstractController
             break;
         case 19:
             // $note = '提现';
-            $user = $finance->getUser();
-            $user->setTopup($user->getTopup() - $amount - $fee);
+            if ($finance->getStatus() == 5) {
+                $user = $finance->getUser();
+                $user->setTopup($user->getTopup() - $amount - $fee);
+            }
             break;
         case 50:
             $note = '充值';
