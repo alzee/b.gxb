@@ -115,7 +115,9 @@ class FinanceNew extends AbstractController
     public function preUpdate(Finance $finance, PreUpdateEventArgs $event): void
     {
         if ($event->hasChangedField('status') && $event->getNewValue('status') == 5) {
-            $finance->setIsFund(true);
+            if ($finance->getType() == 8) {
+                $finance->setIsFund(true);
+            }
         }
     }
 
