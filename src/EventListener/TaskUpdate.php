@@ -23,8 +23,9 @@ class TaskUpdate
         $conf = $em->getRepository(Conf::class)->find(1);
 
         if ($task->getStatus()->getId() == 2) {
-            $conf->setDividendFund($conf->getDividendFund() + $fee);
             $f = $task->getFinance();
+            $fee = $f->getFee();
+            $conf->setDividendFund($conf->getDividendFund() + $fee);
             $f->setIsFund(true);
             $em->flush();
         }

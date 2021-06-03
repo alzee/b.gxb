@@ -24,6 +24,7 @@ use App\Entity\EquityTrade;
 use App\Entity\EquityFee;
 use App\Entity\Conf;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 
 class FinanceNew extends AbstractController
 {
@@ -108,6 +109,13 @@ class FinanceNew extends AbstractController
         } 
         if (isset($note)) {
             $finance->setNote($note);
+        }
+    }
+
+    public function preUpdate(Finance $finance, PreUpdateEventArgs $event): void
+    {
+        if ($event->hasChangedField('status') && $event->getNewValue('status') == 5) {
+            $finance->setIsFund(true);
         }
     }
 
@@ -305,7 +313,6 @@ class FinanceNew extends AbstractController
                     $em->persist($f);
                 }
                 $conf->setDividendFund($conf->getDividendFund() + $amount);
-                $finance->setIsFund(true);
                 break;
             case 19: // withdraw
                 break;
