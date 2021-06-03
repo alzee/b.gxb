@@ -26,7 +26,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Filter\NumericFilter;
 
 class WithdrawCrudController extends AbstractCrudController
 {
-    private $statuses = ['处理中' => 0, '已完成' => 5];
+    private $statuses = ['处理中' => 0, '失败' => 4, '已完成' => 5];
 
     public static function getEntityFqcn(): string
     {
