@@ -94,7 +94,7 @@ class LandPost
     private $showUntil;
 
     /**
-     * @ORM\OneToMany(targetEntity=Read::class, mappedBy="post")
+     * @ORM\OneToMany(targetEntity=Read::class, mappedBy="post", cascade={"remove"})
      */
     private $reads;
 
