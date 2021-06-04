@@ -37,7 +37,7 @@ class UserCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setSearchFields(['id', 'username', 'roles', 'avatar', 'phone', 'topup', 'earnings', 'gxb', 'equity', 'frozen', 'refcode', 'coin'])
+            ->setSearchFields(['id', 'username', 'phone'])
             ->setDefaultSort(['id' => 'DESC'])
             ->setPaginatorPageSize(50);
     }
