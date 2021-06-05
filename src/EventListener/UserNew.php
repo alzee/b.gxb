@@ -8,6 +8,7 @@
 
 namespace App\EventListener;
 
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Finance;
 use App\Entity\User;
@@ -21,8 +22,18 @@ use Doctrine\Persistence\Event\LifecycleEventArgs;
 
 class UserNew extends AbstractController
 {
+    private $encoder;
+
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
+
     public function prePersist(User $user, LifecycleEventArgs $event): void
     {
+        $user->setPassword($this->encoder->encodePassword($user, $user->getPlainPassword()));
+        // $user->eraseCredentials();
+
         $em = $event->getEntityManager();
         $coupons = $em->getRepository(Coupon::class)->findAll();
         $level = $em->getRepository(Level::class)->find(9);
