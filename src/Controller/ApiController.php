@@ -258,7 +258,7 @@ class ApiController extends AbstractController
             ];
         }
 
-        if ($type == 19) {  // withdraw
+        if ($type == 18 || $type == 19) {  // withdraw
             $check_name = 'NO_CHECK';
             $desc = '提现';
             $mch_appid = $this->appid;
