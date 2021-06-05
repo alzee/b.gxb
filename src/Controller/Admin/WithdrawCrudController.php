@@ -89,7 +89,7 @@ class WithdrawCrudController extends AbstractCrudController
     public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): QueryBuilder
     {
         $response = $this->get(EntityRepository::class)->createQueryBuilder($searchDto, $entityDto, $fields, $filters);
-        $response->andWhere('entity.type = 19');
+        $response->andWhere('entity.type = 19 or entity.type = 18');
         return $response;
     }
 }
