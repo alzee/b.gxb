@@ -19,6 +19,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Predis\Client;
 
 /**
  * @Route("/api", name="api")
@@ -34,6 +35,7 @@ class ApiController extends AbstractController
     private $apikey_v3;
     private $mch_private_key_file;
     private $mch_cert_file;
+    private $otp_expire = 300;
 
     public function __construct(HttpClientInterface $client)
     {
@@ -351,8 +353,17 @@ EOT;
      */
     public function getsms(): Response
     {
+        $redis = new \Predis\Client();
         $request = Request::createFromGlobals();
         $phone = $request->get('phone');
+
+        if (($this->otp_expire - $redis->ttl($phone)) < 60) {
+            return $this->json([
+                'success' => false,
+                'msg' => 'reach frequency limit'
+            ]);
+        }
+
         $type = $request->get('type');
         $pass = $request->get('pass');
         $accessKeyId = $_ENV['accessKeyId'];
@@ -397,23 +408,47 @@ EOT;
         ]);
         if($pass == $_ENV['pass']){
             $client->sendSms($sendSmsRequest);
+            $redis->set($phone, $code);
+            $redis->expire($phone, $this->otp_expire);
+            $success = true;
             $msg = 'Sent';
         }
         elseif($pass == 'test'){
+            $redis->set($phone, $code);
+            $redis->expire($phone, $this->otp_expire);
+            $success = true;
             $msg = 'test Sent';
         }
         else{
+            $success = false;
             $msg = 'Wrong password';
         }
 
         return $this->json([
-            'code' => "$code",
-            'phone' => $phone,
-            'type' => $type,
+            'success' => $success,
             'msg' => $msg
-            //'keyId' => $accessKeyId,
-            //'keySec' => $accessKeySecret,
         ]);
+    }
+
+    private function verifysms($phone, $otp)
+    {
+        $redis = new \Predis\Client();
+        $otp0 = $redis->get($phone);
+
+        if (is_null($otp0)) {
+            $code = 1;
+            // $msg = 'top expired';
+        }
+        else if ($top == $otp0) {
+            $code = 0;
+            // $msg = 'yes'
+        }
+        else {
+            $code = 2;
+            // $msg = 'wrong otp';
+        }
+        
+        return $code;
     }
 
     /**
