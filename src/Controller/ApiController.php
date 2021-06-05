@@ -655,6 +655,54 @@ EOT;
     }
 
     /**
+     * @Route("/chphone", name="chphone")
+     */
+    public function chphone(Request $request, UserPasswordEncoderInterface $encoder): Response
+    {
+        $data = $request->toArray();
+        $uid = $data['uid'];
+        $pass = $data['pass'];
+        $phone = $data['phone'];
+        $otp = $data['otp'];
+
+        $verify = $this->verifyOtp($phone, $otp);
+        switch ($verify['code']) {
+        case 0:
+            $em = $this->getDoctrine()->getManager();
+            $user1 = $em->getRepository(User::class)->findOneBy(['phone' => $phone]);
+            if (!is_null($user1)) {
+                $code = 4;
+                $msg = '手机号已被使用';
+                break;
+            }
+
+            $user = $em->getRepository(User::class)->find($uid);
+
+            if ($encoder->isPasswordValid($user, $pass)) {
+                $code = 0;
+                $msg = 'SUCCESS';
+                $user->setPhone($phone);
+                $em->flush();
+            }
+            else {
+                $code = 3;
+                $msg = '原密码错误';
+            }
+            break;
+        case 1:
+            $code = 1;
+            $msg = $verify['msg'];
+            break;
+        case 2:
+            $code = 2;
+            $msg = $verify['msg'];
+            break;
+        }
+
+        return $this->json(['code' => $code, 'msg' => $msg]);
+    }
+
+    /**
      * @Route("/paypassnull/{uid}", name="paypass_null")
      */
     public function paypassNull($uid): Response
