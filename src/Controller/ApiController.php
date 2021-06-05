@@ -430,22 +430,40 @@ EOT;
         ]);
     }
 
-    private function verifysms($phone, $otp)
+    /**
+     * @Route("/verifyotp", name="verify_otp")
+     */
+    public function verifyOtp($phone = '', $otp = '')
     {
+        if ($phone == '') {
+            $request = Request::createFromGlobals();
+            $data = $request->toArray();
+            $phone = $data['phone'];
+            $otp = $data['otp'];
+        }
         $redis = new \Predis\Client();
         $otp0 = $redis->get($phone);
 
         if (is_null($otp0)) {
             $code = 1;
+            $msg = '验证码超时，请重新获取';
         }
         else if ($otp == $otp0) {
             $code = 0;
+            $msg = 'SUCCESS';
         }
         else {
             $code = 2;
+            $msg = '验证码错误';
         }
         
-        return $code;
+        $resp = ['code' => $code, 'msg' => $msg];
+        if (isset($request)) {
+            return $this->json($resp);
+        }
+        else {
+            return $resp;
+        }
     }
 
     /**
@@ -459,7 +477,8 @@ EOT;
         $phone = $params['phone'];
         $otp = $params['otp'];
 
-        switch ($this->verifysms($phone, $otp)) {
+        $verify = $this->verifyOtp($phone, $otp);
+        switch ($verify['code']) {
         case 0:
             $em = $this->getDoctrine()->getManager();
             $user0 = $em->getRepository(User::class)->findOneBy(['username' => $username]);
@@ -490,11 +509,11 @@ EOT;
             break;
         case 1:
             $code = 1;
-            $msg = '验证码超时，请重新获取';
+            $msg = $verify['msg'];
             break;
         case 2:
             $code = 2;
-            $msg = '验证码错误';
+            $msg = $verify['msg'];
             break;
         }
 
