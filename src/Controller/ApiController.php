@@ -437,18 +437,44 @@ EOT;
 
         if (is_null($otp0)) {
             $code = 1;
-            // $msg = 'top expired';
         }
-        else if ($top == $otp0) {
+        else if ($otp == $otp0) {
             $code = 0;
-            // $msg = 'yes'
         }
         else {
             $code = 2;
-            // $msg = 'wrong otp';
         }
         
         return $code;
+    }
+
+    /**
+     * @Route("/signup", name="signup")
+     */
+    public function signup(Request $request): Response
+    {
+        $params  = $request->toArray();
+        $username = $params['username'];
+        $password = $params['password'];
+        $phone = $params['phone'];
+        $otp = $params['otp'];
+
+        if (isset($params['referrerId'])) {
+            $refId = $params['referrerId'];
+        }
+
+        switch ($this->verifysms($phone, $otp)) {
+        case 0:
+            break;
+        case 1:
+            $code = 1;
+            return $this->json(['code' => 1, 'msg' => 'otp expired']);
+        case 2:
+            $code = 2;
+            return $this->json(['code' => 2, 'msg' => 'otp wrong']);
+        }
+
+        return $this->json(['code' => $code, 'msg' => $msg]);
     }
 
     /**
