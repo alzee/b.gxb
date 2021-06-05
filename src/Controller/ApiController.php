@@ -455,23 +455,47 @@ EOT;
     {
         $params  = $request->toArray();
         $username = $params['username'];
-        $password = $params['password'];
+        $plainPassword = $params['plainPassword'];
         $phone = $params['phone'];
         $otp = $params['otp'];
 
-        if (isset($params['referrerId'])) {
-            $refId = $params['referrerId'];
-        }
-
         switch ($this->verifysms($phone, $otp)) {
         case 0:
+            $em = $this->getDoctrine()->getManager();
+            $user0 = $em->getRepository(User::class)->findOneBy(['username' => $username]);
+            $user1 = $em->getRepository(User::class)->findOneBy(['phone' => $phone]);
+            if (!is_null($user0)) {
+                $code = 3;
+                $msg = '用户名已被占用';
+                break;
+            }
+            if (!is_null($user1)) {
+                $code = 4;
+                $msg = '手机号已被使用';
+                break;
+            }
+            $user = new User();
+            $user->setUsername($username);
+            $user->setPlainPassword($plainPassword);
+            $user->setPhone($phone);
+            if (isset($params['referrerId'])) {
+                $ref = $em->getRepository(User::class)->find($params['referrerId']);
+                $user->setReferrer($ref);
+            }
+            $em->persist($user);
+            $em->flush();
+
+            $code = 0;
+            $msg = '注册成功';
             break;
         case 1:
             $code = 1;
-            return $this->json(['code' => 1, 'msg' => 'otp expired']);
+            $msg = '验证码超时，请重新获取';
+            break;
         case 2:
             $code = 2;
-            return $this->json(['code' => 2, 'msg' => 'otp wrong']);
+            $msg = '验证码错误';
+            break;
         }
 
         return $this->json(['code' => $code, 'msg' => $msg]);
