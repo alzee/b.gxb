@@ -347,9 +347,9 @@ EOT;
     }
 
     /**
-     * @Route("/sms", name="_sms")
+     * @Route("/getsms", name="_sms")
      */
-    public function sms(): Response
+    public function getsms(): Response
     {
         $request = Request::createFromGlobals();
         $phone = $request->get('phone');
