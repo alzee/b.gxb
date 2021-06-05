@@ -16,7 +16,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ApiResource(
- * collectionOperations={"get"},
  * normalizationContext={"groups"={"user:read"}},
  * denormalizationContext={"groups"={"user:write"}}
  * )
