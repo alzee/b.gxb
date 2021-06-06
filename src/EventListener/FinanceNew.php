@@ -156,6 +156,9 @@ class FinanceNew
                 $user->setTopup($user->getTopup()  + $amount);
                 break;
             case 1: // post task
+                if ($finance->getIsFund()) {
+                    return;
+                }
                 $user->setFrozen($user->getFrozen() + $amount - $fee);
                 $t = new Task();
                 $cate = $em->getRepository(Category::class)->find($postData['cateId']);
