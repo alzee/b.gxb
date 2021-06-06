@@ -26,7 +26,7 @@ use App\Entity\Conf;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 
-class FinanceNew extends AbstractController
+class FinanceNew
 {
     public function prePersist(Finance $finance, LifecycleEventArgs $event): void
     {
@@ -134,8 +134,7 @@ class FinanceNew extends AbstractController
     {
         $em = $event->getEntityManager();
         $conf = $em->getRepository(Conf::class)->find(1);
-        $uid = $finance->getUser();
-        $user = $this->getDoctrine()->getRepository(User::class)->find($uid);
+        $user = $finance->getUser();
         $type = $finance->getType();
         $note = $finance->getNote();
         $amount = $finance->getAmount();
@@ -148,7 +147,7 @@ class FinanceNew extends AbstractController
 
         if ($status == 5) {
             if ($couponId != 0) {
-                $coupon = $this->getDoctrine()->getRepository(Coupon::class)->find($couponId);
+                $coupon = $em->getRepository(Coupon::class)->find($couponId);
                 $user->removeCoupon($coupon);
             }
 
@@ -159,36 +158,35 @@ class FinanceNew extends AbstractController
             case 1: // post task
                 $user->setFrozen($user->getFrozen() + $amount - $fee);
                 $t = new Task();
-                $cate = $this->getDoctrine()->getRepository(Category::class)->find($postData['cateId']);
+                $cate = $em->getRepository(Category::class)->find($postData['cateId']);
                 $t->setCategory($cate);
                 $t->setDescription($postData['description']);
                 $t->setGuides($postData['guides']);
                 $t->setLink($postData['link']);
                 $t->setName($postData['name']);
                 $t->setNote($postData['note']);
-                $owner = $this->getDoctrine()->getRepository(User::class)->find($postData['ownerId']);
-                $t->setOwner($owner);
+                $t->setOwner($user);
                 $t->setPrice($postData['price']);
                 $t->setQuantity($postData['quantity']);
                 $t->setReviewHours($postData['reviewHours']);
                 $t->setReviews($postData['reviews']);
                 $t->setTitle($postData['title']);
                 $t->setWorkHours($postData['workHours']);
-                $tStatus = $this->getDoctrine()->getRepository(Status::class)->find(1);
+                $tStatus = $em->getRepository(Status::class)->find(1);
                 $t->setStatus($tStatus);
                 $t->setFinance($finance);
                 $em->persist($t);
                 break;
             case 2: // stick
-                $t = $this->getDoctrine()->getRepository(Task::class)->find($data['entityId']);
+                $t = $em->getRepository(Task::class)->find($data['entityId']);
                 $t->setStickyUntil(new \DateTimeImmutable($postData['stickyUntil']));
                 break;
             case 3: // recommend
-                $t = $this->getDoctrine()->getRepository(Task::class)->find($data['entityId']);
+                $t = $em->getRepository(Task::class)->find($data['entityId']);
                 $t->setRecommendUntil(new \DateTimeImmutable($postData['recommendUntil']));
                 break;
             case 4: // bid
-                $t = $this->getDoctrine()->getRepository(Task::class)->find($postData['taskId']);
+                $t = $em->getRepository(Task::class)->find($postData['taskId']);
                 $bid = new Bid();
                 $bid->setIsBuyNow($postData['isBuyNow']);
                 $bid->setPosition($postData['position']);
@@ -197,7 +195,7 @@ class FinanceNew extends AbstractController
                 $em->persist($bid);
                 break;
             case 5: // equity
-                $e = $this->getDoctrine()->getRepository(EquityTrade::class)->find($data['entityId']);
+                $e = $em->getRepository(EquityTrade::class)->find($data['entityId']);
                 $e->setBuyer($user);
                 $e->setStatus(1);
                 $user->setEquity($user->getEquity() + $e->getEquity());
@@ -222,8 +220,7 @@ class FinanceNew extends AbstractController
                 $em->persist($f);
                 break;
             case 6: // occupy
-                $owner = $this->getDoctrine()->getRepository(User::class)->find($postData['ownerId']);
-                $land = $this->getDoctrine()->getRepository(Land::class)->find($postData['landId']);
+                $land = $em->getRepository(Land::class)->find($postData['landId']);
                 $landOwner = $land->getOwner();
                 if (!is_null($landOwner)) {
                     $landTrade = $em->getRepository(LandTrade::class)->findOneBy(['buyer' => $landOwner, 'land' => $land], ['date' => 'DESC']);
@@ -241,7 +238,7 @@ class FinanceNew extends AbstractController
                 }
 
                 $landPost = new LandPost();
-                $landPost->setOwner($owner);
+                $landPost->setOwner($user);
                 $landPost->setLand($land);
                 $landPost->setBody($postData['body']);
                 $landPost->setDays($postData['days']);
@@ -253,8 +250,8 @@ class FinanceNew extends AbstractController
                 break;
             case 7: // landLord
                 if (isset($data['landId'])) {
-                    $land = $this->getDoctrine()->getRepository(Land::class)->find($data['landId']);
-                    $landTrade = $this->getDoctrine()->getRepository(LandTrade::class)->findOneBy(['land' => $land, 'buyer' => NULL], ['id' => 'DESC']);
+                    $land = $em->getRepository(Land::class)->find($data['landId']);
+                    $landTrade = $em->getRepository(LandTrade::class)->findOneBy(['land' => $land, 'buyer' => NULL], ['id' => 'DESC']);
                     if (is_null($landTrade)) {
                         $landTrade =  new LandTrade();
                         $landTrade->setLand($land);
@@ -265,11 +262,11 @@ class FinanceNew extends AbstractController
                 }
 
                 if (isset($data['id'])) {
-                    $landTrade = $this->getDoctrine()->getRepository(LandTrade::class)->find($data['id']);
+                    $landTrade = $em->getRepository(LandTrade::class)->find($data['id']);
                     $land = $landTrade->getLand();
                 }
 
-                $buyer = $this->getDoctrine()->getRepository(User::class)->find($postData['buyer']);
+                $buyer = $em->getRepository(User::class)->find($postData['buyer']);
                 $seller = $land->getOwner();
 
 
@@ -310,7 +307,7 @@ class FinanceNew extends AbstractController
                 $land->setOwner($buyer);
                 break;
             case 8: // buyVip
-                $level = $this->getDoctrine()->getRepository(Level::class)->find($postData['levelId']);
+                $level = $em->getRepository(Level::class)->find($postData['levelId']);
                 $user->setLevel($level);
                 if ($referrer = $user->getReferrer()) {
                     $rebate = $level->getPrice() * 100 * $level->getTopupRatio();
