@@ -61,7 +61,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->join('u.referrer', 'uu')
             ->groupby('uu.id')
             ->orderBy('count', 'DESC')
-            ->setMaxResults(10)
+            ->setMaxResults(1000)
             ->getQuery()
             ->getResult()
         ;
