@@ -76,7 +76,7 @@ class WithdrawCrudController extends AbstractCrudController
         $id = IntegerField::new('id', 'ID');
 
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $user, $note, $date, $amount, $fee, $status];
+            return [$id, $user, $note, $date, $amount, $fee, $type, $status];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $note, $date, $amount, $prepayid, $orderid, $wxOrderid, $type, $status, $couponId, $fee, $method, $user];
         } elseif (Crud::PAGE_NEW === $pageName) {

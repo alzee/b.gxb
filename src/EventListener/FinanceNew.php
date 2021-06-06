@@ -328,7 +328,7 @@ class FinanceNew
             }
 
             // deduct balance
-            if ($type < 19 && $method == 0) {
+            if ($type < 18 && $method == 0) {
                 $topup = $user->getTopup();
                 if ($topup < $amount) {
                     $user->setEarnings($user->getEarnings() - ($amount - $topup));
