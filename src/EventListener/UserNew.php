@@ -32,7 +32,7 @@ class UserNew extends AbstractController
     public function prePersist(User $user, LifecycleEventArgs $event): void
     {
         $user->setPassword($this->encoder->encodePassword($user, $user->getPlainPassword()));
-        // $user->eraseCredentials();
+        $user->eraseCredentials();
 
         $em = $event->getEntityManager();
         $coupons = $em->getRepository(Coupon::class)->findAll();
