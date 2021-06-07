@@ -53,8 +53,8 @@ class TaskUpdate
             $amount = $finance->getAmount();
             $fee = $finance->getFee();
 
-            $owner->setFrozen($owner->getFrozen() - $amount + $fee);
-            $owner->setTopup($owner->getTopup() + $amount);
+            $owner->setFrozen($owner->getFrozen() - $amount);
+            $owner->setTopup($owner->getTopup() + $amount + $fee);
 
             $type = 61;
 

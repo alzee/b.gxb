@@ -159,7 +159,7 @@ class FinanceNew
                 if ($finance->getIsFund()) {
                     return;
                 }
-                $user->setFrozen($user->getFrozen() + $amount - $fee);
+                $user->setFrozen($user->getFrozen() + $amount);
                 $t = new Task();
                 $cate = $em->getRepository(Category::class)->find($postData['cateId']);
                 $t->setCategory($cate);
@@ -329,13 +329,14 @@ class FinanceNew
 
             // deduct balance
             if ($type < 18 && $method == 0) {
+                $total = $amount + $fee;
                 $topup = $user->getTopup();
-                if ($topup < $amount) {
-                    $user->setEarnings($user->getEarnings() - ($amount - $topup));
+                if ($topup < $total) {
+                    $user->setEarnings($user->getEarnings() - ($total - $topup));
                     $user->setTopup(0);
                 }
                 else {
-                    $user->setTopup($user->getTopup() - $amount);
+                    $user->setTopup($user->getTopup() - $total);
                 }
             }
         }
