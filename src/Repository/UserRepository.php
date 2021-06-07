@@ -98,7 +98,17 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->setParameter('val', $value)
             ->select('SUM(u.coin)')
             ->getQuery()
-            ->getSingleScalarResult();
+            ->getSingleScalarResult()
+        ;
+    }
+
+    public function clearCoin()
+    {
+        return $this->createQueryBuilder('u')
+                    ->update()
+                    ->set('u.coin', 0)
+                    ->getQuery()
+                    ->execute()
         ;
     }
 

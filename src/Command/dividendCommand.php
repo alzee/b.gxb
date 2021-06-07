@@ -53,7 +53,6 @@ class dividendCommand extends Command
 
             $io->success($u->getUsername() . " " . $u->getCoin() . " " .  $dividend);
             $u->setTopup($u->getTopup() + $dividend);
-            $u->setCoin(0);
             
             $f = new Finance();
             $f->setUser($u);
@@ -74,6 +73,8 @@ class dividendCommand extends Command
         
         $conf->setDividendFund(0);
         $this->em->flush();
+
+        $userRepo->clearCoin();
 
         return Command::SUCCESS;
     }
