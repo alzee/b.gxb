@@ -33,16 +33,16 @@ class TaskUpdate
         if ($task->getStatus()->getId() == 4) {
             $remain = $task->getRemain();
             $price = $task->getPrice();
-            $amount = $remain * $price;
+            $amountLeft = $remain * $price;
 
-            $owner->setFrozen($owner->getFrozen() - $amount);
-            $owner->setTopup($owner->getTopup() + $amount);
+            $owner->setFrozen($owner->getFrozen() - $amountLeft);
+            $owner->setTopup($owner->getTopup() + $amountLeft);
 
             $type = 56;
 
             $f = new Finance();
             $f->setUser($owner);
-            $f->setAmount($amount);
+            $f->setAmount($amountLeft);
             $f->setType($type);
             $em->persist($f);
             $em->flush();
