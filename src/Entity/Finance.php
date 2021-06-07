@@ -78,7 +78,7 @@ class Finance
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $fee;
+    private $fee = 0;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
