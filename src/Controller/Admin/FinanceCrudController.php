@@ -74,6 +74,7 @@ class FinanceCrudController extends AbstractCrudController
         return $filters
             ->add(EntityFilter::new('user'))
             ->add(ChoiceFilter::new('type')->setChoices($this->types))
+            ->add(ChoiceFilter::new('status')->setChoices($this->statuses))
         ;
     }
 
