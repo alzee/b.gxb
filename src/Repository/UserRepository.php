@@ -59,6 +59,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $ranking = $this->createQueryBuilder('u')
             ->select('uu.id as uid, count(uu.id) as count')
             ->join('u.referrer', 'uu')
+            ->andWhere('uu.active = true')
             ->groupby('uu.id')
             ->orderBy('count', 'DESC')
             ->setMaxResults(1000)
