@@ -26,7 +26,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Filter\NumericFilter;
 
 class WithdrawCrudController extends AbstractCrudController
 {
-    private $statuses = ['处理中' => 0, '失败' => 4, '已完成' => 5];
+    private $statuses = ['处理中' => 1, '失败' => 4, '已完成' => 5];
+    private $types = ['任务奖励' => 18, '充值余额' => 19];
+    private $methods = ['微信(手动)' => 11, '支付宝(手动)' => 12, '微信' => 13, '支付宝' => 14];
 
     public static function getEntityFqcn(): string
     {
@@ -65,18 +67,18 @@ class WithdrawCrudController extends AbstractCrudController
         $prepayid = TextField::new('prepayid');
         $orderid = TextField::new('orderid');
         $wxOrderid = TextField::new('wx_orderid');
-        $type = IntegerField::new('type');
+        $type = ChoiceField::new('type')->setChoices($this->types);
         $status = ChoiceField::new('status')->setChoices($this->statuses);
+        $method = ChoiceField::new('method')->setChoices($this->methods);
         $couponId = IntegerField::new('couponId');
         $fee = MoneyField::new('fee')->setCurrency('CNY');
-        $method = IntegerField::new('method');
         $data = ArrayField::new('data');
         $wxpayData = ArrayField::new('wxpayData');
         $user = AssociationField::new('user');
         $id = IntegerField::new('id', 'ID');
 
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $user, $note, $date, $amount, $fee, $type, $status];
+            return [$id, $user, $date, $amount, $fee, $type, $method, $note, $status];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $note, $date, $amount, $prepayid, $orderid, $wxOrderid, $type, $status, $couponId, $fee, $method, $user];
         } elseif (Crud::PAGE_NEW === $pageName) {

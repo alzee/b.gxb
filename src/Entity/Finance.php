@@ -67,7 +67,8 @@ class Finance
     private $type;
 
     /**
-     * 0 pending
+     * 0 initial
+     * 1 pending
      * 4 支付/提现失败
      * 5 支付/提现完成
      * @ORM\Column(type="smallint", nullable=true)

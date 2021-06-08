@@ -33,6 +33,7 @@ class FinanceNew
         $type = $finance->getType();
         $method = $finance->getMethod();
         $amount = $finance->getAmount();
+        $status = $finance->getStatus();
         $fee = $finance->getFee();
         switch ($type) {
         case 1:
@@ -61,14 +62,14 @@ class FinanceNew
             break;
         case 18:
             // $note = '奖励提现';
-            if ($finance->getStatus() == 5) || $method == 11 || $method == 12) {
+            if ($status == 5 || $status == 1) {
                 $user = $finance->getUser();
                 $user->setEarnings($user->getEarnings() - $amount - $fee);
             }
             break;
         case 19:
             // $note = '余额提现';
-            if ($finance->getStatus() == 5) || $method == 11 || $method == 12) {
+            if ($status == 5 || $status == 1) {
                 $user = $finance->getUser();
                 $user->setTopup($user->getTopup() - $amount - $fee);
             }
