@@ -81,6 +81,13 @@ class Finance
     private $fee = 0;
 
     /**
+     * 0 余额支付
+     * 1 微信支付
+     * 2 支付宝支付
+     * 11 提现至微信(手动)
+     * 12 提现至支付宝(手动)
+     * 13 提现至微信
+     * 14 提现至支付宝
      * @ORM\Column(type="smallint", nullable=true)
      */
     private $method = 0;
