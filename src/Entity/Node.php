@@ -16,6 +16,7 @@ use Doctrine\Common\Collections\Criteria;
 
 /**
  * @ApiResource(
+ * collectionOperations={"get", "post"},
  * normalizationContext={"groups"={"node:read"}},
  * denormalizationContext={"groups"={"node:write"}}
  * )

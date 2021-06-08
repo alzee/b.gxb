@@ -9,6 +9,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(
+ * collectionOperations={"get", "post"},
  * normalizationContext={"groups"={"exchange:read"}},
  * denormalizationContext={"groups"={"exchange:write"}}
  * )

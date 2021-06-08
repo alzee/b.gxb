@@ -12,6 +12,8 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
 /**
  * @ApiResource(
+ * collectionOperations={"get", "post"},
+ * itemOperations={"get", "patch"},
  * normalizationContext={"groups"={"report:read"}},
  * denormalizationContext={"groups"={"report:write"}}
  * )

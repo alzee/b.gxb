@@ -18,6 +18,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 
 /**
  * @ApiResource(
+ * itemOperations={"get", "patch"},
  * normalizationContext={"groups"={"task:read"}},
  * denormalizationContext={"groups"={"task:write"}}
  * )

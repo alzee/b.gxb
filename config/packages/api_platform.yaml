@@ -1,4 +1,8 @@
 api_platform:
+  defaults:
+    item_operations: ['get']
+    collection_operations: ['get']
+
   title: '达人共享宝 API 文档'
   #description: 'API 文档'
   version: '0.1.0'
