@@ -16,6 +16,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\NumericFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
 
 class FinanceCrudController extends AbstractCrudController
 {
@@ -72,7 +73,7 @@ class FinanceCrudController extends AbstractCrudController
     {
         return $filters
             ->add(EntityFilter::new('user'))
-            ->add(NumericFilter::new('type'))
+            ->add(ChoiceFilter::new('type')->setChoices($this->types))
         ;
     }
 
