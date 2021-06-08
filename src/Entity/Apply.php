@@ -69,11 +69,6 @@ class Apply
     private $date;
 
     /**
-     * @ORM\OneToMany(targetEntity=Work::class, mappedBy="apply")
-     */
-    private $works;
-
-    /**
      * @Groups({"apply:read", "apply:write"})
      * @Groups({"task:read"})
      * @Groups({"report:read"})
@@ -99,7 +94,6 @@ class Apply
     {
         $this->date = new \DateTime();
         //$this->date = $this->date->setTimezone(new \DateTimeZone('Asia/Shanghai'));
-        $this->works = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -156,36 +150,6 @@ class Apply
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Work[]
-     */
-    public function getWorks(): Collection
-    {
-        return $this->works;
-    }
-
-    public function addWork(Work $work): self
-    {
-        if (!$this->works->contains($work)) {
-            $this->works[] = $work;
-            $work->setApply($this);
-        }
-
-        return $this;
-    }
-
-    public function removeWork(Work $work): self
-    {
-        if ($this->works->removeElement($work)) {
-            // set the owning side to null (unless already changed)
-            if ($work->getApply() === $this) {
-                $work->setApply(null);
-            }
-        }
 
         return $this;
     }
