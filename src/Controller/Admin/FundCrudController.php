@@ -72,7 +72,7 @@ class FundCrudController extends AbstractCrudController
         $id = IntegerField::new('id', 'ID');
 
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $user, $note, $date, $amount, $fee, $couponId, $method, $type, $status];
+            return [$id, $user, $note, $date, $amount, $fee];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $note, $date, $amount, $prepayid, $orderid, $wxOrderid, $type, $status, $couponId, $fee, $method, $user];
         } elseif (Crud::PAGE_NEW === $pageName) {
