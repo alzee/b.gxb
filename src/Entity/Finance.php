@@ -61,11 +61,15 @@ class Finance
     private $wx_orderid;
 
     /**
+     * @see App\EventListener\FinanceNew
      * @ORM\Column(type="integer", nullable=true)
      */
     private $type;
 
     /**
+     * 0 pending
+     * 4 支付/提现失败
+     * 5 支付/提现完成
      * @ORM\Column(type="smallint", nullable=true)
      */
     private $status = 0;

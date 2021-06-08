@@ -260,7 +260,10 @@ class ApiController extends AbstractController
             ];
         }
 
-        if ($type == 18 || $type == 19) {  // withdraw
+        if ($method == 11 || $method == 12) {   // withdraw to wechat/alipay account
+        }
+
+        if ($method == 13) {  // withdraw to wechat
             $check_name = 'NO_CHECK';
             $desc = '提现';
             $mch_appid = $this->appid;
