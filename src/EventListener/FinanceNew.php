@@ -37,28 +37,28 @@ class FinanceNew
         $fee = $finance->getFee();
         switch ($type) {
         case 1:
-            $note = '任务发布';
+            // $note = '任务发布';
             break;
         case 2:
-            $note = '任务置顶';
+            // $note = '任务置顶';
             break;
         case 3:
-            $note = '任务推荐';
+            // $note = '任务推荐';
             break;
         case 4:
-            $note = '任务竞价';
+            // $note = '任务竞价';
             break;
         case 5:
-            $note = '购买股权';
+            // $note = '购买股权';
             break;
         case 6:
-            $note = '占领格子';
+            // $note = '占领格子';
             break;
         case 7:
-            $note = '购买领地';
+            // $note = '购买领地';
             break;
         case 8:
-            $note = '购买会员';
+            // $note = '购买会员';
             break;
         case 18:
             // $note = '奖励提现';
@@ -75,42 +75,40 @@ class FinanceNew
             }
             break;
         case 50:
-            $note = '充值';
+            // $note = '充值';
             break;
         case 51:
             // $note = '任务分销奖励1级 $applicant';
             break;
         case 52:
             // $note = '任务分销奖励2级 $applicant';
-            $note = $finance->getNote();
             break;
         case 53:
-            $note = '任务奖励';
+            // $note = '任务奖励';
             break;
         case 54:
-            $note = '出售股权';
+            // $note = '出售股权';
             break;
         case 55:
-            $note = '出售领地';
+            // $note = '出售领地';
             break;
         case 56:
-            $note = '解冻-任务下架';
+            // $note = '解冻-任务下架';
             break;
         case 57:
-            $note = '格子收益';
+            // $note = '格子收益';
             break;
         case 58:
             // $note = '购买会员返利 $user';
-            $note = $finance->getNote();
             break;
         case 59:
-            $note = '全民分红';
+            // $note = '全民分红';
             break;
         case 60:
-            $note = '退款-首页竞价';
+            // $note = '退款-首页竞价';
             break;
         case 61:
-            $note = '解冻-任务审核拒绝';
+            // $note = '解冻-任务审核拒绝';
             break;
         default:
             $note = 'unkown';
@@ -322,7 +320,7 @@ class FinanceNew
                     $f->setUser($referrer);
                     $f->setAmount($rebate);
                     $f->setType(58);
-                    $f->setNote('购买会员返利 ' . $user->getUsername());
+                    $f->setNote($user->getUsername());
                     $em->persist($f);
                 }
                 $conf->setDividendFund($conf->getDividendFund() + $amount);
