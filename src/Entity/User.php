@@ -47,7 +47,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Groups({"task:read"})
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"user:read"})
      * @Groups({"apply:read"})
      * @Groups({"land:read"})
      * @Groups({"landpost:read"})
@@ -76,7 +76,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"task:read"})
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"user:read"})
      */
     private $nick;
 
@@ -103,25 +103,25 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"user:read"})
      */
     private $phone;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"user:read"})
      */
     private $topup = 0;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"user:read"})
      */
     private $earnings = 0;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"user:read"})
      */
     private $gxb = 0;
 
@@ -292,25 +292,25 @@ class User implements UserInterface
     private $updatedAt;
 
     /**
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"user:read"})
      * @ORM\Column(type="integer", nullable=true)
      */
     private $equity = 1;
 
     /**
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"user:read"})
      * @ORM\Column(type="integer", nullable=true)
      */
     private $frozen = 0;
 
     /**
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"user:read"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $refcode;
 
     /**
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"user:read"})
      * @ORM\Column(type="integer", nullable=true)
      */
     private $coin = 0;
@@ -321,25 +321,25 @@ class User implements UserInterface
     private $coins;
 
     /**
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"user:read"})
      * @ORM\ManyToMany(targetEntity=Coupon::class)
      */
     private $coupon;
 
     /**
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"user:read"})
      * @ORM\ManyToOne(targetEntity=Level::class, inversedBy="users")
      */
     private $level;
 
     /**
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"user:read"})
      * @ORM\ManyToOne(targetEntity=User::class)
      */
     private $referrer;
 
     /**
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"user:read"})
      * @ORM\ManyToOne(targetEntity=User::class)
      */
     private $ror;
