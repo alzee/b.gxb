@@ -64,7 +64,7 @@ class ApplyUpdate
                 $f1->setUser($referer);
                 $f1->setAmount($price * $rewardRate);
                 $f1->setType(51);
-                $f1->setNote($applicant->getUsername());
+                $f1->setNote('任务分销奖励1级 ' . $applicant->getUsername());
                 $em->persist($f1);
 
                 $rOfReferer = $referer->getReferrer();
@@ -76,7 +76,7 @@ class ApplyUpdate
                     $f2->setUser($rOfReferer);
                     $f2->setAmount($price * $rewardRate2);
                     $f2->setType(52);
-                    $f2->setNote($applicant->getUsername());
+                    $f2->setNote('任务分销奖励2级 ' . $applicant->getUsername());
                     $em->persist($f2);
                 }
             }
