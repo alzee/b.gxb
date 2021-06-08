@@ -26,7 +26,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Filter\NumericFilter;
 
 class WithdrawCrudController extends AbstractCrudController
 {
-    private $statuses = ['处理中' => 1, '失败' => 4, '已完成' => 5];
+    private $statuses = ['待处理' => 0, '处理中' => 1, '失败' => 4, '已完成' => 5];
     private $types = ['任务奖励' => 18, '充值余额' => 19];
     private $methods = ['微信(手动)' => 11, '支付宝(手动)' => 12, '微信' => 13, '支付宝' => 14];
 

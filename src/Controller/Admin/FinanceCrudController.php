@@ -15,9 +15,37 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\NumericFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 
 class FinanceCrudController extends AbstractCrudController
 {
+    private $types = [
+        '任务发布' => 1,
+        '任务置顶' => 2,
+        '任务推荐' => 3,
+        '任务竞价' => 4,
+        '购买股权' => 5,
+        '占领格子' => 6,
+        '购买领地' => 7,
+        '购买会员' => 8,
+        '奖励提现' => 18,
+        '余额提现' => 19,
+        '充值' => 50,
+        '任务分校奖励1级' => 51,
+        '任务分校奖励2级' => 52,
+        '任务奖励' => 53,
+        '出售股权' => 54,
+        '出售领地' => 55,
+        '解冻-任务下架' => 56,
+        '格子收益' => 57,
+        '购买会员返利' => 58,
+        '全民分红' => 59,
+        '退款-首页竞价' => 60,
+        '解冻-任务审核拒绝' => 61,
+    ];
+    private $methods = ['余额' => 0, '微信' => 1, '支付宝' => 2, '微信(手动)' => 11, '支付宝(手动)' => 12, '微信' => 13, '支付宝' => 14];
+    private $statuses = ['待处理' => 0, '处理中' => 1, '失败' => 4, '已完成' => 5];
+
     public static function getEntityFqcn(): string
     {
         return Finance::class;
@@ -56,11 +84,11 @@ class FinanceCrudController extends AbstractCrudController
         $prepayid = TextField::new('prepayid');
         $orderid = TextField::new('orderid');
         $wxOrderid = TextField::new('wx_orderid');
-        $type = IntegerField::new('type');
-        $status = IntegerField::new('status');
+        $type = ChoiceField::new('type')->setChoices($this->types);
+        $status = ChoiceField::new('status')->setChoices($this->statuses);
+        $method = ChoiceField::new('method')->setChoices($this->methods);
         $couponId = IntegerField::new('couponId');
         $fee = MoneyField::new('fee')->setCurrency('CNY');
-        $method = IntegerField::new('method');
         $data = ArrayField::new('data');
         $wxpayData = ArrayField::new('wxpayData');
         $user = AssociationField::new('user');
