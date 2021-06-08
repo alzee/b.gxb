@@ -44,7 +44,7 @@ class FinanceCrudController extends AbstractCrudController
         '退款-首页竞价' => 60,
         '解冻-任务审核拒绝' => 61,
     ];
-    private $methods = ['余额' => 0, '微信' => 1, '支付宝' => 2, '微信(手动)' => 11, '支付宝(手动)' => 12, '微信' => 13, '支付宝' => 14];
+    private $methods = ['余额' => 0, '微信' => 1, '支付宝' => 2, '提现至微信(手动)' => 11, '提现至支付宝(手动)' => 12, '提现至微信' => 13, '提现至支付宝' => 14];
     private $statuses = ['待处理' => 0, '处理中' => 1, '失败' => 4, '已完成' => 5];
 
     public static function getEntityFqcn(): string
