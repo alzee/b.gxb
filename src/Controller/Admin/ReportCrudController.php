@@ -13,9 +13,16 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
+use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
+use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class ReportCrudController extends AbstractCrudController
 {
+    private $statuses = ['评审中' => 0, '维权无效' => 1, '维权成功' => 2];
+
     public static function getEntityFqcn(): string
     {
         return Report::class;
@@ -44,7 +51,7 @@ class ReportCrudController extends AbstractCrudController
         $descB = TextEditorField::new('descB');
         $picsB = ArrayField::new('picsB')->setTemplatePath('t.html.twig');
         $date = DateTimeField::new('date');
-        $status = ChoiceField::new('status')->setChoices(['评审中' => 0, '维权无效' => 1, '维权成功' => 2]);
+        $status = ChoiceField::new('status')->setChoices($this->statuses);
         $apply = AssociationField::new('apply');
         $id = IntegerField::new('id', 'ID');
 
@@ -57,5 +64,16 @@ class ReportCrudController extends AbstractCrudController
         } elseif (Crud::PAGE_EDIT === $pageName) {
             return [$status];
         }
+    }
+
+    public function createEditForm(EntityDto $entityDto, KeyValueStore $formOptions, AdminContext $context): FormInterface
+    {
+        $b = $this->createEditFormBuilder($entityDto, $formOptions, $context);
+        $f = $b->getForm();
+        if ($f->get('status')->getData() > 0) {
+            $b->add('status', ChoiceType::class, ['disabled' => true, 'choices' => $this->statuses]);
+            $f = $b->getForm();
+        }
+        return $f;
     }
 }
