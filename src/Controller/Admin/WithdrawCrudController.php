@@ -23,6 +23,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\ChoiceFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\NumericFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
+use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class WithdrawCrudController extends AbstractCrudController
 {
@@ -93,5 +97,16 @@ class WithdrawCrudController extends AbstractCrudController
         $response = $this->get(EntityRepository::class)->createQueryBuilder($searchDto, $entityDto, $fields, $filters);
         $response->andWhere('entity.type = 19 or entity.type = 18');
         return $response;
+    }
+
+    public function createEditForm(EntityDto $entityDto, KeyValueStore $formOptions, AdminContext $context): FormInterface
+    {
+        $b = $this->createEditFormBuilder($entityDto, $formOptions, $context);
+        $f = $b->getForm();
+        if ($f->get('status')->getData() > 1) {
+            $b->add('status', ChoiceType::class, ['disabled' => true, 'choices' => $this->statuses]);
+            $f = $b->getForm();
+        }
+        return $f;
     }
 }
