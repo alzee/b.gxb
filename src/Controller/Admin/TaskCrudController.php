@@ -19,6 +19,11 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
+use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
+use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\Status;
 
 class TaskCrudController extends AbstractCrudController
@@ -87,5 +92,16 @@ class TaskCrudController extends AbstractCrudController
             ->add('index', Action::DETAIL)
             ->disable('new')
         ;
+    }
+
+    public function createEditForm(EntityDto $entityDto, KeyValueStore $formOptions, AdminContext $context): FormInterface
+    {
+        $b = $this->createEditFormBuilder($entityDto, $formOptions, $context);
+        $f = $b->getForm();
+        if ($f->get('status')->getData()->getId() > 1) {
+            $b->add('status', EntityType::class, ['class' => Status::class, 'disabled' => true]);
+            $f = $b->getForm();
+        }
+        return $f;
     }
 }
