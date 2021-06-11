@@ -92,7 +92,7 @@ class UserCrudController extends AbstractCrudController
         } elseif (Crud::PAGE_NEW === $pageName) {
             return [$username, $plainPassword, $phone];
         } elseif (Crud::PAGE_EDIT === $pageName) {
-            return [$level, $active, $plainPassword];
+            return [$level, $gxb, $active, $plainPassword];
         }
     }
 
