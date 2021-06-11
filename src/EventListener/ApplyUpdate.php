@@ -20,9 +20,16 @@ class ApplyUpdate
 {
     public function preUpdate(Apply $apply, PreUpdateEventArgs $event): void
     {
-        if ($event->hasChangedField('status') && $event->getNewValue('status')->getId() == 12) {
+        if ($event->hasChangedField('status')) {
             $em = $event->getEntityManager();
-            $apply->setSubmitAt(new \DateTime());
+            $newStatusId = $event->getNewValue('status')->getId();
+
+            if ($newStatusId == 12) {
+                $apply->setSubmitAt(new \DateTime());
+            }
+            if ($newStatusId == 13 || $newStatusId == 14) {
+                $apply->setApprovedAt(new \DateTime());
+            }
         }
     }
 
