@@ -95,6 +95,11 @@ class Apply
      */
     private $note;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $approved_at;
+
     public function __construct()
     {
         $this->date = new \DateTime();
@@ -191,6 +196,18 @@ class Apply
     public function setNote(?string $note): self
     {
         $this->note = $note;
+
+        return $this;
+    }
+
+    public function getApprovedAt(): ?\DateTimeInterface
+    {
+        return $this->approved_at;
+    }
+
+    public function setApprovedAt(?\DateTimeInterface $approved_at): self
+    {
+        $this->approved_at = $approved_at;
 
         return $this;
     }
