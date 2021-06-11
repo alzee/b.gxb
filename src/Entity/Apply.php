@@ -53,6 +53,11 @@ class Apply
     private $applicant;
 
     /**
+     * 11 待提交
+     * 12 验收中
+     * 13 不合格
+     * 14 已完成
+     * 15 承认不合格
      * @ORM\ManyToOne(targetEntity=Status::class)
      * @ORM\JoinColumn(nullable=false)
      * @Groups({"apply:read", "apply:write"})

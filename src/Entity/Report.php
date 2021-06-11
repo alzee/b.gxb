@@ -73,6 +73,9 @@ class Report
     private $date;
 
     /**
+     * 0 评审中
+     * 1 维权无效
+     * 2 维权成功
      * @Groups({"report:read", "report:write"})
      * @ORM\Column(type="smallint", nullable=true)
      */

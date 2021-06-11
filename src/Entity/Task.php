@@ -201,6 +201,11 @@ class Task
     private $reviewHours;
 
     /**
+     * 1 待审核
+     * 2 已审核
+     * 3 已暂停
+     * 4 已下架
+     * 5 审核拒绝
      * @Groups({"task:read", "task:write"})
      * @ORM\ManyToOne(targetEntity=Status::class)
      */
