@@ -76,7 +76,7 @@ class TaskCrudController extends AbstractCrudController
         $opinion = TextField::new('opinion');
 
         if (Crud::PAGE_INDEX === $pageName) {
-            return [$id, $name, $title, $price, $owner, $category, $description, $date, $status];
+            return [$id, $name, $title, $price, $owner, $category, $date, $status];
         } elseif (Crud::PAGE_DETAIL === $pageName) {
             return [$id, $name, $title, $price, $description, $quantity, $date, $link, $note, $guides, $reviews, $workHours, $reviewHours, $owner, $category, $tag, $applies, $status, $opinion];
         } elseif (Crud::PAGE_NEW === $pageName) {
